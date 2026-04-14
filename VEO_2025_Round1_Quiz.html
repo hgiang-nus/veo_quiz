@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEO 2025 – Round 1 Practice Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF7F2;
+  --card: #FFFFFF;
+  --accent: #1B4D3E;
+  --accent-light: #E8F0EC;
+  --accent-mid: #2D7A5F;
+  --gold: #C8963E;
+  --gold-light: #FBF4E9;
+  --text: #2A2A2A;
+  --text-muted: #6B6B6B;
+  --correct: #1B7A4A;
+  --correct-bg: #E6F5EC;
+  --wrong: #B33A3A;
+  --wrong-bg: #FDEAEA;
+  --border: #E2DDD5;
+  --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1B4D3E 0%, #0D2B22 100%);
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60%; left: -20%;
+  width: 140%; height: 200%;
+  background: radial-gradient(ellipse at center, rgba(200,150,62,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.02em;
+}
+.hero .subtitle {
+  font-size: 1.05rem;
+  opacity: 0.75;
+  font-weight: 400;
+}
+.hero .badge {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.35rem 1rem;
+  background: rgba(200,150,62,0.2);
+  border: 1px solid rgba(200,150,62,0.4);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #E8C97A;
+  letter-spacing: 0.04em;
+}
+
+.progress-bar-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.progress-track {
+  flex: 1;
+  height: 8px;
+  background: #EAE6DF;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-mid));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+.progress-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+.section-label {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-light);
+}
+
+.q-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  animation: slideUp 0.35s ease both;
+}
+.q-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+.q-card.answered-correct { border-color: var(--correct); }
+.q-card.answered-wrong { border-color: var(--wrong); }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.q-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  background: var(--accent);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 50%;
+  margin-bottom: 0.6rem;
+}
+.q-card.answered-correct .q-number { background: var(--correct); }
+.q-card.answered-wrong .q-number { background: var(--wrong); }
+
+.q-text {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.55;
+}
+
+.options { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.option-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg);
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: left;
+  transition: all 0.2s;
+  font-family: inherit;
+  color: var(--text);
+  width: 100%;
+}
+.option-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.option-btn .letter {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: white;
+  border: 1.5px solid var(--border);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+.option-btn:hover:not(:disabled) .letter {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.option-btn.selected-correct {
+  background: var(--correct-bg);
+  border-color: var(--correct);
+}
+.option-btn.selected-correct .letter {
+  background: var(--correct);
+  border-color: var(--correct);
+  color: white;
+}
+.option-btn.selected-wrong {
+  background: var(--wrong-bg);
+  border-color: var(--wrong);
+}
+.option-btn.selected-wrong .letter {
+  background: var(--wrong);
+  border-color: var(--wrong);
+  color: white;
+}
+.option-btn.show-correct {
+  background: var(--correct-bg);
+  border-color: var(--correct);
+}
+.option-btn.show-correct .letter {
+  background: var(--correct);
+  border-color: var(--correct);
+  color: white;
+}
+.option-btn:disabled { cursor: default; }
+
+.explanation {
+  margin-top: 1rem;
+  padding: 1rem 1.15rem;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.explanation.show { display: block; }
+.explanation.correct-expl {
+  background: var(--correct-bg);
+  border-left: 4px solid var(--correct);
+  color: #155D35;
+}
+.explanation.wrong-expl {
+  background: var(--wrong-bg);
+  border-left: 4px solid var(--wrong);
+  color: #8A2222;
+}
+.explanation strong { font-weight: 700; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Results panel */
+.results-panel {
+  display: none;
+  background: var(--card);
+  border: 2px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  animation: slideUp 0.4s ease;
+}
+.results-panel.show { display: block; }
+.results-panel h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+.score-display {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0.5rem 0;
+}
+.score-display span { color: var(--text-muted); font-size: 1.5rem; }
+.score-label {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+.score-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+.score-stat { text-align: center; }
+.score-stat .num { font-size: 1.4rem; font-weight: 700; }
+.score-stat .lbl { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.score-stat.green .num { color: var(--correct); }
+.score-stat.red .num { color: var(--wrong); }
+
+.btn-restart {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+.btn-restart:hover { background: var(--accent-mid); }
+
+.footer-note {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 2rem 1rem 1.8rem; }
+  .container { padding: 1rem 1rem 3rem; }
+  .q-card { padding: 1.2rem; }
+  .score-breakdown { gap: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Vietnam Economics Olympiad 2025</h1>
+  <p class="subtitle">Round 1 – Practice Quiz</p>
+  <div class="badge">20 MULTIPLE-CHOICE QUESTIONS</div>
+</div>
+
+<div class="progress-bar-container">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">0 / 20</div>
+</div>
+
+<div class="container" id="quizContainer"></div>
+
+<script>
+const questions = [
+  {
+    id: 1,
+    section: "Microeconomics",
+    text: "When the price of a normal good falls, which of the following is TRUE regarding the direction of the income effect and the substitution effect?",
+    options: [
+      "The income effect and the substitution effect both lead to an increase in quantity demanded.",
+      "The income effect leads to a decrease in quantity demanded, and the substitution effect leads to an increase.",
+      "The substitution effect leads to an increase in quantity demanded, and the income effect leads to a decrease.",
+      "The income effect and the substitution effect both lead to a decrease in quantity demanded."
+    ],
+    correct: 0,
+    explanation: "For a <strong>normal good</strong>, when price falls: (1) the <strong>substitution effect</strong> makes the good relatively cheaper, so consumers buy more; (2) the <strong>income effect</strong> increases the consumer's real purchasing power, and since the good is normal (not inferior), they also buy more. Both effects work in the same direction — increasing quantity demanded."
+  },
+  {
+    id: 2,
+    section: "Microeconomics",
+    text: "Suppose the government introduces a subsidy for consumers purchasing electric vehicles. Assuming all else remains constant, how would this policy be most likely to affect the equilibrium price and quantity of traditional gasoline-powered vehicles in the market?",
+    options: [
+      "The equilibrium price will increase, and the equilibrium quantity will decrease.",
+      "The equilibrium price will decrease, and the equilibrium quantity will increase.",
+      "The equilibrium price will increase, and the equilibrium quantity will increase.",
+      "The equilibrium price will decrease, and the equilibrium quantity will decrease."
+    ],
+    correct: 3,
+    explanation: "Electric vehicles and gasoline vehicles are <strong>substitutes</strong>. A subsidy for EVs makes them cheaper for consumers, increasing demand for EVs. This shifts demand for gasoline vehicles <strong>leftward</strong> (fewer people want them). With lower demand and unchanged supply, both the equilibrium price and quantity of gasoline vehicles <strong>decrease</strong>."
+  },
+  {
+    id: 3,
+    section: "Microeconomics",
+    text: "In the short run, if the marginal cost of production is rising, what does this imply about the relationship between marginal cost (MC) and average variable cost (AVC)?",
+    options: [
+      "MC is equal to AVC.",
+      "MC is less than AVC.",
+      "MC is greater than AVC.",
+      "None of the above is correct."
+    ],
+    correct: 3,
+    explanation: "A rising MC does <strong>not</strong> by itself determine whether MC is above or below AVC. If MC is rising but still below AVC, AVC is falling. If MC is rising and above AVC, AVC is rising. The key insight: MC can be rising while being either above <em>or</em> below AVC — it depends on where output is relative to the AVC minimum. Therefore, none of A, B, or C is always correct."
+  },
+  {
+    id: 4,
+    section: "Microeconomics",
+    text: "Which of the following is a characteristic of monopolistic competition?",
+    options: [
+      "Firms produce identical goods with no barriers to entry.",
+      "Firms engage in price-taking behavior.",
+      "Each firm produces a differentiated product and has some market power.",
+      "Firms are unable to set prices above marginal cost."
+    ],
+    correct: 2,
+    explanation: "Monopolistic competition is defined by: (1) <strong>many firms</strong>, (2) <strong>product differentiation</strong> (each firm's product is slightly unique), and (3) <strong>free entry and exit</strong>. Because products are differentiated, each firm faces a downward-sloping demand curve and has <strong>some market power</strong> — it can set price above marginal cost, unlike a perfectly competitive firm."
+  },
+  {
+    id: 5,
+    section: "Microeconomics",
+    text: "In the context of a non-cooperative game, which of the following best describes a Nash equilibrium?",
+    options: [
+      "A strategy combination where each player maximizes their payoff given the strategy of the other players",
+      "A strategy combination where at least one player can improve their payoff by changing their strategy unilaterally",
+      "A situation where all players choose the same strategy",
+      "A scenario in which both players cooperate to maximize their total payoff"
+    ],
+    correct: 0,
+    explanation: "A <strong>Nash equilibrium</strong> is a strategy profile where <em>no player can do better by unilaterally changing their strategy</em>, given what every other player is doing. Each player's strategy is a <strong>best response</strong> to the others' strategies. Option B describes a situation that is <em>not</em> an equilibrium; C and D describe cooperation, which contradicts non-cooperative game theory."
+  },
+  {
+    id: 6,
+    section: "Financial Literacy",
+    text: "On what principle does the Ponzi scheme operate?",
+    options: [
+      "Investors receive profits from the cash flow of new investors.",
+      "Investors receive profits by recruiting new members.",
+      "Investors receive profits from various illegal business activities.",
+      "The system operates sustainably without attracting more investors."
+    ],
+    correct: 0,
+    explanation: "A <strong>Ponzi scheme</strong> uses funds from <em>new investors</em> to pay returns to earlier investors, creating the illusion of a profitable business. It is not sustainable — it collapses when new capital inflows can no longer cover promised returns. This distinguishes it from a pyramid scheme (B), which focuses on recruitment fees."
+  },
+  {
+    id: 7,
+    section: "Financial Literacy",
+    text: "Which of the following factors has the greatest impact on an individual's credit score?",
+    options: [
+      "The individual's debt payment history",
+      "The number of open bank accounts",
+      "The frequency of credit checks by financial institutions",
+      "The individual's monthly income"
+    ],
+    correct: 0,
+    explanation: "<strong>Payment history</strong> is the single most important factor in credit scoring models (e.g., FICO weights it at ~35%). Lenders care most about whether you pay on time. While credit inquiries and number of accounts have some effect, they carry much less weight. Notably, income is <em>not</em> directly used in credit score calculations."
+  },
+  {
+    id: 8,
+    section: "Financial Literacy",
+    text: "Which of the following measures helps manage debt most effectively?",
+    options: [
+      "Continuously borrow new loans to pay off old debts",
+      "Open multiple credit cards to increase the credit limit",
+      "Focus on paying off debts only when there is a late penalty",
+      "Pay off debts on time and do not borrow beyond your ability to pay"
+    ],
+    correct: 3,
+    explanation: "Sound debt management means (1) making <strong>timely payments</strong> to avoid penalty interest and credit damage, and (2) <strong>borrowing within your means</strong>. Rolling over debt (A) creates a debt spiral; opening multiple credit cards (B) increases temptation and potential fees; waiting for penalties (C) is financially damaging."
+  },
+  {
+    id: 9,
+    section: "Marketing",
+    text: "Which of the following best defines a \"Product\" in the marketing mix?",
+    options: [
+      "A discount offered to customers",
+      "A company's location",
+      "Anything that can be offered to a market to satisfy a want or need",
+      "An advertising campaign"
+    ],
+    correct: 2,
+    explanation: "In marketing theory, a <strong>product</strong> is broadly defined as anything — a physical good, service, experience, or idea — that can be offered to a market to satisfy a consumer want or need. Discounts relate to <em>Price</em>, location to <em>Place</em>, and advertising to <em>Promotion</em>."
+  },
+  {
+    id: 10,
+    section: "Marketing",
+    text: "Which of the following is an example of a promotional tool?",
+    options: [
+      "Logistics",
+      "Advertising",
+      "Price discount",
+      "Product label"
+    ],
+    correct: 1,
+    explanation: "<strong>Advertising</strong> (TV, digital, print ads) is a core element of the <em>Promotion</em> mix, alongside personal selling, sales promotion, and public relations. Logistics falls under <em>Place</em>; price discounts fall under <em>Price</em>; product labels are part of <em>Product</em> (packaging)."
+  },
+  {
+    id: 11,
+    section: "Marketing",
+    text: "In the 4Ps, what does \"Place\" represent?",
+    options: [
+      "The geographical location of consumers",
+      "The store layout",
+      "The distribution channels that deliver the product to consumers",
+      "The price range of the product"
+    ],
+    correct: 2,
+    explanation: "In the marketing mix, <strong>Place</strong> refers to <em>distribution</em> — how and where the product reaches the consumer. This includes channels (wholesale, retail, online), logistics, coverage, and inventory. It is about making the product <strong>available and accessible</strong>, not simply a physical location."
+  },
+  {
+    id: 12,
+    section: "Marketing",
+    text: "What is a major pricing strategy?",
+    options: [
+      "Targeting",
+      "Cost-based pricing",
+      "Segmentation",
+      "Branding"
+    ],
+    correct: 1,
+    explanation: "<strong>Cost-based pricing</strong> (e.g., cost-plus pricing) sets the price by adding a markup to production cost. It is one of three major approaches alongside <em>value-based pricing</em> and <em>competition-based pricing</em>. Targeting and segmentation belong to the STP framework, while branding is a product/promotion strategy."
+  },
+  {
+    id: 13,
+    section: "Marketing",
+    text: "In the marketing mix, which element is directly related to revenue generation?",
+    options: [
+      "Promotion",
+      "Product",
+      "Place",
+      "Price"
+    ],
+    correct: 3,
+    explanation: "<strong>Price</strong> is the only element of the 4Ps that directly generates revenue (Revenue = Price × Quantity). Product, Place, and Promotion all represent <em>costs</em> to the firm — they drive demand, but it is price that converts demand into income."
+  },
+  {
+    id: 14,
+    section: "Macroeconomics",
+    text: "Country A is facing a severe economic downturn, leading to high unemployment and a decline in aggregate demand. What fiscal policy can the government implement to stimulate growth while limiting the risk of excessive budget deficits?",
+    options: [
+      "Increase public spending on infrastructure while cutting personal and corporate income taxes",
+      "Increase consumption taxes to offset the budget deficit caused by the economic downturn",
+      "Cut public spending sharply to maintain a balanced budget",
+      "Issue more money to finance public spending without borrowing"
+    ],
+    correct: 0,
+    explanation: "During a recession, <strong>expansionary fiscal policy</strong> — higher government spending and/or tax cuts — stimulates aggregate demand. Infrastructure spending has a strong <strong>multiplier effect</strong> (creates jobs and income), while tax cuts boost disposable income. Raising consumption taxes (B) or cutting spending (C) would be <em>contractionary</em>. Printing money (D) is monetary policy and risks inflation."
+  },
+  {
+    id: 15,
+    section: "Macroeconomics",
+    text: "If the nominal GDP of a country is 500 billion and the real GDP is 400 billion, what is the GDP deflator?",
+    options: [
+      "1.2",
+      "1.25",
+      "1.5",
+      "0.8"
+    ],
+    correct: 1,
+    explanation: "GDP Deflator = Nominal GDP ÷ Real GDP = 500 ÷ 400 = <strong>1.25</strong>. (If expressed as an index ×100, this would be 125, indicating a 25% price increase from the base year.) Note: the question format uses a ratio rather than the index form."
+  },
+  {
+    id: 16,
+    section: "Macroeconomics",
+    text: "When the government increases spending to stimulate the economy during a recession, this is an example of which fiscal policy?",
+    options: [
+      "Expansionary fiscal policy",
+      "Contractionary fiscal policy",
+      "Neutral fiscal policy",
+      "Expansionary monetary policy"
+    ],
+    correct: 0,
+    explanation: "<strong>Expansionary fiscal policy</strong> involves the government <em>increasing spending</em> or <em>cutting taxes</em> to boost aggregate demand during a recession. This is a <em>fiscal</em> (government budget) tool — not monetary policy, which involves central bank actions like changing interest rates or money supply."
+  },
+  {
+    id: 17,
+    section: "Macroeconomics",
+    text: "Cyclical unemployment refers to what type of unemployment?",
+    options: [
+      "Unemployment caused by technology replacing labor",
+      "Unemployment due to a recession or slow economic growth",
+      "Unemployment caused by a lack of information between job seekers and employers",
+      "Unemployment due to shifts in consumer demand"
+    ],
+    correct: 1,
+    explanation: "<strong>Cyclical unemployment</strong> rises during recessions when aggregate demand falls and firms lay off workers. It is tied to the <em>business cycle</em>. Option A describes <em>structural</em> unemployment (technological displacement); C describes <em>frictional</em> unemployment (information mismatch); D can contribute to structural unemployment."
+  },
+  {
+    id: 18,
+    section: "Personal Finance",
+    text: "Which of the following is considered a key component of a personal budget?",
+    options: [
+      "Income",
+      "Taxes",
+      "Investments",
+      "Stock market trading"
+    ],
+    correct: 0,
+    explanation: "<strong>Income</strong> is the foundational component of any personal budget — it determines how much you can allocate to expenses, savings, and investments. While taxes and investments are related financial concepts, the core structure of a budget starts with income (inflows) versus expenditures (outflows)."
+  },
+  {
+    id: 19,
+    section: "Macroeconomics",
+    text: "If the inflation rate is higher than the nominal interest rate, what will the real interest rate be?",
+    options: [
+      "The real interest rate will be equal to the nominal interest rate",
+      "The real interest rate will be equal to the inflation rate",
+      "The real interest rate will be lower than the nominal interest rate",
+      "The real interest rate will be negative"
+    ],
+    correct: 3,
+    explanation: "By the <strong>Fisher equation</strong>: Real interest rate ≈ Nominal interest rate − Inflation rate. If inflation > nominal rate, then the real interest rate is <strong>negative</strong>. This means the purchasing power of savings is <em>eroding</em> — lenders lose in real terms while borrowers benefit."
+  },
+  {
+    id: 20,
+    section: "Macroeconomics",
+    text: "In the context of financial crises, what is the primary cause of the economic collapse?",
+    options: [
+      "A prolonged period of strong economic growth",
+      "A sharp decline in the value of financial assets",
+      "Government's excessive cuts in public spending",
+      "A significant rise in wages across the economy"
+    ],
+    correct: 1,
+    explanation: "Financial crises are typically triggered by a <strong>sharp decline in asset values</strong> — e.g., stock market crashes, housing price collapses, or bank failures. This destroys wealth, freezes credit markets, and causes a downward spiral in spending and output. While other factors can contribute, the abrupt loss of asset value is the defining characteristic."
+  }
+];
+
+let answered = 0;
+let correctCount = 0;
+
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  let currentSection = '';
+  let html = '';
+
+  questions.forEach((q, idx) => {
+    if (q.section !== currentSection) {
+      currentSection = q.section;
+      html += `<div class="section-label">${currentSection}</div>`;
+    }
+    html += `
+      <div class="q-card" id="qcard-${q.id}" style="animation-delay: ${idx * 0.03}s">
+        <div class="q-number">${q.id}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="options">
+          ${q.options.map((opt, i) => `
+            <button class="option-btn" id="opt-${q.id}-${i}" onclick="selectAnswer(${q.id}, ${i})">
+              <span class="letter">${String.fromCharCode(65 + i)}</span>
+              <span>${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="explanation" id="expl-${q.id}"></div>
+      </div>
+    `;
+  });
+
+  html += `
+    <div class="results-panel" id="resultsPanel">
+      <h2>Quiz Complete!</h2>
+      <div class="score-display" id="scoreDisplay"></div>
+      <div class="score-label">correct answers</div>
+      <div class="score-breakdown">
+        <div class="score-stat green"><div class="num" id="statCorrect">0</div><div class="lbl">Correct</div></div>
+        <div class="score-stat red"><div class="num" id="statWrong">0</div><div class="lbl">Incorrect</div></div>
+      </div>
+      <button class="btn-restart" onclick="restartQuiz()">Try Again</button>
+    </div>
+    <div class="footer-note">VEO 2025 Round 1 – Practice Quiz &bull; Prepared by MeritPath</div>
+  `;
+
+  container.innerHTML = html;
+}
+
+function selectAnswer(qId, selected) {
+  const q = questions.find(x => x.id === qId);
+  const card = document.getElementById(`qcard-${qId}`);
+  const expl = document.getElementById(`expl-${qId}`);
+
+  // Disable all options for this question
+  q.options.forEach((_, i) => {
+    document.getElementById(`opt-${qId}-${i}`).disabled = true;
+  });
+
+  const isCorrect = selected === q.correct;
+  if (isCorrect) {
+    correctCount++;
+    document.getElementById(`opt-${qId}-${selected}`).classList.add('selected-correct');
+    card.classList.add('answered-correct');
+    expl.className = 'explanation show correct-expl';
+    expl.innerHTML = `<strong>✓ Correct!</strong> ${q.explanation}`;
+  } else {
+    document.getElementById(`opt-${qId}-${selected}`).classList.add('selected-wrong');
+    document.getElementById(`opt-${qId}-${q.correct}`).classList.add('show-correct');
+    card.classList.add('answered-wrong');
+    expl.className = 'explanation show wrong-expl';
+    expl.innerHTML = `<strong>✗ Incorrect.</strong> The correct answer is <strong>${String.fromCharCode(65 + q.correct)}</strong>. ${q.explanation}`;
+  }
+
+  answered++;
+  updateProgress();
+
+  if (answered === questions.length) {
+    setTimeout(showResults, 600);
+  }
+}
+
+function updateProgress() {
+  const pct = (answered / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${answered} / ${questions.length}`;
+}
+
+function showResults() {
+  const panel = document.getElementById('resultsPanel');
+  const wrong = answered - correctCount;
+  document.getElementById('scoreDisplay').innerHTML = `${correctCount} <span>/ ${questions.length}</span>`;
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = wrong;
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function restartQuiz() {
+  answered = 0;
+  correctCount = 0;
+  updateProgress();
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderQuiz();
+</script>
+
+</body>
+</html>
