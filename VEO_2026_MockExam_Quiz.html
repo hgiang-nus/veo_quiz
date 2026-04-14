@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEO 2026 – Mock Exam Practice Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F3EE;
+  --card: #FFFFFF;
+  --accent: #2C3E6B;
+  --accent-light: #E8EDF6;
+  --accent-mid: #4A6FA5;
+  --gold: #B8860B;
+  --gold-light: #FDF6E3;
+  --text: #1E1E1E;
+  --text-muted: #6B6B6B;
+  --correct: #1B7A4A;
+  --correct-bg: #E6F5EC;
+  --wrong: #B33A3A;
+  --wrong-bg: #FDEAEA;
+  --border: #DDD8CE;
+  --radius: 12px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.hero {
+  background: linear-gradient(135deg, #2C3E6B 0%, #1A2544 100%);
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -30%;
+  width: 80%; height: 200%;
+  background: radial-gradient(ellipse at center, rgba(184,134,11,0.1) 0%, transparent 55%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold), #D4A843, var(--gold));
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.02em;
+}
+.hero .subtitle { font-size: 1.05rem; opacity: 0.75; }
+.hero .badges { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+.hero .badge {
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.badge-mcq { background: rgba(184,134,11,0.25); border: 1px solid rgba(184,134,11,0.45); color: #F0D68A; }
+.badge-pts { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); }
+
+.progress-bar-container {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.progress-track { flex: 1; height: 8px; background: #E5E1D8; border-radius: 4px; overflow: hidden; }
+.progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-mid));
+  border-radius: 4px; transition: width 0.5s ease;
+}
+.progress-text { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+.progress-score { font-size: 0.82rem; font-weight: 700; color: var(--correct); white-space: nowrap; }
+
+.container { max-width: 780px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+
+.section-label {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-light);
+}
+
+.q-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.q-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+.q-card.answered-correct { border-color: var(--correct); }
+.q-card.answered-wrong { border-color: var(--wrong); }
+
+.q-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; }
+.q-number {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  background: var(--accent); color: white;
+  font-size: 0.78rem; font-weight: 700;
+  border-radius: 50%; flex-shrink: 0;
+}
+.q-card.answered-correct .q-number { background: var(--correct); }
+.q-card.answered-wrong .q-number { background: var(--wrong); }
+.q-pts { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; background: #F0EDE6; padding: 0.15rem 0.55rem; border-radius: 10px; }
+
+.q-text { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.6; }
+
+.options { display: flex; flex-direction: column; gap: 0.5rem; }
+.option-btn {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg); border: 1.5px solid transparent;
+  border-radius: 10px; cursor: pointer;
+  font-size: 0.95rem; line-height: 1.5;
+  text-align: left; transition: all 0.2s;
+  font-family: inherit; color: var(--text); width: 100%;
+}
+.option-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+.option-btn .letter {
+  flex-shrink: 0; width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: white;
+  border: 1.5px solid var(--border);
+  font-weight: 700; font-size: 0.8rem; color: var(--text-muted);
+  transition: all 0.2s;
+}
+.option-btn:hover:not(:disabled) .letter { border-color: var(--accent); color: var(--accent); }
+.option-btn.selected-correct { background: var(--correct-bg); border-color: var(--correct); }
+.option-btn.selected-correct .letter { background: var(--correct); border-color: var(--correct); color: white; }
+.option-btn.selected-wrong { background: var(--wrong-bg); border-color: var(--wrong); }
+.option-btn.selected-wrong .letter { background: var(--wrong); border-color: var(--wrong); color: white; }
+.option-btn.show-correct { background: var(--correct-bg); border-color: var(--correct); }
+.option-btn.show-correct .letter { background: var(--correct); border-color: var(--correct); color: white; }
+.option-btn:disabled { cursor: default; }
+
+.explanation {
+  margin-top: 1rem; padding: 1rem 1.15rem;
+  border-radius: 10px; font-size: 0.92rem; line-height: 1.6;
+  display: none; animation: fadeIn 0.3s ease;
+}
+.explanation.show { display: block; }
+.explanation.correct-expl { background: var(--correct-bg); border-left: 4px solid var(--correct); color: #155D35; }
+.explanation.wrong-expl { background: var(--wrong-bg); border-left: 4px solid var(--wrong); color: #8A2222; }
+.explanation strong { font-weight: 700; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.results-panel {
+  display: none; background: var(--card);
+  border: 2px solid var(--gold); border-radius: var(--radius);
+  padding: 2rem; text-align: center; margin-top: 2rem;
+}
+.results-panel.show { display: block; }
+.results-panel h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--accent); margin-bottom: 0.25rem; }
+.score-display { font-size: 3rem; font-weight: 700; color: var(--accent); margin: 0.5rem 0; }
+.score-display span { color: var(--text-muted); font-size: 1.5rem; }
+.score-label { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+.score-breakdown { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
+.score-stat { text-align: center; }
+.score-stat .num { font-size: 1.4rem; font-weight: 700; }
+.score-stat .lbl { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.score-stat.green .num { color: var(--correct); }
+.score-stat.red .num { color: var(--wrong); }
+.score-pct { font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; }
+.btn-restart {
+  display: inline-block; padding: 0.75rem 2rem;
+  background: var(--accent); color: white; border: none;
+  border-radius: 8px; font-size: 1rem; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: background 0.2s;
+}
+.btn-restart:hover { background: var(--accent-mid); }
+
+.footer-note { text-align: center; margin-top: 2rem; font-size: 0.82rem; color: var(--text-muted); }
+
+@media (max-width: 600px) {
+  .hero { padding: 2rem 1rem 1.8rem; }
+  .container { padding: 1rem 1rem 3rem; }
+  .q-card { padding: 1.2rem; }
+  .score-breakdown { gap: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Vietnam Economics Olympiad 2026</h1>
+  <p class="subtitle">Mock Exam – Multiple-Choice Section</p>
+  <div class="badges">
+    <div class="badge badge-mcq">20 MCQ QUESTIONS</div>
+    <div class="badge badge-pts">80 POINTS TOTAL</div>
+  </div>
+</div>
+
+<div class="progress-bar-container">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">0 / 20</div>
+  <div class="progress-score" id="progressScore"></div>
+</div>
+
+<div class="container" id="quizContainer"></div>
+
+<script>
+const questions = [
+  {
+    id: 1, section: "Microeconomics & Principles",
+    text: "President Truman once said he wanted to find a one-armed economist because when he asked his economists for advice, they always answered, \"On the one hand,... On the other hand,...\" Truman's observation that economists' advice is not always straightforward:",
+    options: [
+      "indicates that economists recognize that there are opportunity costs associated with policy decisions.",
+      "is rooted in the principle that people face trade-offs.",
+      "confirms that economists are not suited to be presidential advisers.",
+      "more than one of the mentioned answers is correct."
+    ],
+    correct: 3,
+    explanation: "Both A and B are valid interpretations. Economists acknowledge <strong>opportunity costs</strong> (choosing one policy means giving up another) and that <strong>people face trade-offs</strong> — these are two sides of the same fundamental economic principle. Option C is dismissive and incorrect. Since both A and B are correct, the answer is D."
+  },
+  {
+    id: 2, section: "Microeconomics & Principles",
+    text: "Which of the following is NOT a characteristic that distinguishes monopolistic competition from perfect competition?",
+    options: [
+      "In monopolistic competition, firms may earn positive economic profits in the long run, while in perfect competition, firms always earn zero economic profits in the long run.",
+      "In monopolistic competition, firms have some degree of market power, while in perfect competition, firms are price takers.",
+      "In monopolistic competition, the marginal revenue curve lies below the average revenue curve, while in perfect competition, the two curves coincide.",
+      "In monopolistic competition, firms sell differentiated products, while in perfect competition, firms sell identical products."
+    ],
+    correct: 0,
+    explanation: "This statement is <strong>false</strong> — and therefore NOT a distinguishing characteristic. In monopolistic competition, <strong>free entry and exit</strong> drives economic profits to <strong>zero in the long run</strong>, just like in perfect competition. New firms enter when they see profits, increasing competition until profits are eliminated. Options B, C, and D are all genuine differences between the two market structures."
+  },
+  {
+    id: 3, section: "Microeconomics & Principles",
+    text: "Rising interest in a good leads to a parallel shift in its linear demand curve. Which of the following statements is correct?",
+    options: [
+      "None of the above.",
+      "The price elasticity of demand decreases at every price level.",
+      "The price elasticity of demand remains unchanged at every price level.",
+      "The price elasticity of demand increases at every price level."
+    ],
+    correct: 1,
+    explanation: "For a linear demand curve, elasticity at a given price P is: E = (1/slope) × (P/Q). A rightward parallel shift keeps the <strong>same slope</strong> but increases <strong>Q at every price level</strong>. Since P stays the same but Q is larger, the ratio P/Q falls, so <strong>|elasticity| decreases</strong> (demand becomes more inelastic) at every price. Intuitively, the same absolute price change now represents a smaller proportional change in a larger quantity."
+  },
+  {
+    id: 4, section: "Microeconomics & Principles",
+    text: "Two individuals, Anna and Bob, must indicate their availability to schedule a meeting on one of the following days: Friday, Saturday, Sunday, or Monday. Anna prefers weekdays; Bob prefers weekends. Both prefer meeting over not meeting. Each must independently choose two days to be available. The meeting is scheduled on the earliest common available day. How many Nash equilibria are there?",
+    options: [
+      "There are 4 Nash equilibria.",
+      "There are no Nash equilibria.",
+      "There are 10 Nash equilibria.",
+      "There are 2 Nash equilibria."
+    ],
+    correct: 2,
+    explanation: "Each player chooses 2 days from 4, giving C(4,2) = 6 strategies each and 36 total strategy profiles. A Nash equilibrium requires that neither player can improve by unilaterally changing their two-day choice. Careful enumeration — considering Anna's preference for weekdays (Fri/Mon), Bob's preference for weekends (Sat/Sun), the earliest-day-wins rule, and all possible deviations — yields exactly <strong>10 Nash equilibria</strong>. The large number arises because once both players overlap on a mutually acceptable day, many alternative picks for their second day don't change the outcome."
+  },
+  {
+    id: 5, section: "Microeconomics & Principles",
+    text: "If the government imposes a per-unit tax on a good, and the supply curve is perfectly inelastic, which of the following statements is true?",
+    options: [
+      "The tax will have no effect on the equilibrium price.",
+      "The tax burden will be shared equally between consumers and producers.",
+      "The producer will bear the entire tax burden.",
+      "The consumer will bear the entire tax burden."
+    ],
+    correct: 2,
+    explanation: "A <strong>perfectly inelastic supply curve</strong> is vertical — quantity supplied does not respond to price at all. When a tax is imposed, producers cannot reduce quantity to shift the burden to consumers. The market price paid by consumers stays the same, while producers receive that price minus the tax. Therefore, <strong>producers bear the entire tax burden</strong>. General rule: the more inelastic side of the market bears more of the tax."
+  },
+  {
+    id: 6, section: "Finance & Investment",
+    text: "Which of the following factors directly affects the price of a fixed-rate bond?",
+    options: [
+      "Changes in inflation rate",
+      "Changes in market interest rates",
+      "Exchange rate volatility",
+      "Financial condition of the bond buyer"
+    ],
+    correct: 1,
+    explanation: "A fixed-rate bond's price moves <strong>inversely with market interest rates</strong>. When market rates rise, the bond's fixed coupon becomes less attractive, so its price falls (and vice versa). This is the most direct relationship. Inflation affects bond prices indirectly (through interest rate expectations), exchange rates matter mainly for foreign-currency bonds, and the buyer's financial condition is irrelevant to the bond's market price."
+  },
+  {
+    id: 7, section: "Finance & Investment",
+    text: "A person deposits 10 million VND into a savings account with an annual compound interest rate of 5%. After 10 years, the amount in the account will be closest to:",
+    options: [
+      "17 million VND",
+      "16 million VND",
+      "14 million VND",
+      "15 million VND"
+    ],
+    correct: 1,
+    explanation: "Using the compound interest formula: FV = PV × (1 + r)<sup>n</sup> = 10 × (1.05)<sup>10</sup>. We compute (1.05)<sup>10</sup> ≈ 1.6289, so FV ≈ <strong>16.29 million VND</strong>, closest to 16 million. Note: simple interest would give only 15 million — the extra ~1.29 million comes from compounding (earning interest on interest)."
+  },
+  {
+    id: 8, section: "Finance & Investment",
+    text: "Which of the following is NOT true about cryptocurrencies?",
+    options: [
+      "All transactions are untraceable and completely anonymous",
+      "Cryptocurrencies use blockchain to record and secure transactions",
+      "Cryptocurrencies are decentralized and not controlled by central banks",
+      "Cryptocurrency values may fluctuate heavily due to supply and demand"
+    ],
+    correct: 0,
+    explanation: "Most cryptocurrencies (including Bitcoin and Ethereum) are <strong>pseudonymous, not anonymous</strong>. Every transaction is permanently recorded on the public blockchain and can be traced. Law enforcement agencies routinely trace crypto transactions. While some privacy-focused coins (Monero, Zcash) offer enhanced anonymity, the blanket claim that \"all transactions are untraceable and completely anonymous\" is <strong>false</strong>."
+  },
+  {
+    id: 9, section: "Policy & Public Economics",
+    text: "A city is facing severe air pollution from car emissions. Which policy below can the government apply to most effectively reduce pollution while maintaining economic benefits and consumers' utility?",
+    options: [
+      "Subsidize electric car purchases and improve public transport",
+      "Triple the current fuel taxes and traffic fines to reduce car usage",
+      "Require all car manufacturers to plant trees to offset emissions",
+      "Completely ban personal cars in the city"
+    ],
+    correct: 0,
+    explanation: "This option <strong>addresses the externality</strong> while preserving mobility and economic activity. Subsidizing EVs encourages a shift to cleaner technology (internalizing the externality), while better public transport offers alternatives — both reduce pollution without destroying consumer utility. Tripling taxes (B) is excessively punitive; tree planting (C) doesn't reduce emissions at source; banning all cars (D) is economically devastating and impractical."
+  },
+  {
+    id: 10, section: "Finance & Investment",
+    text: "At a nearby electronics store, Nhan is offered a 12.5% discount on each order if he becomes a member. The membership fee is 200,000 VND per month. What is the minimum amount Nhan must spend per year at the store for the membership to be worth it?",
+    options: [
+      "22.86 million VND",
+      "1.6 million VND",
+      "19.2 million VND",
+      "14.43 million VND"
+    ],
+    correct: 2,
+    explanation: "Annual membership cost = 200,000 × 12 = <strong>2,400,000 VND</strong>. The membership saves 12.5% on purchases. For it to break even: 0.125 × Spending = 2,400,000, so Spending = 2,400,000 ÷ 0.125 = <strong>19,200,000 VND = 19.2 million VND</strong> per year. Any spending above this threshold makes the membership profitable."
+  },
+  {
+    id: 11, section: "Macroeconomics",
+    text: "Suppose there are 1 million part-time workers and 9 million full-time workers in an economy. Five hundred thousand of part-time workers switch to full-time work. We can conclude that:",
+    options: [
+      "The size of the labour force will increase",
+      "The official unemployment rate will fall",
+      "The official unemployment rate will remain unchanged",
+      "The official unemployment rate will rise"
+    ],
+    correct: 2,
+    explanation: "Both part-time and full-time workers are counted as <strong>employed</strong> in official labour statistics. When part-time workers switch to full-time, they were already employed and remain employed — just in a different capacity. The <strong>labour force</strong> (employed + unemployed) doesn't change, and the number of <strong>unemployed</strong> doesn't change, so the <strong>unemployment rate stays the same</strong>."
+  },
+  {
+    id: 12, section: "Finance & Investment",
+    text: "A company is considering two investment options. Investment A requires $2,000 upfront and generates $700/year for 5 years. Investment B requires $2,500 upfront and generates $800/year for 4 years. At a 7% discount rate, which investment yields a higher NPV?",
+    options: [
+      "Both investments will yield the same NPV",
+      "Neither investment should be accepted",
+      "Investment B",
+      "Investment A"
+    ],
+    correct: 3,
+    explanation: "Using the annuity present value formula PV = C × [1 − (1+r)<sup>−n</sup>] / r:<br><br><strong>Investment A:</strong> NPV = −2,000 + 700 × [1 − 1.07<sup>−5</sup>]/0.07 = −2,000 + 700 × 4.1002 = −2,000 + 2,870 = <strong>$870</strong><br><strong>Investment B:</strong> NPV = −2,500 + 800 × [1 − 1.07<sup>−4</sup>]/0.07 = −2,500 + 800 × 3.3872 = −2,500 + 2,710 = <strong>$210</strong><br><br>Investment A has the higher NPV ($870 vs $210)."
+  },
+  {
+    id: 13, section: "International Trade",
+    text: "Vietnam and the US produce wheat and steel. The US can produce 150 tons of wheat or 50 tons of steel; Vietnam can produce 40 tons of wheat or 20 tons of steel. If both specialize based on comparative advantage and 1 ton of wheat = 1 ton of steel in trade, who should produce what?",
+    options: [
+      "Cannot determine due to lack of consumption data",
+      "Both should produce both goods to avoid dependence",
+      "Vietnam should produce steel, US should produce wheat",
+      "Vietnam should produce wheat, US should produce steel"
+    ],
+    correct: 2,
+    explanation: "Calculate <strong>opportunity costs</strong>:<br>• US: 1 ton of steel costs 150/50 = <strong>3 tons of wheat</strong> foregone<br>• Vietnam: 1 ton of steel costs 40/20 = <strong>2 tons of wheat</strong> foregone<br><br>Vietnam has the <strong>lower opportunity cost for steel</strong> (2 < 3), so Vietnam has a <strong>comparative advantage in steel</strong>. Conversely, the US has a lower opportunity cost for wheat (1/3 < 1/2 ton of steel per wheat). Each country should specialize in its comparative advantage."
+  },
+  {
+    id: 14, section: "Macroeconomics",
+    text: "In 1992 Trailblazer Bicycle Company produced a mountain bike, which was delivered to a retail outlet in November 1992. The bicycle was sold to E.Z. Ryder in March 1993. This bicycle is counted as:",
+    options: [
+      "Disinvestment in 1992 and as consumption in 1993",
+      "Disinvestment in 1992 and as investment in 1993",
+      "Investment in 1992 and as disinvestment in 1993",
+      "Consumption in 1992 and as disinvestment in 1993"
+    ],
+    correct: 2,
+    explanation: "When the bike is produced in 1992 but not yet sold to a consumer, it enters the retailer's <strong>inventory</strong> — this counts as <strong>investment (inventory investment)</strong> in 1992 GDP. When sold to the consumer in 1993, the inventory decreases (<strong>disinvestment</strong>) and becomes consumption. Net effect: GDP correctly counts the bike's value once, in 1992 when it was produced."
+  },
+  {
+    id: 15, section: "Finance & Investment",
+    text: "What is the net present value (NPV) of an investment that costs $1,000 today and generates cash flows of $300 each year for 5 years, with a discount rate of 5%?",
+    options: [
+      "$462.71",
+      "$298.84",
+      "$1,298.84",
+      "$832.54"
+    ],
+    correct: 1,
+    explanation: "NPV = −Initial Cost + PV of cash flows = −1,000 + 300 × [1 − (1.05)<sup>−5</sup>] / 0.05<br><br>The annuity factor = [1 − 1/1.2763] / 0.05 = [1 − 0.7835] / 0.05 = 0.2165 / 0.05 = <strong>4.3295</strong><br><br>PV of cash flows = 300 × 4.3295 = 1,298.84<br>NPV = 1,298.84 − 1,000 = <strong>$298.84</strong>"
+  },
+  {
+    id: 16, section: "Marketing",
+    text: "Which of the following is a major disadvantage of using exclusive distribution?",
+    options: [
+      "Increased promotional costs",
+      "Low product quality",
+      "Reduced control over marketing strategy",
+      "Limited market coverage"
+    ],
+    correct: 3,
+    explanation: "<strong>Exclusive distribution</strong> means granting distribution rights to very few intermediaries. The key <strong>advantage</strong> is tight control over brand image and customer experience. The key <strong>disadvantage</strong> is <strong>limited market coverage</strong> — fewer outlets means fewer consumers can access the product, restricting sales volume and geographic reach."
+  },
+  {
+    id: 17, section: "Marketing",
+    text: "When a company relies on retailers to promote a product to final consumers, it is using a:",
+    options: [
+      "Positioning strategy",
+      "Market penetration strategy",
+      "Pull strategy",
+      "Push strategy"
+    ],
+    correct: 3,
+    explanation: "A <strong>push strategy</strong> directs marketing efforts toward <em>channel intermediaries</em> (wholesalers, retailers), who then promote the product to end consumers. The manufacturer \"pushes\" the product through the distribution chain. A <strong>pull strategy</strong> is the opposite — the company markets directly to consumers to create demand that \"pulls\" the product through channels."
+  },
+  {
+    id: 18, section: "Macroeconomics",
+    text: "When a bank loan is repaid, the supply of money:",
+    options: [
+      "may either increase or decrease",
+      "is constant, but its composition will have changed",
+      "is increased",
+      "is decreased"
+    ],
+    correct: 3,
+    explanation: "Through the <strong>money creation process</strong>, banks create money when they lend — the loan appears as a new deposit (money) in the borrower's account. When the loan is <strong>repaid</strong>, this process reverses: the borrower's deposit (money) is used to pay down the loan, destroying both the asset (loan) and the liability (deposit) on the bank's balance sheet. The money supply <strong>decreases</strong>."
+  },
+  {
+    id: 19, section: "Marketing",
+    text: "Which of the following is an example of an actual product?",
+    options: [
+      "Customer experience",
+      "Product warranty",
+      "Brand name, features, and packaging",
+      "After-sales service"
+    ],
+    correct: 2,
+    explanation: "In Kotler's <strong>three levels of product</strong>: the <em>core product</em> is the fundamental benefit; the <strong>actual product</strong> includes the tangible attributes — brand name, features, design, quality, and packaging; the <em>augmented product</em> adds extra services like warranty (B), after-sales service (D), and overall customer experience (A). Brand name, features, and packaging are the classic examples of the actual product level."
+  },
+  {
+    id: 20, section: "Marketing",
+    text: "Which pricing strategy involves setting a low initial price to gain market share quickly?",
+    options: [
+      "Penetration pricing",
+      "Skimming pricing",
+      "Premium pricing",
+      "Psychological pricing"
+    ],
+    correct: 0,
+    explanation: "<strong>Penetration pricing</strong> sets a deliberately low price at launch to attract customers quickly, build market share, and deter competitors. It works best when demand is price-elastic and economies of scale reduce costs at higher volumes. In contrast, <strong>skimming</strong> starts high and lowers over time; <strong>premium pricing</strong> maintains high prices for luxury positioning; <strong>psychological pricing</strong> exploits perception (e.g., $9.99)."
+  }
+];
+
+let answered = 0, correctCount = 0;
+
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  let currentSection = '', html = '';
+  questions.forEach((q, idx) => {
+    if (q.section !== currentSection) {
+      currentSection = q.section;
+      html += `<div class="section-label">${currentSection}</div>`;
+    }
+    html += `
+      <div class="q-card" id="qcard-${q.id}">
+        <div class="q-header">
+          <div class="q-number">${q.id}</div>
+          <div class="q-pts">4 pts</div>
+        </div>
+        <div class="q-text">${q.text}</div>
+        <div class="options">
+          ${q.options.map((opt, i) => `
+            <button class="option-btn" id="opt-${q.id}-${i}" onclick="selectAnswer(${q.id}, ${i})">
+              <span class="letter">${String.fromCharCode(65 + i)}</span>
+              <span>${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="explanation" id="expl-${q.id}"></div>
+      </div>`;
+  });
+  html += `
+    <div class="results-panel" id="resultsPanel">
+      <h2>Quiz Complete!</h2>
+      <div class="score-display" id="scoreDisplay"></div>
+      <div class="score-label">correct answers</div>
+      <div class="score-pct" id="scorePct"></div>
+      <div class="score-breakdown">
+        <div class="score-stat green"><div class="num" id="statCorrect">0</div><div class="lbl">Correct</div></div>
+        <div class="score-stat red"><div class="num" id="statWrong">0</div><div class="lbl">Incorrect</div></div>
+      </div>
+      <button class="btn-restart" onclick="restartQuiz()">Try Again</button>
+    </div>
+    <div class="footer-note">VEO 2026 Mock Exam – MCQ Practice Quiz &bull; Prepared by MeritPath</div>`;
+  container.innerHTML = html;
+}
+
+function selectAnswer(qId, selected) {
+  const q = questions.find(x => x.id === qId);
+  const card = document.getElementById(`qcard-${qId}`);
+  const expl = document.getElementById(`expl-${qId}`);
+  q.options.forEach((_, i) => { document.getElementById(`opt-${qId}-${i}`).disabled = true; });
+  const isCorrect = selected === q.correct;
+  if (isCorrect) {
+    correctCount++;
+    document.getElementById(`opt-${qId}-${selected}`).classList.add('selected-correct');
+    card.classList.add('answered-correct');
+    expl.className = 'explanation show correct-expl';
+    expl.innerHTML = `<strong>\u2713 Correct!</strong> ${q.explanation}`;
+  } else {
+    document.getElementById(`opt-${qId}-${selected}`).classList.add('selected-wrong');
+    document.getElementById(`opt-${qId}-${q.correct}`).classList.add('show-correct');
+    card.classList.add('answered-wrong');
+    expl.className = 'explanation show wrong-expl';
+    expl.innerHTML = `<strong>\u2717 Incorrect.</strong> The correct answer is <strong>${String.fromCharCode(65 + q.correct)}</strong>. ${q.explanation}`;
+  }
+  answered++;
+  updateProgress();
+  if (answered === questions.length) setTimeout(showResults, 600);
+}
+
+function updateProgress() {
+  const pct = (answered / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${answered} / ${questions.length}`;
+  document.getElementById('progressScore').textContent = `${correctCount} correct`;
+}
+
+function showResults() {
+  const panel = document.getElementById('resultsPanel');
+  const wrong = answered - correctCount;
+  const pct = Math.round((correctCount / questions.length) * 100);
+  document.getElementById('scoreDisplay').innerHTML = `${correctCount} <span>/ ${questions.length}</span>`;
+  document.getElementById('scorePct').textContent = `${pct}% — ${correctCount * 4} / 80 points`;
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = wrong;
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function restartQuiz() {
+  answered = 0; correctCount = 0;
+  document.getElementById('progressScore').textContent = '';
+  updateProgress();
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderQuiz();
+</script>
+</body>
+</html>
