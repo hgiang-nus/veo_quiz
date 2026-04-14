@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEO 2021 – Round 2 Practice Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F2ED;
+  --card: #FFFFFF;
+  --accent: #4A3728;
+  --accent-light: #EDE8E0;
+  --accent-mid: #7A5C3E;
+  --gold: #C8963E;
+  --gold-dim: rgba(200,150,62,0.12);
+  --teal: #2A6B5E;
+  --teal-light: #E4F0ED;
+  --text: #1E1E1E;
+  --text-muted: #7A7570;
+  --correct: #1B7A4A;
+  --correct-bg: #E6F5EC;
+  --wrong: #B33A3A;
+  --wrong-bg: #FDEAEA;
+  --border: #DDD8CE;
+  --radius: 12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+.hero{background:linear-gradient(135deg,#4A3728 0%,#2A1F16 100%);color:#fff;padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),#E8C97A,var(--gold))}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(1.7rem,5vw,2.4rem);margin-bottom:.25rem}
+.hero .sub{font-size:1rem;opacity:.7}
+.hero .badges{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem}
+.hero .badge{padding:.25rem .75rem;border-radius:20px;font-size:.78rem;font-weight:600;letter-spacing:.04em}
+.badge-mcq{background:rgba(200,150,62,.2);border:1px solid rgba(200,150,62,.4);color:#E8C97A}
+.badge-open{background:rgba(42,107,94,.25);border:1px solid rgba(42,107,94,.4);color:#8ED4C4}
+.badge-t{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.75)}
+
+/* Timer bar */
+.timer-bar{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:.5rem 1.25rem;display:flex;align-items:center;gap:1rem;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.timer-left{display:flex;align-items:center;gap:.6rem;flex:1}
+.progress-track{flex:1;height:7px;background:#EAE6DF;border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-mid));border-radius:4px;transition:width .4s}
+.progress-text{font-size:.8rem;font-weight:600;color:var(--text-muted);white-space:nowrap}
+.timer-clock{display:flex;align-items:center;gap:.4rem;font-size:.95rem;font-weight:700;font-variant-numeric:tabular-nums;padding:.35rem .75rem;background:var(--accent-light);border-radius:8px;color:var(--accent);min-width:115px;justify-content:center}
+.timer-clock svg{width:16px;height:16px;flex-shrink:0}
+.timer-clock.warning{background:#FFF3E0;color:#E65100;animation:pulse 1s infinite}
+.timer-clock.danger{background:var(--wrong-bg);color:var(--wrong);animation:pulse .5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.timer-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--text-muted)}
+.timer-btn:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
+.timer-btn svg{width:14px;height:14px}
+
+/* Timer setup */
+.timer-setup{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.5rem;text-align:center}
+.timer-setup h3{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--accent);margin-bottom:.3rem}
+.timer-setup p{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem}
+.time-options{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.time-opt{padding:.6rem 1.2rem;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-family:inherit;font-size:.92rem;font-weight:600;color:var(--text);transition:all .2s}
+.time-opt:hover,.time-opt.active{border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
+.start-btn{padding:.7rem 2.5rem;border:none;border-radius:10px;background:var(--accent);color:#fff;font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s}
+.start-btn:hover{background:var(--accent-mid)}
+.no-timer-link{display:block;margin-top:.6rem;font-size:.85rem;color:var(--text-muted);cursor:pointer;text-decoration:underline;border:none;background:none;font-family:inherit}
+
+.container{max-width:780px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
+.section-label{font-family:'DM Serif Display',serif;font-size:1.25rem;margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-light)}
+.section-label.mcq-label{color:var(--accent)}
+.section-label.open-label{color:var(--teal)}
+
+/* MCQ cards */
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.15rem;transition:border-color .3s,box-shadow .3s}
+.q-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.04)}
+.q-card.answered-correct{border-color:var(--correct)}
+.q-card.answered-wrong{border-color:var(--wrong)}
+.q-header{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
+.q-number{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#fff;font-size:.78rem;font-weight:700;border-radius:50%;flex-shrink:0}
+.q-card.answered-correct .q-number{background:var(--correct)}
+.q-card.answered-wrong .q-number{background:var(--wrong)}
+.q-topic{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);background:#F0EDE6;padding:.15rem .55rem;border-radius:10px}
+.q-text{font-size:1rem;font-weight:600;margin-bottom:1rem;line-height:1.6}
+.options{display:flex;flex-direction:column;gap:.45rem}
+.option-btn{display:flex;align-items:flex-start;gap:.7rem;padding:.8rem 1rem;background:var(--bg);border:1.5px solid transparent;border-radius:10px;cursor:pointer;font-size:.93rem;line-height:1.5;text-align:left;transition:all .2s;font-family:inherit;color:var(--text);width:100%}
+.option-btn:hover:not(:disabled){border-color:var(--accent);background:var(--accent-light)}
+.option-btn .letter{flex-shrink:0;width:25px;height:25px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;border:1.5px solid var(--border);font-weight:700;font-size:.78rem;color:var(--text-muted);transition:all .2s}
+.option-btn:hover:not(:disabled) .letter{border-color:var(--accent);color:var(--accent)}
+.option-btn.selected-correct{background:var(--correct-bg);border-color:var(--correct)}
+.option-btn.selected-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff}
+.option-btn.selected-wrong{background:var(--wrong-bg);border-color:var(--wrong)}
+.option-btn.selected-wrong .letter{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.option-btn.show-correct{background:var(--correct-bg);border-color:var(--correct)}
+.option-btn.show-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff}
+.option-btn:disabled{cursor:default}
+.explanation{margin-top:.9rem;padding:.9rem 1rem;border-radius:10px;font-size:.9rem;line-height:1.6;display:none}
+.explanation.show{display:block;animation:fadeIn .3s ease}
+.explanation.correct-expl{background:var(--correct-bg);border-left:4px solid var(--correct);color:#155D35}
+.explanation.wrong-expl{background:var(--wrong-bg);border-left:4px solid var(--wrong);color:#8A2222}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* Open-ended cards */
+.open-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.25rem;border-left:4px solid var(--teal)}
+.open-header{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;flex-wrap:wrap}
+.open-num{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;background:var(--teal);color:#fff;font-size:.78rem;font-weight:700;border-radius:50%;flex-shrink:0}
+.open-pts{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--teal);background:var(--teal-light);padding:.15rem .55rem;border-radius:10px}
+.open-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--accent);margin-bottom:.5rem}
+.open-text{font-size:.93rem;line-height:1.7;margin-bottom:1rem;color:var(--text)}
+.open-text p{margin-bottom:.5rem}
+.open-subpart{margin-bottom:1rem;padding:.75rem 1rem;background:var(--bg);border-radius:10px}
+.open-subpart-label{font-weight:700;font-size:.85rem;color:var(--teal);margin-bottom:.3rem}
+.open-subpart p{font-size:.9rem;line-height:1.6;margin-bottom:.3rem}
+.reveal-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.2rem;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;transition:background .2s;margin-top:.5rem}
+.reveal-btn:hover{background:#1F5248}
+.reveal-btn svg{width:14px;height:14px;transition:transform .3s}
+.reveal-btn.open svg{transform:rotate(180deg)}
+.solution-content{display:none;margin-top:1rem;padding:1rem 1.15rem;background:var(--teal-light);border-radius:10px;border-left:4px solid var(--teal);font-size:.9rem;line-height:1.7;color:#1A4A3F}
+.solution-content.show{display:block;animation:fadeIn .3s ease}
+.solution-content h4{font-size:.92rem;margin-bottom:.5rem;color:var(--teal)}
+.solution-content p{margin-bottom:.5rem}
+.solution-content ul{margin:.3rem 0 .5rem 1.2rem}
+.solution-content li{margin-bottom:.25rem}
+
+/* Results */
+.results-panel{display:none;background:var(--card);border:2px solid var(--gold);border-radius:var(--radius);padding:2rem;text-align:center;margin-top:2rem}
+.results-panel.show{display:block;animation:fadeIn .4s ease}
+.results-panel h2{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--accent);margin-bottom:.25rem}
+.score-display{font-size:3rem;font-weight:700;color:var(--accent);margin:.5rem 0}
+.score-display span{color:var(--text-muted);font-size:1.5rem}
+.score-sub{font-size:.95rem;color:var(--text-muted);margin-bottom:1.2rem}
+.score-row{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.score-stat{text-align:center}
+.score-stat .num{font-size:1.3rem;font-weight:700}
+.score-stat .lbl{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em}
+.score-stat.green .num{color:var(--correct)}
+.score-stat.red .num{color:var(--wrong)}
+.score-stat.time .num{color:var(--accent)}
+.btn-restart{padding:.7rem 2rem;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn-restart:hover{background:var(--accent-mid)}
+.footer-note{text-align:center;margin-top:2rem;font-size:.82rem;color:var(--text-muted)}
+.hidden{display:none!important}
+@media(max-width:600px){.hero{padding:2rem 1rem 1.5rem}.container{padding:1rem 1rem 3rem}.q-card,.open-card{padding:1.2rem}.timer-bar{padding:.4rem .75rem;gap:.5rem}.timer-clock{font-size:.82rem;min-width:100px;padding:.3rem .5rem}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Vietnam Economics Olympiad 2021</h1>
+  <p class="sub">Round 2 – Practice Quiz</p>
+  <div class="badges">
+    <div class="badge badge-mcq">20 MCQs</div>
+    <div class="badge badge-open">5 OPEN-ENDED</div>
+    <div class="badge badge-t">⏱ TIMED</div>
+  </div>
+</div>
+
+<div class="timer-bar">
+  <div class="timer-left">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0 / 20</div>
+  </div>
+  <div class="timer-clock" id="timerClock">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span id="timerDisplay">--:--</span>
+  </div>
+  <button class="timer-btn" id="pauseBtn" title="Pause/Resume" onclick="togglePause()">
+    <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+  </button>
+</div>
+
+<div class="container">
+  <div id="timerSetup" class="timer-setup">
+    <h3>Set Your Timer</h3>
+    <p>MCQ section is timed. Open-ended questions follow after (untimed, with reveal solutions).</p>
+    <div class="time-options">
+      <button class="time-opt" onclick="selectTime(20)">20 min</button>
+      <button class="time-opt active" onclick="selectTime(30)">30 min</button>
+      <button class="time-opt" onclick="selectTime(45)">45 min</button>
+      <button class="time-opt" onclick="selectTime(60)">60 min</button>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+    <button class="no-timer-link" onclick="startQuiz(true)">Practice without timer</button>
+  </div>
+  <div id="quizContainer" class="hidden"></div>
+</div>
+
+<script>
+const questions=[
+{id:1,topic:"Oligopoly",text:"Two firms with similar constant marginal cost face demand Q = 80 − P. Initially they collude to maximize joint profits. Now firm 1 cheats and maximizes its own profit while firm 2 still produces the collusion quantity. What is the change in firm 1's output?",
+options:["Decrease by 50%","Increase by 50%","Decrease by 75%","Increase by 75%"],correct:1,
+explanation:"<strong>Collusion:</strong> Joint profit maximization → MR = MC. P = 80 − Q, MR = 80 − 2Q = MC (assume MC = 0 for simplicity). Q<sub>total</sub> = 40, each produces <strong>20</strong>.<br><br><strong>Cheating:</strong> Firm 1 faces residual demand P = 80 − (q₁ + 20) = 60 − q₁. MR₁ = 60 − 2q₁ = 0 → q₁ = <strong>30</strong>.<br><br>Change: from 20 to 30 = <strong>increase by 50%</strong>. This illustrates why cartels are unstable — each member has an incentive to cheat."},
+{id:2,topic:"Growth",text:"Supply factors in economic growth DO NOT comprise:",
+options:["Full employment","Development of technology","The size and quality of the labor force","The stock of capital"],correct:0,
+explanation:"<strong>Full employment</strong> is an <em>outcome/goal</em>, not a supply-side factor of production. The supply factors of economic growth are: physical capital (D), human capital and labor (C), and technology/productivity (B). These are inputs that expand the economy's productive capacity."},
+{id:3,topic:"Game Theory",text:"Game theory is the study about:",
+options:["How to manage production at the lowest cost.","The impacts of individuals' decision makings having on others' actions.","How to manage a financial portfolio to reduce or avoid risk.","How to play a video game."],correct:1,
+explanation:"<strong>Game theory</strong> studies strategic interactions — situations where the outcome for each participant depends not only on their own decisions but also on <em>the decisions of others</em>. It analyzes how rational agents behave when their choices are interdependent (e.g., pricing wars, auctions, negotiations)."},
+{id:4,topic:"Corporate Finance",text:"What will a corporation's stockholders lose if it goes bankrupt?",
+options:["Their stock's value only","Their stock's value plus all other business assets","Their stock's value plus all other personal assets","Their stock's value plus all business and personal assets"],correct:0,
+explanation:"A key feature of a <strong>corporation</strong> is <strong>limited liability</strong>. Stockholders' maximum loss is limited to the value of their investment (stock). They are <em>not</em> personally liable for corporate debts. This distinguishes corporations from sole proprietorships and partnerships, where personal assets can be at risk."},
+{id:5,topic:"Price Controls",text:"What will most likely happen if the government establishes the highest rental fee landlords can charge?",
+options:["Everything will remain unchanged.","Available flats will exceed people who want to rent.","People who want to rent will exceed available flats.","Available flats will equal those who want to rent."],correct:2,
+explanation:"A <strong>price ceiling</strong> (maximum rent) set below the equilibrium creates a <strong>shortage</strong>. At the artificially low price, quantity demanded increases (more people can afford to rent) while quantity supplied decreases (landlords have less incentive to offer properties). Result: more renters than available units — a housing shortage."},
+{id:6,topic:"Labor Economics",text:"Which term best describes the number of unemployed people an economy normally experiences?",
+options:["Typical rate of unemployment","Average rate of unemployment","Cyclical rate of unemployment","Natural rate of unemployment"],correct:3,
+explanation:"The <strong>natural rate of unemployment</strong> is the normal, baseline level of unemployment that persists even in a healthy economy. It includes frictional unemployment (job transitions) and structural unemployment (skills mismatches), but excludes cyclical unemployment (caused by recessions). It represents the economy's long-run equilibrium unemployment."},
+{id:7,topic:"Information Economics",text:"As soon as purchasing a car that has airbags, Minh starts to drive riskily. Which problem does this illustrate?",
+options:["Free-rider problem","Principal-agent problem","Adverse selection problem","Moral hazard problem"],correct:3,
+explanation:"<strong>Moral hazard</strong> occurs when someone changes their behavior <em>after</em> obtaining protection (insurance, safety features), taking on more risk because they're shielded from consequences. Minh drives riskily <em>because</em> airbags reduce his perceived risk. Adverse selection (C) occurs <em>before</em> a transaction (hidden information); moral hazard occurs <em>after</em> (hidden action)."},
+{id:8,topic:"GDP",text:"GDP comprises approximate value calculations of which non-market goods or services?",
+options:["The estimated rental worth of owner-occupied homes","The monetary worth of unpaid housework","The monetary worth of home-grown vegetables","All of the above are included in GDP"],correct:0,
+explanation:"GDP includes <strong>imputed rent</strong> for owner-occupied housing — statisticians estimate what homeowners would pay in rent. This is one of the few non-market items included. Unpaid housework (B) and home-grown food (C) are <em>not</em> included because they are too difficult to measure reliably, even though they create real value."},
+{id:9,topic:"Money & Banking",text:"If all banks offer the reserve ratio of 25%, then new reserves of 3 million VND can generate:",
+options:["6 million VND of new money","750,000 VND of new money","12 million VND of new money","7.5 million VND of new money"],correct:2,
+explanation:"The <strong>money multiplier</strong> = 1 / reserve ratio = 1 / 0.25 = <strong>4</strong>.<br><br>Maximum new money = Initial deposit × Multiplier = 3,000,000 × 4 = <strong>12,000,000 VND</strong>.<br><br>Each round of lending creates new deposits: 3M → 2.25M → 1.6875M → ... summing to 12M total."},
+{id:10,topic:"Inflation",text:"When the economy experiences high inflation, which of the following are most likely to be benefitted?",
+options:["People who live on a fixed income","Banks that loaned money at a fixed interest rate","People who borrowed money at a fixed interest rate","All of the above"],correct:2,
+explanation:"<strong>Borrowers at fixed rates benefit from unexpected inflation</strong>. They repay loans in money that has less purchasing power — effectively, inflation erodes the real value of their debt. Conversely, lenders/banks (B) <em>lose</em> because they receive back money worth less. Fixed-income earners (A) also lose because their income buys less."},
+{id:11,topic:"Macroeconomics",text:"In a closed economy where national saving is positive, which must be correct?",
+options:["Either public or private saving must be positive","Investment is greater than zero","National income (GDP) > Consumption + Government Spending","All of the above are correct"],correct:3,
+explanation:"In a closed economy: <strong>S = Y − C − G = I</strong>.<br><br>If S > 0, then: (B) I > 0 ✓; (C) Y > C + G ✓; (A) S = S<sub>private</sub> + S<sub>public</sub> > 0, so at least one must be positive ✓ (if both were negative, the sum couldn't be positive).<br><br>All three statements are necessarily true."},
+{id:12,topic:"Distribution",text:"What is the fundamental economic argument for achieving more income equality?",
+options:["Equal distribution is the logical outcome of any tax-transfer program","Citizens deserve economic equality because they enjoy political equality","More equal distribution will maximize incentives to work and invest","More equal distribution of a given income will maximize total utility"],correct:3,
+explanation:"The <strong>utilitarian argument</strong>: due to <strong>diminishing marginal utility of income</strong>, transferring $1 from a rich person (low MU) to a poor person (high MU) increases total societal utility. A more equal distribution of a fixed total income thus maximizes aggregate welfare. Options A and B are normative assertions, and C is incorrect (equality can reduce incentives)."},
+{id:13,topic:"Supply & Demand",text:"New plastic and recyclable plastic are close substitutes. What happens if the tax on original resources for making plastic containers increases?",
+options:["Demand for recyclable plastic will increase","Demand for recyclable plastic will decrease","Supply of recyclable plastic will decrease","Equilibrium price of recyclable plastic will be reduced"],correct:0,
+explanation:"Higher tax on raw materials → higher cost → higher price of <em>new</em> plastic. Since new and recyclable plastic are <strong>close substitutes</strong>, consumers switch to the now relatively cheaper alternative. The <strong>demand for recyclable plastic increases</strong> (rightward shift). This raises both the equilibrium price and quantity of recyclable plastic."},
+{id:14,topic:"Financial Literacy",text:"Hanh's Bakery offers a 40% discount if a customer pays the 50,000 VND monthly fee. What is the minimum monthly spending so this purchase is worthwhile?",
+options:["At least 75,000 VND","At least 100,000 VND","At least 125,000 VND","At least 150,000 VND"],correct:2,
+explanation:"The membership saves 40% on purchases but costs 50,000 VND. Break-even point:<br><br>0.40 × Spending = 50,000<br>Spending = 50,000 ÷ 0.40 = <strong>125,000 VND</strong><br><br>At 125,000 VND spending, the 40% discount saves exactly 50,000 — covering the membership fee. Any spending above this makes the membership profitable."},
+{id:15,topic:"Monopoly",text:"Which statement is NOT TRUE about a non-discriminating monopoly?",
+options:["Marginal revenue increases as the monopoly produces more outputs","If MR > MC, the monopoly should increase output","The monopoly must lower price on all units to sell additional outputs","Relative to perfect competition, the monopoly produces less at a higher price"],correct:0,
+explanation:"For a monopolist facing a downward-sloping demand curve, <strong>MR always decreases</strong> as output increases — never increases. This is because selling one more unit requires lowering the price on <em>all</em> units, so MR falls faster than price. Statements B, C, and D are all true properties of monopoly."},
+{id:16,topic:"Game Theory",text:"A father divides 100 gold bars among 2 daughters. Each whispers an integer (0–100). If the total exceeds 100, both get nothing. How many Nash equilibria exist?",
+options:["0","1","101","102"],correct:2,
+explanation:"A Nash equilibrium requires that neither daughter can improve by unilaterally changing her request.<br><br>If a + b = 100 (with a ≥ 0, b ≥ 0): increasing your request makes the total exceed 100 → you get nothing (worse). Decreasing gives you less. Neither wants to deviate. ✓<br><br>If a + b < 100: either daughter can increase her request and get more. Not a NE. ✗<br><br>Valid pairs: (0,100), (1,99), (2,98), ..., (100,0) = <strong>101 equilibria</strong>."},
+{id:17,topic:"Perfect Competition",text:"AVC = C(Q)/Q, and a perfectly competitive firm generates positive profit. At its optimal output:",
+options:["MC > AVC","MC < AVC","MC = AVC","Impossible to determine"],correct:0,
+explanation:"For a competitive firm, the profit-maximizing condition is <strong>P = MC</strong>. Positive profit means <strong>P > ATC</strong>. Since ATC > AVC (ATC includes fixed costs), we have:<br><br>MC = P > ATC > AVC → <strong>MC > AVC</strong>.<br><br>Geometrically, the firm is operating on the rising portion of MC, above the AVC curve."},
+{id:18,topic:"Market Equilibrium",text:"Market demand for bread at different prices:<br>Q: 150, 170, 250, 290, 310, 400, 450, 600<br>P: 330, 305, 255, 210, 185, 130, 100, 85<br>Unit cost = 25 USD. How many loaves should the bakery make?",
+options:["150","170","250","450"],correct:2,
+explanation:"Calculate <strong>profit = TR − TC</strong> at each quantity (TC = 25 × Q):<br><br>Q=150: 49,500 − 3,750 = 45,750<br>Q=170: 51,850 − 4,250 = 47,600<br>Q=250: 63,750 − 6,250 = <strong>57,500</strong> ← maximum<br>Q=290: 60,900 − 7,250 = 53,650<br>Q=310: 57,350 − 7,750 = 49,600<br><br>Profit is maximized at <strong>Q = 250 loaves</strong>."},
+{id:19,topic:"Bond Valuation",text:"A $2,000 face value US government bond has a 6% coupon rate, interest paid annually, maturing in 10 years. If priced to yield 8%, what is closest to the bond's present value?",
+options:["$1,250","$1,500","$1,750","$2,000"],correct:2,
+explanation:"Annual coupon = $2,000 × 6% = $120.<br><br><strong>PV of coupons</strong> = 120 × [1 − (1.08)<sup>−10</sup>] / 0.08 = 120 × 6.7101 = $805<br><strong>PV of face value</strong> = 2,000 / (1.08)<sup>10</sup> = 2,000 × 0.4632 = $926<br><br><strong>Total PV ≈ $805 + $926 = $1,731 ≈ $1,750</strong><br><br>Since the coupon rate (6%) < yield (8%), the bond trades at a <em>discount</em> to face value."},
+{id:20,topic:"Investment",text:"A taxi driver buys a car for 500M VND with a 5-year useful life, expecting to earn 120M VND annually. What is the maximum discount rate for this purchase to be desirable?",
+options:["5%","6%","7%","8%"],correct:1,
+explanation:"Find the rate r where NPV = 0: −500 + 120 × [1 − (1+r)<sup>−5</sup>]/r = 0.<br><br>At <strong>r = 6%</strong>: annuity factor = 4.2124. NPV = −500 + 120 × 4.2124 = +5.49 > 0 ✓<br>At <strong>r = 7%</strong>: annuity factor = 4.1002. NPV = −500 + 120 × 4.1002 = −7.98 < 0 ✗<br><br>The IRR is between 6% and 7%. The maximum rate where the purchase is still desirable is <strong>6%</strong> (the highest listed rate giving positive NPV)."}
+];
+
+const openQuestions = [
+{id:1,title:"COVID-19 Vaccine as a Good",pts:30,
+parts:[
+{label:"Part a (5 pts)",question:"What is a public good? What are its attributes? Give examples.",
+solution:`<h4>Public Good Definition</h4>
+<p>A <strong>public good</strong> is a good that is both <strong>non-excludable</strong> (people cannot be prevented from using it) and <strong>non-rivalrous</strong> (one person's use does not diminish another's).</p>
+<p><strong>Examples:</strong> national defense, street lighting, clean air, public radio broadcasts.</p>`},
+{label:"Part b (10 pts)",question:"Is the COVID-19 vaccine a global public good? State and discuss your opinion with evidence.",
+solution:`<h4>Key Arguments</h4>
+<p><strong>Arguments FOR (WHO/EU position):</strong> Vaccination creates <em>positive externalities</em> — herd immunity protects everyone, including the unvaccinated. The knowledge/formula can be shared globally (non-rivalrous). Global pandemics require global solutions.</p>
+<p><strong>Arguments AGAINST (WHA/US position):</strong> Physical vaccine doses are <em>rivalrous</em> (a dose given to one person can't be given to another) and <em>excludable</em> (governments/companies can restrict access). Vaccine production is constrained by patents and manufacturing capacity.</p>
+<p><strong>Resolution:</strong> The vaccine <em>knowledge</em> can function as a global public good, but the <em>physical doses</em> are private goods. The <em>act of vaccination</em> generates public good characteristics through herd immunity externalities.</p>`},
+{label:"Part c1 (3 pts)",question:"What type of good is the COVID-19 vaccine in Vietnam?",
+solution:`<p>In Vietnam's context, vaccines distributed free by the government function as <strong>merit goods</strong> (goods the government deems beneficial and provides below market price). When sold through the service-fee program, they function as <strong>private goods</strong> (excludable and rivalrous). The combined approach makes vaccination a <strong>quasi-public good</strong>.</p>`},
+{label:"Part c2 (4 pts)",question:"Why doesn't the government just print money to finance COVID-19 vaccines?",
+solution:`<p>Printing money to cover expenses would cause <strong>inflation</strong> — increasing the money supply without a corresponding increase in goods/services leads to too much money chasing too few goods.</p>
+<p><strong>Consequences:</strong> currency devaluation, reduced purchasing power, higher import costs, potential hyperinflation, loss of investor confidence, and ultimately <em>greater economic harm than the pandemic itself</em>. This is why governments use taxation, borrowing, and funds instead.</p>`},
+{label:"Part c3 (8 pts)",question:"Compare two scenarios: (1) Free-market 'invisible hand' vaccine distribution vs. (2) Government-only free distribution.",
+solution:`<h4>Scenario 1: Free Market Only</h4>
+<p><strong>Problems:</strong> Market failure — vaccines have positive externalities not captured by market prices. Wealthy individuals/regions get vaccinated first, deepening inequality. Prices may be unaffordable for many. Herd immunity is delayed or never achieved. <strong>Under-provision</strong> relative to the socially optimal level.</p>
+<h4>Scenario 2: Government-Only Free Distribution</h4>
+<p><strong>Problems:</strong> Massive fiscal burden on the state budget. Potential <strong>inefficiency</strong> — bureaucratic allocation may be slower than market mechanisms. No price signal to manage demand → possible overconsumption or waste. No incentive for private-sector innovation in distribution. People who can afford to pay still receive free vaccines, creating <strong>deadweight loss</strong>.</p>
+<p><strong>Conclusion:</strong> Vietnam's combined approach is optimal — free distribution ensures equity and herd immunity, while service-fee options reduce fiscal burden and improve efficiency.</p>`}
+]},
+{id:2,title:"Impacts of COVID-19 on Vietnamese Economy",pts:30,
+parts:[
+{label:"Part a (10 pts)",question:"Explain why Arts/entertainment, Accommodation/catering, and Education/training were the most negatively affected industries.",
+solution:`<p><strong>Common factor:</strong> All three industries rely heavily on <em>face-to-face interaction and physical presence</em>, which social distancing measures directly disrupt.</p>
+<p><strong>Arts & Entertainment:</strong> Theaters, concerts, cinemas — all require gatherings. Government bans on public events eliminated revenue entirely. No easy digital substitute for live experiences.</p>
+<p><strong>Accommodation & Catering:</strong> Travel restrictions collapsed both domestic and international tourism. Restaurants faced capacity limits, curfews, and mandatory closures. Hotels had near-zero occupancy.</p>
+<p><strong>Education & Training:</strong> Schools closed, reducing demand for auxiliary services (tutoring centers, training companies). The shift to online learning disrupted traditional business models. Many private training institutions lost students and revenue.</p>
+<p><strong>Demand-side:</strong> Consumer fear of infection reduced willingness to engage. <strong>Supply-side:</strong> Lockdowns prevented businesses from operating.</p>`},
+{label:"Part b (10 pts)",question:"Explain why banking interest rates fell throughout 2020 compared to 2019.",
+solution:`<h4>Central Bank Policy (Supply-side)</h4>
+<p>The State Bank of Vietnam (SBV) cut policy rates (discount rate to 2.5%, refinancing rate) to inject liquidity and stimulate lending during the economic downturn — <strong>expansionary monetary policy</strong>.</p>
+<h4>Demand-side</h4>
+<p>Businesses reduced borrowing due to uncertainty and reduced economic activity. Lower loan demand puts downward pressure on lending rates. Meanwhile, consumers saved more (precautionary saving), increasing deposit supply and pushing deposit rates down.</p>
+<h4>Mechanism</h4>
+<p>Lower policy rates → lower cost of funds for banks → lower lending rates to support businesses → lower deposit rates to maintain margins. The three coordinated cuts (March, May, October) reflect deliberate SBV intervention at key crisis moments.</p>`},
+{label:"Part c (10 pts)",question:"Explain why inflation is expected to increase in the second half of 2021 as vaccines roll out.",
+solution:`<h4>Demand-Pull Inflation</h4>
+<p>As vaccines enable economic reopening, pent-up consumer demand is released — spending on travel, dining, entertainment surges. Aggregate demand shifts right faster than supply can adjust.</p>
+<h4>Cost-Push Inflation</h4>
+<p>Global supply chains disrupted by COVID are slow to recover. Raw material and shipping costs have risen. These higher input costs push up consumer prices.</p>
+<h4>Monetary Overhang</h4>
+<p>The expansionary monetary policy throughout 2020 (low interest rates, liquidity injection) increased money supply. As velocity of money increases with reopening, the inflationary effect materializes — too much money chasing goods that are still supply-constrained.</p>`}
+]},
+{id:3,title:"Vaccine Fund Contribution Game",pts:30,
+parts:[
+{label:"Part a (9 pts)",question:"If exactly m of the other 999 residents have contributed, what would you do and why?",
+solution:`<h4>Three Cases</h4>
+<p><strong>Case 1: m ≥ k.</strong> Vaccine is already provided (enough contributors). Your best move is <strong>not to contribute</strong> — you get outcome #1 (vaccine + no cost), which is the best possible.</p>
+<p><strong>Case 2: m = k − 1.</strong> Your contribution is <em>pivotal</em>. If you contribute: vaccine is provided (outcome #2). If you don't: no vaccine (outcome #3). Since outcome #2 > outcome #3, you <strong>should contribute</strong>.</p>
+<p><strong>Case 3: m < k − 1.</strong> Even if you contribute, total contributors = m + 1 < k, so no vaccine. You'd get outcome #4 (worst). Not contributing gives outcome #3 (better). You <strong>should not contribute</strong>.</p>`},
+{label:"Part b (21 pts)",question:"Find all Nash equilibria.",
+solution:`<h4>Analysis</h4>
+<p>From Part (a), the best response is: contribute if and only if exactly k − 1 others have contributed.</p>
+<p><strong>Type 1: Exactly k people contribute.</strong> Each contributor is pivotal — if they switch to not contributing, the vaccine fails (worse). Each non-contributor free-rides — if they switch to contributing, they pay unnecessarily (worse). This is a NE. ✓</p>
+<p><strong>Type 2: Fewer than k − 1 contribute.</strong> Specifically, 0 people contribute: no one is pivotal, no one wants to contribute alone. NE when 0 contribute. ✓ More generally, any profile with fewer than k−1 contributors where no single person is pivotal works.</p>
+<p><strong>Counting NE with exactly k contributors:</strong> Choose which k of the 1000 residents contribute: C(1000, k) Nash equilibria of this type.</p>
+<p><strong>NE with 0 contributors:</strong> 1 equilibrium (everyone free-rides).</p>
+<p><strong>Total NE = C(1000, k) + 1</strong> for each value of k. (Profiles with between 1 and k−1 contributors are generally not NE because at least one contributor has no incentive to contribute.)</p>`}
+]},
+{id:4,title:"Expected Utility & Insurance (Schumacher)",pts:30,
+parts:[
+{label:"Part a (6 pts)",question:"Calculate Schumacher's expected utility. u(w) = w^0.5, initial wealth = 400, accident probability = 2/3, accident loss = 204.",
+solution:`<p>E[u] = (1/3) × u(400) + (2/3) × u(400 − 204)</p>
+<p>= (1/3) × √400 + (2/3) × √196</p>
+<p>= (1/3) × 20 + (2/3) × 14</p>
+<p>= 20/3 + 28/3 = <strong>48/3 = 16</strong></p>`},
+{label:"Part b (6 pts)",question:"What premium π must IEO charge to break even (risk-neutral insurer)?",
+solution:`<p>Expected payout = (2/3) × 204 = <strong>136 USD</strong>.</p>
+<p>A risk-neutral insurer breaks even at <strong>π = 136 USD</strong> (the actuarially fair premium).</p>`},
+{label:"Part c (6 pts)",question:"Will Schumacher purchase insurance at premium π = 136?",
+solution:`<p>With insurance: wealth = 400 − 136 = 264 regardless of accident.</p>
+<p>u(264) = √264 ≈ <strong>16.25</strong></p>
+<p>Without insurance: E[u] = <strong>16</strong> (from part a).</p>
+<p>Since 16.25 > 16, Schumacher's utility is higher with insurance. <strong>Yes, he purchases.</strong></p>
+<p>This makes sense: Schumacher is <strong>risk-averse</strong> (concave utility function), so he prefers the certain outcome over the gamble with the same expected value.</p>`},
+{label:"Part d (12 pts)",question:"For general u(w) = w^a with a > 0, prove Schumacher purchases insurance at π if a < 1.",
+solution:`<h4>Proof Sketch</h4>
+<p>When a < 1, u(w) = w<sup>a</sup> is a <strong>concave</strong> function (u'' < 0), meaning the agent is <strong>risk-averse</strong>.</p>
+<p>By <strong>Jensen's inequality</strong> for concave functions: E[u(W)] < u(E[W]).</p>
+<p>Expected wealth without insurance: E[W] = (1/3)(400) + (2/3)(196) = 400/3 + 392/3 = 264.</p>
+<p>With insurance at π = 136: certain wealth = 400 − 136 = 264 = E[W].</p>
+<p>So: u(264) = u(E[W]) > E[u(W)] by Jensen's inequality.</p>
+<p><strong>Therefore Schumacher strictly prefers insurance when a < 1.</strong></p>
+<p><strong>Intuition:</strong> A risk-averse person always prefers a guaranteed amount over a gamble with the same expected value, because losses hurt more than equivalent gains help (diminishing marginal utility).</p>`}
+]},
+{id:5,title:"Perfect Competition Long-Run Equilibrium",pts:30,
+parts:[
+{label:"Part a (10 pts)",question:"Explain how condition (iii) — no firm has incentive to enter or exit — implies zero profit in long-run equilibrium.",
+solution:`<h4>Argument</h4>
+<p><strong>If profit > 0:</strong> New firms would enter the market (no barriers to entry), increasing supply, driving down price, and reducing profits. Entry continues until profit = 0.</p>
+<p><strong>If profit < 0:</strong> Existing firms would exit (no barriers to exit), reducing supply, driving up price, and reducing losses. Exit continues until profit = 0.</p>
+<p><strong>Therefore:</strong> The only situation where no firm wants to enter or exit is when economic profit = 0. This is the <strong>zero-profit condition</strong> of long-run competitive equilibrium. Firms earn normal (accounting) profit but zero economic profit.</p>`},
+{label:"Part b (20 pts)",question:"Given C(q) = 0.5q² + 20q + 18 and Q(P) = 80 − P, find the long-run equilibrium (P*, Q*, N).",
+solution:`<h4>Step 1: Find minimum ATC</h4>
+<p>ATC = C(q)/q = 0.5q + 20 + 18/q</p>
+<p>Minimize: d(ATC)/dq = 0.5 − 18/q² = 0 → q² = 36 → <strong>q* = 6</strong></p>
+<p><strong>P* = ATC(6)</strong> = 0.5(6) + 20 + 18/6 = 3 + 20 + 3 = <strong>26</strong></p>
+<h4>Step 2: Verify MC = P*</h4>
+<p>MC = q + 20. At q = 6: MC = 26 = P*. ✓</p>
+<h4>Step 3: Market quantity and number of firms</h4>
+<p><strong>Q* = 80 − P*</strong> = 80 − 26 = <strong>54</strong></p>
+<p><strong>N = Q*/q*</strong> = 54/6 = <strong>9 firms</strong></p>
+<h4>Long-run equilibrium: P* = 26, Q* = 54, N = 9</h4>`}
+]}
+];
+
+let answered=0,correctCount=0,timerSeconds=30*60,timerInterval=null,isPaused=false,noTimer=false,selectedMinutes=30,startTime=null,elapsedAtEnd=null;
+
+function selectTime(m){selectedMinutes=m;document.querySelectorAll('.time-opt').forEach(b=>b.classList.remove('active'));event.target.classList.add('active')}
+
+function startQuiz(skip){
+  noTimer=!!skip;timerSeconds=selectedMinutes*60;
+  document.getElementById('timerSetup').classList.add('hidden');
+  document.getElementById('quizContainer').classList.remove('hidden');
+  startTime=Date.now();renderQuiz();
+  if(!noTimer){updateTimerDisplay();timerInterval=setInterval(tick,1000)}
+  else{document.getElementById('timerDisplay').textContent='∞';timerInterval=setInterval(()=>{const e=Math.floor((Date.now()-startTime)/1000),m=Math.floor(e/60),s=e%60;document.getElementById('timerDisplay').textContent=m+':'+String(s).padStart(2,'0')},1000)}
+}
+function tick(){if(!isPaused){timerSeconds--;updateTimerDisplay();if(timerSeconds<=0){clearInterval(timerInterval);endByTimer()}}}
+function updateTimerDisplay(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;document.getElementById('timerDisplay').textContent=m+':'+String(s).padStart(2,'0');const c=document.getElementById('timerClock');c.classList.remove('warning','danger');if(timerSeconds<=60)c.classList.add('danger');else if(timerSeconds<=300)c.classList.add('warning')}
+function togglePause(){isPaused=!isPaused;document.getElementById('pauseBtn').innerHTML=isPaused?'<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>':'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'}
+function endByTimer(){elapsedAtEnd=selectedMinutes*60;questions.forEach(q=>{const c=document.getElementById('qcard-'+q.id);if(!c.classList.contains('answered-correct')&&!c.classList.contains('answered-wrong')){q.options.forEach((_,i)=>{document.getElementById('opt-'+q.id+'-'+i).disabled=true});document.getElementById('opt-'+q.id+'-'+q.correct).classList.add('show-correct');const e=document.getElementById('expl-'+q.id);e.className='explanation show wrong-expl';e.innerHTML='<strong>⏱ Time\'s up!</strong> Correct: <strong>'+String.fromCharCode(65+q.correct)+'</strong>. '+q.explanation;c.classList.add('answered-wrong')}});answered=questions.length;updateProgress();showResults()}
+function getElapsed(){return elapsedAtEnd!==null?elapsedAtEnd:Math.floor((Date.now()-startTime)/1000)}
+function fmtTime(s){return Math.floor(s/60)+'m '+s%60+'s'}
+
+function renderQuiz(){
+  const ctr=document.getElementById('quizContainer');let html='<div class="section-label mcq-label">Part 1 — Multiple Choice (20 Questions)</div>';
+  questions.forEach(q=>{
+    html+=`<div class="q-card" id="qcard-${q.id}"><div class="q-header"><div class="q-number">${q.id}</div><div class="q-topic">${q.topic}</div></div><div class="q-text">${q.text}</div><div class="options">${q.options.map((o,i)=>`<button class="option-btn" id="opt-${q.id}-${i}" onclick="selectAnswer(${q.id},${i})"><span class="letter">${String.fromCharCode(65+i)}</span><span>${o}</span></button>`).join('')}</div><div class="explanation" id="expl-${q.id}"></div></div>`;
+  });
+  html+=`<div class="results-panel" id="resultsPanel"><h2>MCQ Section Complete!</h2><div class="score-display" id="scoreDisplay"></div><div class="score-sub" id="scoreSub"></div><div class="score-row"><div class="score-stat green"><div class="num" id="statCorrect">0</div><div class="lbl">Correct</div></div><div class="score-stat red"><div class="num" id="statWrong">0</div><div class="lbl">Incorrect</div></div><div class="score-stat time"><div class="num" id="statTime">-</div><div class="lbl">Time</div></div></div><button class="btn-restart" onclick="restartQuiz()">Restart MCQs</button></div>`;
+
+  html+='<div class="section-label open-label">Part 2 — Open-Ended Questions (Choose 4 of 5 · 30 pts each)</div>';
+  openQuestions.forEach(oq=>{
+    html+=`<div class="open-card"><div class="open-header"><div class="open-num">Q${oq.id}</div><div class="open-pts">${oq.pts} pts</div></div><div class="open-title">${oq.title}</div>`;
+    oq.parts.forEach((p,pi)=>{
+      const uid=`open-${oq.id}-${pi}`;
+      html+=`<div class="open-subpart"><div class="open-subpart-label">${p.label}</div><p>${p.question}</p><button class="reveal-btn" id="btn-${uid}" onclick="toggleSolution('${uid}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg> Show Solution</button><div class="solution-content" id="sol-${uid}">${p.solution}</div></div>`;
+    });
+    html+='</div>';
+  });
+  html+='<div class="footer-note">VEO 2021 Round 2 – Practice Quiz &bull; Prepared by MeritPath</div>';
+  ctr.innerHTML=html;
+}
+
+function toggleSolution(uid){
+  const sol=document.getElementById('sol-'+uid);
+  const btn=document.getElementById('btn-'+uid);
+  if(sol.classList.contains('show')){sol.classList.remove('show');btn.classList.remove('open');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg> Show Solution'}
+  else{sol.classList.add('show');btn.classList.add('open');btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg> Hide Solution'}
+}
+
+function selectAnswer(qId,sel){
+  const q=questions.find(x=>x.id===qId),card=document.getElementById('qcard-'+qId),expl=document.getElementById('expl-'+qId);
+  q.options.forEach((_,i)=>{document.getElementById('opt-'+qId+'-'+i).disabled=true});
+  if(sel===q.correct){correctCount++;document.getElementById('opt-'+qId+'-'+sel).classList.add('selected-correct');card.classList.add('answered-correct');expl.className='explanation show correct-expl';expl.innerHTML='<strong>✓ Correct!</strong> '+q.explanation}
+  else{document.getElementById('opt-'+qId+'-'+sel).classList.add('selected-wrong');document.getElementById('opt-'+qId+'-'+q.correct).classList.add('show-correct');card.classList.add('answered-wrong');expl.className='explanation show wrong-expl';expl.innerHTML='<strong>✗ Incorrect.</strong> Correct: <strong>'+String.fromCharCode(65+q.correct)+'</strong>. '+q.explanation}
+  answered++;updateProgress();
+  if(answered===questions.length){clearInterval(timerInterval);elapsedAtEnd=getElapsed();setTimeout(showResults,500)}
+}
+
+function updateProgress(){document.getElementById('progressFill').style.width=(answered/questions.length*100)+'%';document.getElementById('progressText').textContent=answered+' / '+questions.length}
+
+function showResults(){
+  const p=document.getElementById('resultsPanel');
+  document.getElementById('scoreDisplay').innerHTML=correctCount+' <span>/ '+questions.length+'</span>';
+  document.getElementById('scoreSub').textContent=Math.round(correctCount/questions.length*100)+'% correct';
+  document.getElementById('statCorrect').textContent=correctCount;
+  document.getElementById('statWrong').textContent=answered-correctCount;
+  document.getElementById('statTime').textContent=fmtTime(elapsedAtEnd||getElapsed());
+  p.classList.add('show');p.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function restartQuiz(){answered=0;correctCount=0;elapsedAtEnd=null;isPaused=false;clearInterval(timerInterval);document.getElementById('quizContainer').classList.add('hidden');document.getElementById('timerSetup').classList.remove('hidden');document.getElementById('timerClock').classList.remove('warning','danger');document.getElementById('timerDisplay').textContent='--:--';document.getElementById('pauseBtn').innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';updateProgress();window.scrollTo({top:0,behavior:'smooth'})}
+</script>
+</body>
+</html>
