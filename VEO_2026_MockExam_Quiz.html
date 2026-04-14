@@ -200,6 +200,47 @@ body {
   .q-card { padding: 1.2rem; }
   .score-breakdown { gap: 1.2rem; }
 }
+
+/* Timer additions */
+.timer-clock {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  padding: 0.35rem 0.75rem; background: #E8EDF6; border-radius: 8px;
+  color: #2C3E6B; min-width: 115px; justify-content: center;
+}
+.timer-clock svg { width: 16px; height: 16px; flex-shrink: 0; }
+.timer-clock.warning { background: #FFF3E0; color: #E65100; animation: pulse 1s infinite; }
+.timer-clock.danger { background: #FDEAEA; color: #B33A3A; animation: pulse 0.5s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+.timer-btn {
+  width: 32px; height: 32px; border-radius: 8px; border: 1px solid #E2DDD5;
+  background: white; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; transition: all 0.2s; color: #6B6B6B;
+}
+.timer-btn:hover { background: #E8EDF6; color: #2C3E6B; border-color: #2C3E6B; }
+.timer-btn svg { width: 14px; height: 14px; }
+.timer-setup {
+  background: white; border: 1px solid #E2DDD5; border-radius: 12px;
+  padding: 1.75rem; margin-bottom: 1.5rem; text-align: center;
+}
+.timer-setup h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: #2C3E6B; margin-bottom: 0.3rem; }
+.timer-setup p { font-size: 0.9rem; color: #6B6B6B; margin-bottom: 1rem; }
+.time-options { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.time-opt {
+  padding: 0.6rem 1.2rem; border-radius: 10px; border: 1.5px solid #E2DDD5;
+  background: #FAF7F2; cursor: pointer; font-family: inherit; font-size: 0.92rem;
+  font-weight: 600; color: #2A2A2A; transition: all 0.2s;
+}
+.time-opt:hover, .time-opt.active { border-color: #2C3E6B; background: #E8EDF6; color: #2C3E6B; }
+.start-btn {
+  padding: 0.7rem 2.5rem; border: none; border-radius: 10px;
+  background: #2C3E6B; color: white; font-family: inherit;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+}
+.start-btn:hover { background: #2C3E6B; }
+.no-timer-link { display: block; margin-top: 0.6rem; font-size: 0.85rem; color: #6B6B6B; cursor: pointer; text-decoration: underline; border: none; background: none; font-family: inherit; }
+.hidden { display: none !important; }
+
 </style>
 </head>
 <body>
@@ -216,10 +257,32 @@ body {
 <div class="progress-bar-container">
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   <div class="progress-text" id="progressText">0 / 20</div>
-  <div class="progress-score" id="progressScore"></div>
+  <div class="progress-score" id="progressScore">
+  <div class="timer-clock" id="timerClock">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span id="timerDisplay">--:--</span>
+  </div>
+  <button class="timer-btn" id="pauseBtn" title="Pause/Resume" onclick="togglePause()">
+    <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+  </button>
 </div>
 
-<div class="container" id="quizContainer"></div>
+<div class="container">
+  <div id="timerSetup" class="timer-setup">
+    <h3>Set Your Timer</h3>
+    <p>Choose a time limit or practice without one.</p>
+    <div class="time-options">
+      <button class="time-opt" onclick="selectTime(15)">15 min</button>
+      <button class="time-opt active" onclick="selectTime(30)">30 min</button>
+      <button class="time-opt" onclick="selectTime(45)">45 min</button>
+      <button class="time-opt" onclick="selectTime(60)">60 min</button>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+    <button class="no-timer-link" onclick="startQuiz(true)">Practice without timer</button>
+  </div>
+
+  <div id="quizContainer" class="hidden"></div>
+</div>
 
 <script>
 const questions = [
@@ -502,7 +565,7 @@ function renderQuiz() {
       <div class="score-breakdown">
         <div class="score-stat green"><div class="num" id="statCorrect">0</div><div class="lbl">Correct</div></div>
         <div class="score-stat red"><div class="num" id="statWrong">0</div><div class="lbl">Incorrect</div></div>
-      </div>
+      <div class="score-stat" style="text-align:center"><div class="num" id="statTime" style="font-size:1.3rem;font-weight:700;color:#1B4D3E">-</div><div class="lbl" style="font-size:.75rem;color:#6B6B6B;text-transform:uppercase;letter-spacing:.06em">Time</div></div></div>
       <button class="btn-restart" onclick="restartQuiz()">Try Again</button>
     </div>
     <div class="footer-note">VEO 2026 Mock Exam – MCQ Practice Quiz &bull; Prepared by MeritPath</div>`;
@@ -541,6 +604,8 @@ function updateProgress() {
 }
 
 function showResults() {
+  if (!elapsedAtEnd) elapsedAtEnd = Math.floor((Date.now() - startTime) / 1000);
+  clearInterval(timerInterval);
   const panel = document.getElementById('resultsPanel');
   const wrong = answered - correctCount;
   const pct = Math.round((correctCount / questions.length) * 100);
@@ -548,11 +613,18 @@ function showResults() {
   document.getElementById('scorePct').textContent = `${pct}% — ${correctCount * 4} / 80 points`;
   document.getElementById('statCorrect').textContent = correctCount;
   document.getElementById('statWrong').textContent = wrong;
+  if (document.getElementById('statTime')) { var el = elapsedAtEnd || 0; document.getElementById('statTime').textContent = Math.floor(el/60) + 'm ' + (el%60) + 's'; }
   panel.classList.add('show');
   panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function restartQuiz() {
+  clearInterval(timerInterval); elapsedAtEnd = null; isPaused = false;
+  document.getElementById("quizContainer").classList.add("hidden");
+  document.getElementById("timerSetup").classList.remove("hidden");
+  document.getElementById("timerClock").classList.remove("warning","danger");
+  document.getElementById("timerDisplay").textContent = "--:--";
+  document.getElementById("pauseBtn").innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
   answered = 0; correctCount = 0;
   document.getElementById('progressScore').textContent = '';
   updateProgress();
@@ -560,7 +632,6 @@ function restartQuiz() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-renderQuiz();
 </script>
 </body>
 </html>
