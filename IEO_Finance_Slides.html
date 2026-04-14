@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEO Financial Literacy – Study Slides</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B1120;--slide:#111827;--border:#1E293B;--text:#E8ECF1;--muted:#94A3B8;--accent:#3B82F6;--accent2:#6366F1;--green:#10B981;--gold:#F59E0B;--red:#EF4444;--teal:#14B8A6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh}
+
+.deck{height:100vh;display:flex;flex-direction:column}
+.slide{display:none;flex:1;padding:2.5rem 3rem;overflow-y:auto;animation:fadeIn .4s ease}
+.slide.active{display:flex;flex-direction:column}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:.6rem 2rem;background:#0F172A;border-top:1px solid var(--border)}
+.nav-info{font-size:.78rem;color:var(--muted)}
+.nav-btns{display:flex;gap:.5rem}
+.nav-btn{padding:.5rem 1.2rem;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
+.nav-btn:hover{background:var(--accent);border-color:var(--accent)}
+.nav-btn:disabled{opacity:.3;cursor:default}
+.nav-btn:disabled:hover{background:transparent;border-color:var(--border)}
+.progress-dots{display:flex;gap:4px;align-items:center}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:all .3s}
+.dot.active{background:var(--accent);width:18px;border-radius:3px}
+.dot.done{background:var(--green)}
+
+/* Slide types */
+.slide-title{justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#0F172A 0%,#1E1B4B 100%)}
+.slide-title h1{font-family:'Instrument Serif',serif;font-size:clamp(2.5rem,6vw,4rem);line-height:1.1;margin-bottom:.5rem}
+.slide-title h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.slide-title p{font-size:1.15rem;color:var(--muted);max-width:500px}
+.slide-title .badge{display:inline-block;margin-top:1rem;padding:.3rem 1rem;border:1px solid var(--accent);border-radius:20px;font-size:.8rem;color:var(--accent);font-weight:600}
+
+.slide-topic{background:var(--slide)}
+.topic-num{font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.slide h2{font-family:'Instrument Serif',serif;font-size:clamp(1.6rem,4vw,2.2rem);margin-bottom:1rem;line-height:1.2}
+.slide h3{font-size:1rem;font-weight:700;margin:1rem 0 .5rem;color:var(--accent)}
+
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;flex:1}
+.content-full{flex:1}
+@media(max-width:768px){.content-grid{grid-template-columns:1fr}}
+
+.card{background:#1E293B;border:1px solid #334155;border-radius:12px;padding:1.15rem}
+.card-title{font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+.card-title .icon{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0}
+.icon-blue{background:var(--accent)}.icon-green{background:var(--green)}.icon-gold{background:var(--gold)}.icon-red{background:var(--red)}.icon-teal{background:var(--teal)}.icon-purple{background:var(--accent2)}
+
+.card p,.card li{font-size:.88rem;line-height:1.6;color:#CBD5E1}
+.card ul{padding-left:1.1rem;margin-top:.3rem}
+.card li{margin-bottom:.25rem}
+
+.formula{background:#0F172A;border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;margin:.5rem 0;font-family:'Courier New',monospace;font-size:.9rem;color:var(--gold);text-align:center}
+
+.key-point{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(99,102,241,.1));border:1px solid rgba(59,130,246,.25);border-radius:10px;padding:.8rem 1rem;margin:.5rem 0}
+.key-point p{font-size:.88rem;color:var(--text)}
+.key-point strong{color:var(--accent)}
+
+.exam-tip{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:.7rem 1rem;margin:.5rem 0}
+.exam-tip p{font-size:.85rem;color:var(--gold)}
+.exam-tip strong{color:var(--gold)}
+
+@media(max-width:600px){.slide{padding:1.5rem 1rem}.nav{padding:.5rem 1rem}}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- Slide 0: Title -->
+<div class="slide slide-title active" id="s0">
+  <h1><span>Financial Literacy</span></h1>
+  <p>IEO Exam Preparation — 9 Topic Areas from the Official IEO Syllabus (Section 2.4)</p>
+  <div class="badge">25 MCQs · Individual Test · 2025 Format</div>
+  <p style="margin-top:2rem;font-size:.82rem;color:var(--muted)">Prepared by MeritPath — Use ← → arrow keys or buttons to navigate</p>
+</div>
+
+<!-- Slide 1: Financial Planning -->
+<div class="slide slide-topic" id="s1">
+  <div class="topic-num">Topic 1 of 9</div>
+  <h2>Financial Planning</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-blue">$</span> Core Concepts</div>
+        <ul>
+          <li><strong>Income:</strong> Earned (salary, wages) vs. Unearned (investments, rent, dividends)</li>
+          <li><strong>Expenses:</strong> Fixed (rent, insurance) vs. Variable (food, entertainment)</li>
+          <li><strong>Needs vs. Wants:</strong> Essential expenditures vs. discretionary spending</li>
+          <li><strong>Net income:</strong> Gross income − Taxes − Deductions</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-green">B</span> Budgeting</div>
+        <ul>
+          <li><strong>50/30/20 Rule:</strong> 50% needs, 30% wants, 20% savings</li>
+          <li><strong>Emergency fund:</strong> 3–6 months of expenses</li>
+          <li><strong>Pay yourself first:</strong> Save before spending</li>
+          <li><strong>Tracking:</strong> Monitor cash inflows vs. outflows</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-gold">G</span> Financial Goals</div>
+        <ul>
+          <li><strong>Short-term:</strong> &lt; 1 year (emergency fund, vacation)</li>
+          <li><strong>Medium-term:</strong> 1–5 years (car, education)</li>
+          <li><strong>Long-term:</strong> &gt; 5 years (retirement, home)</li>
+          <li><strong>SMART goals:</strong> Specific, Measurable, Achievable, Relevant, Time-bound</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-red">D</span> Debt Management</div>
+        <ul>
+          <li><strong>Debt-to-income ratio:</strong> Monthly debt payments / Gross monthly income</li>
+          <li><strong>Avalanche method:</strong> Pay highest interest rate first</li>
+          <li><strong>Snowball method:</strong> Pay smallest balance first</li>
+          <li><strong>Good debt</strong> (mortgage, education) vs. <strong>Bad debt</strong> (credit card)</li>
+        </ul>
+      </div>
+      <div class="exam-tip"><p><strong>IEO Tip:</strong> Questions often test whether students can distinguish between income types and calculate net disposable income after taxes.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 2: Banks and Banking System -->
+<div class="slide slide-topic" id="s2">
+  <div class="topic-num">Topic 2 of 9</div>
+  <h2>Banks & the Banking System</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-blue">B</span> Types of Financial Institutions</div>
+        <ul>
+          <li><strong>Commercial banks:</strong> Accept deposits, make loans, facilitate payments</li>
+          <li><strong>Central bank:</strong> Controls monetary policy, issues currency, lender of last resort</li>
+          <li><strong>Investment banks:</strong> Underwriting, M&A advisory, trading</li>
+          <li><strong>Credit unions:</strong> Member-owned, non-profit cooperative</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-green">R</span> Reserve System</div>
+        <ul>
+          <li><strong>Fractional reserve:</strong> Banks keep only a fraction of deposits as reserves</li>
+          <li><strong>Reserve ratio (rr):</strong> Required reserves / Total deposits</li>
+          <li><strong>Excess reserves:</strong> Actual − Required reserves → available for lending</li>
+        </ul>
+        <div class="formula">Money Multiplier = 1 / rr</div>
+        <div class="formula">Max new money = Initial deposit × (1/rr)</div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-gold">C</span> Central Bank Tools</div>
+        <ul>
+          <li><strong>Open market operations:</strong> Buy bonds → ↑ money supply; Sell bonds → ↓ money supply</li>
+          <li><strong>Discount rate:</strong> Interest rate the CB charges commercial banks</li>
+          <li><strong>Reserve requirements:</strong> ↑ rr → ↓ lending → ↓ money supply</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-teal">D</span> Deposits & Loans</div>
+        <ul>
+          <li><strong>Demand deposits:</strong> Withdrawable anytime (checking accounts)</li>
+          <li><strong>Time deposits:</strong> Fixed term, higher interest rate</li>
+          <li><strong>Secured loans:</strong> Backed by collateral (mortgage)</li>
+          <li><strong>Unsecured loans:</strong> No collateral (credit card debt)</li>
+        </ul>
+      </div>
+      <div class="key-point"><p><strong>Key mechanism:</strong> When banks lend, they create new deposits → new money. When loans are repaid, money is destroyed. This is how the banking system expands and contracts the money supply.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: Saving Money -->
+<div class="slide slide-topic" id="s3">
+  <div class="topic-num">Topic 3 of 9</div>
+  <h2>Saving Money & Compound Interest</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-green">S</span> Why Save?</div>
+        <ul>
+          <li><strong>Precautionary:</strong> Buffer against unexpected events (job loss, medical)</li>
+          <li><strong>Life-cycle:</strong> Smooth consumption over lifetime (earn more now, spend in retirement)</li>
+          <li><strong>Goal-oriented:</strong> Accumulate for specific purchases</li>
+          <li><strong>Opportunity cost of saving:</strong> Foregone current consumption</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-blue">T</span> Types of Savings Accounts</div>
+        <ul>
+          <li><strong>Regular savings:</strong> Low interest, high liquidity</li>
+          <li><strong>High-yield savings:</strong> Higher rate, may have restrictions</li>
+          <li><strong>Certificate of Deposit (CD):</strong> Fixed term, penalty for early withdrawal</li>
+          <li><strong>Money market:</strong> Higher minimums, check-writing ability</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-gold">C</span> Compound Interest</div>
+        <p>The "eighth wonder of the world" — earning interest on interest.</p>
+        <div class="formula">FV = PV × (1 + r)ⁿ</div>
+        <p style="margin-top:.4rem">FV = Future Value, PV = Present Value, r = interest rate per period, n = number of periods</p>
+        <div class="formula">Rule of 72: Doubling time ≈ 72 / r%</div>
+        <p>At 6% interest, money doubles in ≈ 12 years.</p>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-purple">E</span> Example Calculation</div>
+        <p>Deposit 10,000 at 5% for 10 years:</p>
+        <p><strong>Simple:</strong> 10,000 + (10,000 × 0.05 × 10) = <strong>15,000</strong></p>
+        <p><strong>Compound:</strong> 10,000 × (1.05)¹⁰ = <strong>16,289</strong></p>
+        <p>Difference: <strong>1,289</strong> — the power of compounding!</p>
+      </div>
+      <div class="exam-tip"><p><strong>IEO Tip:</strong> Expect calculation questions using compound interest. Practice computing (1+r)ⁿ without a calculator for small n.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 4: Borrowing & Credit -->
+<div class="slide slide-topic" id="s4">
+  <div class="topic-num">Topic 4 of 9</div>
+  <h2>Borrowing Money & Credit</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-red">C</span> Credit Fundamentals</div>
+        <ul>
+          <li><strong>Credit:</strong> Borrowing money with a promise to repay + interest</li>
+          <li><strong>Principal:</strong> Original amount borrowed</li>
+          <li><strong>Interest rate:</strong> Cost of borrowing (annual %)</li>
+          <li><strong>APR:</strong> Annual Percentage Rate — total cost including fees</li>
+          <li><strong>Collateral:</strong> Asset pledged to secure a loan</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-blue">T</span> Types of Credit</div>
+        <ul>
+          <li><strong>Credit cards:</strong> Revolving credit, high interest (15–25% APR)</li>
+          <li><strong>Mortgage:</strong> Home loan, lower rate, 15–30 year term</li>
+          <li><strong>Auto loan:</strong> Secured by the vehicle</li>
+          <li><strong>Student loans:</strong> Often subsidized, deferred payment</li>
+          <li><strong>Payday loans:</strong> Short-term, extremely high APR — predatory</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-gold">S</span> Credit Score</div>
+        <ul>
+          <li><strong>Payment history (35%):</strong> On-time payments — most important factor</li>
+          <li><strong>Amounts owed (30%):</strong> Credit utilization ratio</li>
+          <li><strong>Length of history (15%):</strong> Longer = better</li>
+          <li><strong>New credit (10%):</strong> Hard inquiries lower score temporarily</li>
+          <li><strong>Credit mix (10%):</strong> Variety of credit types</li>
+        </ul>
+        <p style="margin-top:.4rem"><strong>Note:</strong> Income is NOT directly used in credit scoring.</p>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-teal">L</span> Loan Amortization</div>
+        <div class="formula">Monthly payment = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]</div>
+        <p>Early payments are mostly interest; later payments are mostly principal. This is why extra payments early in a mortgage save the most.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 5: Investment & Risk -->
+<div class="slide slide-topic" id="s5">
+  <div class="topic-num">Topic 5 of 9</div>
+  <h2>Investment, Financial Instruments & Risk</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-green">T</span> Time Value of Money</div>
+        <p>A dollar today is worth more than a dollar tomorrow.</p>
+        <div class="formula">PV = FV / (1 + r)ⁿ</div>
+        <div class="formula">NPV = −Cost + Σ [CFₜ / (1+r)ᵗ]</div>
+        <p>Accept investment if <strong>NPV > 0</strong>.</p>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-blue">I</span> Financial Instruments</div>
+        <ul>
+          <li><strong>Stocks:</strong> Ownership shares — dividends + capital gains. Higher risk/return</li>
+          <li><strong>Bonds:</strong> Debt instruments — fixed coupon payments. Lower risk/return</li>
+          <li><strong>Mutual funds:</strong> Pooled investments, professionally managed</li>
+          <li><strong>ETFs:</strong> Trade like stocks, track an index</li>
+          <li><strong>Derivatives:</strong> Options, futures — derive value from underlying assets</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-red">R</span> Risk vs. Return</div>
+        <ul>
+          <li><strong>Fundamental tradeoff:</strong> Higher expected return ↔ Higher risk</li>
+          <li><strong>Diversification:</strong> "Don't put all eggs in one basket" — reduces unsystematic risk</li>
+          <li><strong>Systematic risk:</strong> Market-wide, cannot be diversified away (recessions)</li>
+          <li><strong>Unsystematic risk:</strong> Firm-specific, can be diversified (management failure)</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-gold">B</span> Bond Valuation</div>
+        <div class="formula">Bond Price = Σ [Coupon/(1+r)ᵗ] + Face/(1+r)ⁿ</div>
+        <ul>
+          <li>Coupon rate < Market rate → bond trades at <strong>discount</strong></li>
+          <li>Coupon rate > Market rate → bond trades at <strong>premium</strong></li>
+          <li>Bond prices and interest rates move <strong>inversely</strong></li>
+        </ul>
+      </div>
+      <div class="exam-tip"><p><strong>IEO Tip:</strong> NPV and bond valuation calculations appear frequently. Practice the annuity PV formula: PV = C × [1 − (1+r)⁻ⁿ] / r</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 6: Insurance -->
+<div class="slide slide-topic" id="s6">
+  <div class="topic-num">Topic 6 of 9</div>
+  <h2>Insurance Contracts & Insurance Market</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-teal">I</span> Insurance Fundamentals</div>
+        <ul>
+          <li><strong>Premium:</strong> Regular payment for coverage</li>
+          <li><strong>Coverage:</strong> Maximum amount insurer will pay</li>
+          <li><strong>Deductible:</strong> Amount you pay before insurance kicks in</li>
+          <li><strong>Copay:</strong> Fixed amount per service</li>
+          <li><strong>Liability:</strong> Legal responsibility for damages/injury</li>
+          <li><strong>Claim:</strong> Request for payment under the policy</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-blue">T</span> Types of Insurance</div>
+        <ul>
+          <li><strong>Health:</strong> Medical expenses coverage</li>
+          <li><strong>Life:</strong> Payment to beneficiaries upon death</li>
+          <li><strong>Auto:</strong> Vehicle damage and liability</li>
+          <li><strong>Property/Home:</strong> Damage to real estate</li>
+          <li><strong>Liability:</strong> Protection against third-party claims</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-red">E</span> Economics of Insurance</div>
+        <ul>
+          <li><strong>Risk pooling:</strong> Spread risk across many policyholders</li>
+          <li><strong>Actuarially fair premium:</strong> = Probability × Loss amount</li>
+          <li><strong>Risk-averse</strong> people buy insurance (concave utility → prefer certainty)</li>
+          <li><strong>Risk-neutral</strong> people are indifferent at fair premium</li>
+        </ul>
+        <div class="formula">Fair Premium π = P(accident) × Loss</div>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-gold">M</span> Market Problems</div>
+        <ul>
+          <li><strong>Moral hazard:</strong> Insured take more risk <em>after</em> getting coverage (hidden action)</li>
+          <li><strong>Adverse selection:</strong> High-risk individuals more likely to buy insurance (hidden info)</li>
+          <li><strong>Solutions:</strong> Deductibles (co-insurance), screening, experience rating</li>
+        </ul>
+      </div>
+      <div class="key-point"><p><strong>Connection to utility theory:</strong> A risk-averse person (u'' < 0) always prefers insurance at the actuarially fair premium because, by Jensen's inequality, u(E[W]) > E[u(W)].</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 7: Financial Fraud -->
+<div class="slide slide-topic" id="s7">
+  <div class="topic-num">Topic 7 of 9</div>
+  <h2>Financial Fraud & Ponzi Schemes</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-red">P</span> Ponzi Scheme</div>
+        <ul>
+          <li>Returns paid from <strong>new investors' money</strong>, not actual profits</li>
+          <li>Promises unusually high, consistent returns</li>
+          <li>Collapses when new investments can't cover payouts</li>
+          <li><strong>Bernie Madoff</strong> (2008): Largest Ponzi scheme — $65 billion fraud</li>
+        </ul>
+        <div class="key-point"><p>Key difference from pyramid: Ponzi has a <strong>central operator</strong> managing the fraud; pyramid requires each participant to <strong>recruit new members</strong>.</p></div>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-gold">P</span> Pyramid Scheme</div>
+        <ul>
+          <li>Participants pay to join and earn by <strong>recruiting others</strong></li>
+          <li>No legitimate product/service (or product is secondary)</li>
+          <li>Mathematically unsustainable — requires exponential growth</li>
+          <li>Early participants profit; later ones lose everything</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-purple">D</span> Digital Fraud</div>
+        <ul>
+          <li><strong>Phishing:</strong> Fake emails/websites to steal personal data</li>
+          <li><strong>Identity theft:</strong> Using someone's personal info fraudulently</li>
+          <li><strong>Advance fee fraud:</strong> "Pay upfront to receive a larger sum"</li>
+          <li><strong>Pump and dump:</strong> Inflate stock price with false info, then sell</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-green">P</span> Protection & Red Flags</div>
+        <ul>
+          <li>Returns that are "too good to be true" (guaranteed high returns)</li>
+          <li>Unregistered investments or unlicensed sellers</li>
+          <li>Secretive or complex strategies</li>
+          <li>Difficulty receiving payments or cashing out</li>
+          <li>Pressure to recruit new investors</li>
+          <li><strong>Regulatory measures:</strong> SEC, financial authorities, investor education</li>
+        </ul>
+      </div>
+      <div class="exam-tip"><p><strong>IEO Tip:</strong> Know the precise distinction between Ponzi and pyramid schemes. VEO 2021/2025 tested this directly.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 8: Crowdfunding -->
+<div class="slide slide-topic" id="s8">
+  <div class="topic-num">Topic 8 of 9</div>
+  <h2>Crowdfunding</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-teal">C</span> What is Crowdfunding?</div>
+        <p>Raising small amounts of money from a large number of people, typically via online platforms, to finance a project, business, or cause.</p>
+        <ul style="margin-top:.5rem">
+          <li>Democratizes access to capital</li>
+          <li>Bypasses traditional financial intermediaries</li>
+          <li>Leverages social networks and community engagement</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-blue">T</span> Types of Crowdfunding</div>
+        <ul>
+          <li><strong>Donation-based:</strong> No return expected (charity, disaster relief)</li>
+          <li><strong>Reward-based:</strong> Backers receive a product/perk (Kickstarter)</li>
+          <li><strong>Equity-based:</strong> Investors receive ownership shares</li>
+          <li><strong>Debt-based (P2P lending):</strong> Lenders receive interest payments</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-gold">P</span> Major Platforms</div>
+        <ul>
+          <li><strong>Kickstarter:</strong> Reward-based, creative projects (all-or-nothing model)</li>
+          <li><strong>Indiegogo:</strong> Reward-based, flexible funding option</li>
+          <li><strong>GoFundMe:</strong> Donation-based, personal causes</li>
+          <li><strong>SeedInvest, Crowdcube:</strong> Equity-based</li>
+          <li><strong>LendingClub:</strong> Peer-to-peer debt</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-red">R</span> Risks & Considerations</div>
+        <ul>
+          <li><strong>For backers:</strong> Project may fail, no guarantee of returns or delivery</li>
+          <li><strong>For creators:</strong> May underestimate costs, face production delays</li>
+          <li><strong>Regulatory:</strong> Equity crowdfunding is regulated (investor protection)</li>
+          <li><strong>Information asymmetry:</strong> Backers have limited due diligence ability</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 9: Cryptocurrencies -->
+<div class="slide slide-topic" id="s9">
+  <div class="topic-num">Topic 9 of 9</div>
+  <h2>Cryptocurrencies & Blockchain</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-purple">B</span> Blockchain Technology</div>
+        <ul>
+          <li><strong>Distributed ledger:</strong> Decentralized record of all transactions</li>
+          <li><strong>Blocks:</strong> Groups of transactions linked cryptographically</li>
+          <li><strong>Immutable:</strong> Once recorded, data cannot be altered</li>
+          <li><strong>Consensus mechanisms:</strong> Proof of Work (mining), Proof of Stake</li>
+          <li><strong>Key property:</strong> Trust without a central authority</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-gold">C</span> Key Cryptocurrencies</div>
+        <ul>
+          <li><strong>Bitcoin (BTC):</strong> First and largest by market cap, store of value</li>
+          <li><strong>Ethereum (ETH):</strong> Smart contracts, programmable blockchain</li>
+          <li><strong>Stablecoins:</strong> Pegged to fiat currency (USDT, USDC)</li>
+          <li><strong>CBDCs:</strong> Central Bank Digital Currencies — government-backed digital money</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-red">R</span> Risks & Misconceptions</div>
+        <ul>
+          <li><strong>Volatility:</strong> Extreme price swings — not a stable store of value</li>
+          <li><strong>NOT anonymous:</strong> Pseudonymous — transactions are traceable on public blockchain</li>
+          <li><strong>Environmental:</strong> Proof of Work consumes enormous energy</li>
+          <li><strong>Regulatory uncertainty:</strong> Legal status varies by country</li>
+          <li><strong>No consumer protection:</strong> Lost keys = lost funds, irreversible</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-teal">D</span> DeFi & Beyond</div>
+        <ul>
+          <li><strong>DeFi:</strong> Decentralized Finance — lending, borrowing without banks</li>
+          <li><strong>Smart contracts:</strong> Self-executing agreements on blockchain</li>
+          <li><strong>NFTs:</strong> Non-fungible tokens — unique digital ownership</li>
+          <li><strong>Tokenization:</strong> Converting real-world assets to digital tokens</li>
+        </ul>
+      </div>
+      <div class="exam-tip"><p><strong>IEO Tip:</strong> The most common exam trap: "All crypto transactions are anonymous." This is FALSE — they are pseudonymous and traceable. VEO 2026 Mock tested this directly.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 10: Summary -->
+<div class="slide slide-title" id="s10" style="background:linear-gradient(135deg,#0F172A,#1E3A1E)">
+  <h1 style="font-size:clamp(1.8rem,4vw,2.8rem)"><span style="background:linear-gradient(135deg,#10B981,#14B8A6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Summary & Exam Strategy</span></h1>
+  <div style="text-align:left;max-width:600px;margin-top:1.5rem">
+    <p style="margin-bottom:.8rem;font-size:.95rem"><strong style="color:#10B981">Format:</strong> 25 MCQs, 90 min (shared with Economics MCQs = 40 total). Correct +2, Wrong −0.5, Blank 0.</p>
+    <p style="margin-bottom:.8rem;font-size:.95rem"><strong style="color:#F59E0B">High-yield topics:</strong> Compound interest calculations, NPV/bond valuation, money multiplier, insurance economics (moral hazard vs adverse selection), credit scores.</p>
+    <p style="margin-bottom:.8rem;font-size:.95rem"><strong style="color:#3B82F6">Strategy:</strong> Skip questions you're unsure about (−0.5 penalty for wrong). Answer all questions where you can eliminate 2+ options. Time: ~2 min per question.</p>
+    <p style="font-size:.95rem"><strong style="color:#EF4444">Common traps:</strong> Crypto is NOT anonymous. Income is NOT part of credit scores. Ponzi ≠ Pyramid. Simple ≠ Compound interest.</p>
+  </div>
+  <div class="badge" style="margin-top:1.5rem;border-color:#10B981;color:#10B981">Prepared by MeritPath · IEO/VEO Coaching</div>
+</div>
+
+</div><!-- end deck -->
+
+<!-- Navigation -->
+<div class="nav">
+  <div class="nav-info" id="navInfo">Slide 1 of 11</div>
+  <div class="progress-dots" id="dots"></div>
+  <div class="nav-btns">
+    <button class="nav-btn" id="prevBtn" onclick="prev()" disabled>← Prev</button>
+    <button class="nav-btn" id="nextBtn" onclick="next()">Next →</button>
+  </div>
+</div>
+
+<script>
+const total=11;let cur=0;
+function init(){const d=document.getElementById('dots');for(let i=0;i<total;i++){const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.onclick=()=>goTo(i);d.appendChild(dot)}}
+function goTo(n){document.getElementById('s'+cur).classList.remove('active');cur=n;document.getElementById('s'+cur).classList.add('active');update()}
+function next(){if(cur<total-1)goTo(cur+1)}
+function prev(){if(cur>0)goTo(cur-1)}
+function update(){document.getElementById('navInfo').textContent='Slide '+(cur+1)+' of '+total;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.querySelectorAll('.dot').forEach((d,i)=>{d.className='dot'+(i===cur?' active':i<cur?' done':'')})}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev()});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX});document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(d<-50)next();if(d>50)prev()});
+init();
+</script>
+</body>
+</html>

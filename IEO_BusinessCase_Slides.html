@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEO Business Case – Study Slides</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0C0C14;--slide:#13131F;--border:#252538;--text:#E8ECF1;--muted:#94A3B8;--accent:#8B5CF6;--accent2:#A78BFA;--green:#10B981;--gold:#F59E0B;--red:#EF4444;--teal:#14B8A6;--blue:#3B82F6;--pink:#EC4899}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh}
+.deck{height:100vh;display:flex;flex-direction:column}.slide{display:none;flex:1;padding:2.5rem 3rem;overflow-y:auto;animation:fadeIn .4s ease}.slide.active{display:flex;flex-direction:column}@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:.6rem 2rem;background:#0F0F1A;border-top:1px solid var(--border)}.nav-info{font-size:.78rem;color:var(--muted)}.nav-btns{display:flex;gap:.5rem}.nav-btn{padding:.5rem 1.2rem;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}.nav-btn:hover{background:var(--accent);border-color:var(--accent)}.nav-btn:disabled{opacity:.3;cursor:default}.nav-btn:disabled:hover{background:transparent;border-color:var(--border)}.progress-dots{display:flex;gap:4px;align-items:center}.dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:all .3s;cursor:pointer}.dot.active{background:var(--accent);width:18px;border-radius:3px}.dot.done{background:var(--green)}
+.slide-title{justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#13131F 0%,#1E1030 100%)}.slide-title h1{font-family:'Instrument Serif',serif;font-size:clamp(2.5rem,6vw,4rem);line-height:1.1;margin-bottom:.5rem}.slide-title h1 span{background:linear-gradient(135deg,var(--accent),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.slide-title p{font-size:1.15rem;color:var(--muted);max-width:520px}.slide-title .badge{display:inline-block;margin-top:1rem;padding:.3rem 1rem;border:1px solid var(--accent);border-radius:20px;font-size:.8rem;color:var(--accent);font-weight:600}
+.slide-topic{background:var(--slide)}.topic-num{font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}.slide h2{font-family:'Instrument Serif',serif;font-size:clamp(1.6rem,4vw,2.2rem);margin-bottom:1rem;line-height:1.2}
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;flex:1}@media(max-width:768px){.content-grid{grid-template-columns:1fr}}
+.card{background:#1E1E2E;border:1px solid #2D2D44;border-radius:12px;padding:1.15rem}.card-title{font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}.card-title .icon{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0}
+.icon-purple{background:var(--accent)}.icon-green{background:var(--green)}.icon-gold{background:var(--gold)}.icon-red{background:var(--red)}.icon-teal{background:var(--teal)}.icon-blue{background:var(--blue)}.icon-pink{background:var(--pink)}
+.card p,.card li{font-size:.88rem;line-height:1.6;color:#CBD5E1}.card ul{padding-left:1.1rem;margin-top:.3rem}.card li{margin-bottom:.25rem}
+.key-point{background:linear-gradient(135deg,rgba(139,92,246,.1),rgba(236,72,153,.1));border:1px solid rgba(139,92,246,.25);border-radius:10px;padding:.8rem 1rem;margin:.5rem 0}.key-point p{font-size:.88rem;color:var(--text)}.key-point strong{color:var(--accent)}
+.exam-tip{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:.7rem 1rem;margin:.5rem 0}.exam-tip p{font-size:.85rem;color:var(--gold)}.exam-tip strong{color:var(--gold)}
+.step-flow{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}.step{flex:1;min-width:120px;background:#252538;border-radius:10px;padding:.7rem;text-align:center;border:1px solid #2D2D44}.step-num{font-size:.7rem;font-weight:700;color:var(--accent);margin-bottom:.2rem}.step-label{font-size:.82rem;font-weight:600}
+.framework-box{background:linear-gradient(135deg,rgba(20,184,166,.08),rgba(59,130,246,.08));border:1px solid rgba(20,184,166,.2);border-radius:12px;padding:1rem;margin:.5rem 0}.framework-box h4{font-size:.9rem;color:var(--teal);margin-bottom:.4rem}
+@media(max-width:600px){.slide{padding:1.5rem 1rem}.nav{padding:.5rem 1rem}.step-flow{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- Slide 0: Title -->
+<div class="slide slide-title active" id="s0">
+  <h1><span>Business Case</span></h1>
+  <p>IEO Exam Preparation — Team Competition Framework, Competencies & Presentation Strategy</p>
+  <div class="badge">Team Event · 2-Day Format · Presentation + Q&A</div>
+  <p style="margin-top:2rem;font-size:.82rem;color:var(--muted)">Prepared by MeritPath — Use ← → arrow keys to navigate</p>
+</div>
+
+<!-- Slide 1: Format Overview -->
+<div class="slide slide-topic" id="s1">
+  <div class="topic-num">Overview</div>
+  <h2>Competition Format & Structure</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-purple">F</span> Format</div>
+        <ul>
+          <li><strong>Team competition:</strong> Each country sends a team of up to 5 members</li>
+          <li><strong>Day 1 — Preparation:</strong> Teams receive the case, analyze, and build slides</li>
+          <li><strong>Day 2 — Presentation:</strong> Present solution to a panel of judges + Q&A</li>
+          <li><strong>Language:</strong> All presentations must be in English</li>
+          <li><strong>Slides submitted by deadline</strong> — no changes after submission</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-gold">S</span> Scoring (50 pts max final)</div>
+        <ul>
+          <li>Raw scores per criterion → median of judges' scores</li>
+          <li>Normalized via Z-score formula: Zi = (Gi − A) / σ</li>
+          <li>Final score: Fi = 25 × (1 + Zi/2)</li>
+          <li>Group winners advance to public <strong>Business Case Finals</strong></li>
+          <li>Final result = max(group stage, finals)</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-green">T</span> Timeline</div>
+        <div class="step-flow">
+          <div class="step"><div class="step-num">1</div><div class="step-label">Receive Case</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-label">Analyze</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-label">Structure</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-label">Build Slides</div></div>
+        </div>
+        <div class="step-flow">
+          <div class="step"><div class="step-num">5</div><div class="step-label">Submit</div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-label">Rehearse</div></div>
+          <div class="step"><div class="step-num">7</div><div class="step-label">Present</div></div>
+          <div class="step"><div class="step-num">8</div><div class="step-label">Q&A</div></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-red">R</span> Rules & Constraints</div>
+        <ul>
+          <li>May use <strong>any online/offline materials</strong> during prep day</li>
+          <li><strong>Cannot contact other people</strong> for help</li>
+          <li>No slide changes after submission deadline</li>
+          <li>Presentation in English only</li>
+        </ul>
+      </div>
+      <div class="key-point"><p><strong>Key insight:</strong> The Business Case contributes up to 50 final points (vs 150 for Economics+Finance). But in team rankings, the BC weight is proportionally higher — it can make or break your team medal.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 2: Four Core Competencies -->
+<div class="slide slide-topic" id="s2">
+  <div class="topic-num">Core Skills</div>
+  <h2>The 4 Competencies Judges Evaluate</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card" style="border-left:3px solid var(--accent)">
+        <div class="card-title"><span class="icon icon-purple">1</span> Analytical Thinking</div>
+        <p>Structure a complex business problem into clear, logical streams.</p>
+        <ul>
+          <li>Break the case into large blocks → sub-blocks → specific problems</li>
+          <li>Apply the <strong>MECE principle</strong>: Mutually Exclusive, Collectively Exhaustive</li>
+          <li>No overlap between streams, but all possibilities are covered</li>
+          <li>Use issue trees, decision trees, or logic frameworks</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem;border-left:3px solid var(--green)">
+        <div class="card-title"><span class="icon icon-green">2</span> Conceptual Thinking</div>
+        <p>Build correct hypotheses and validate them logically.</p>
+        <ul>
+          <li>Generate <strong>hypotheses</strong> based on your analytical structure</li>
+          <li>Check: Does the idea address the actual problem?</li>
+          <li>Verify <strong>feasibility</strong> — is the solution implementable?</li>
+          <li>Apply <strong>business sense</strong> — does it make commercial/strategic sense?</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="border-left:3px solid var(--gold)">
+        <div class="card-title"><span class="icon icon-gold">3</span> Quantitative Thinking</div>
+        <p>Back up your recommendations with numbers.</p>
+        <ul>
+          <li>Simple but fast <strong>calculations</strong> (market sizing, revenue projections)</li>
+          <li>Build <strong>models</strong> to illustrate analysis (cost-benefit, break-even)</li>
+          <li>Use <strong>data from the case</strong> — don't ignore provided numbers</li>
+          <li>Sanity check: Do your numbers make sense in context?</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem;border-left:3px solid var(--pink)">
+        <div class="card-title"><span class="icon icon-pink">4</span> Communication Skills</div>
+        <p>Present your solution clearly and persuasively.</p>
+        <ul>
+          <li>Build a <strong>logical presentation flow</strong> (situation → analysis → recommendation)</li>
+          <li>Answer judges' questions <strong>directly and concisely</strong></li>
+          <li>All team members should speak and contribute</li>
+          <li>Visual aids: clear charts, minimal text on slides</li>
+        </ul>
+      </div>
+      <div class="exam-tip"><p><strong>Judges' perspective:</strong> They are looking for structured, feasible, quantified solutions — not just creative ideas. A mediocre idea with excellent structure scores higher than a brilliant idea with poor logic.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: MECE & Structuring -->
+<div class="slide slide-topic" id="s3">
+  <div class="topic-num">Framework 1</div>
+  <h2>MECE Principle & Problem Structuring</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-purple">M</span> MECE Explained</div>
+        <p><strong>M</strong>utually <strong>E</strong>xclusive: No overlap between categories</p>
+        <p><strong>C</strong>ollectively <strong>E</strong>xhaustive: All possibilities covered</p>
+        <div class="framework-box" style="margin-top:.6rem">
+          <h4>Example: "How to increase profit?"</h4>
+          <p><strong>MECE split:</strong> Increase Revenue OR Decrease Costs</p>
+          <p>Revenue = Price × Quantity (no overlap, covers all)</p>
+          <p>Costs = Fixed + Variable (no overlap, covers all)</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-blue">I</span> Issue Tree</div>
+        <p>Break the central question into sub-questions hierarchically:</p>
+        <ul>
+          <li><strong>Level 1:</strong> Main question → 2–4 major branches</li>
+          <li><strong>Level 2:</strong> Each branch → 2–3 sub-branches</li>
+          <li><strong>Level 3:</strong> Specific, actionable questions</li>
+          <li>Each level should be MECE</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-gold">P</span> The Pyramid Principle (Barbara Minto)</div>
+        <ul>
+          <li><strong>Start with the answer</strong> — lead with your recommendation</li>
+          <li><strong>Group supporting arguments</strong> below the answer</li>
+          <li><strong>Each argument</strong> is supported by evidence/data</li>
+          <li>Top-down structure: conclusion → reasons → evidence</li>
+        </ul>
+        <div class="key-point" style="margin-top:.5rem"><p><strong>SCR Framework:</strong> Situation (context) → Complication (problem) → Resolution (recommendation). Use this to open your presentation.</p></div>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-red">A</span> Anti-Patterns to Avoid</div>
+        <ul>
+          <li>❌ Listing ideas without structure ("brainstorm dump")</li>
+          <li>❌ Overlapping categories (violates ME)</li>
+          <li>❌ Missing obvious options (violates CE)</li>
+          <li>❌ Going too deep on one branch, ignoring others</li>
+          <li>❌ Burying the recommendation at the end</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 4: Strategy Frameworks -->
+<div class="slide slide-topic" id="s4">
+  <div class="topic-num">Framework 2</div>
+  <h2>Essential Business Frameworks</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-blue">P</span> Porter's Five Forces</div>
+        <p>Industry attractiveness analysis:</p>
+        <ul>
+          <li><strong>Threat of new entrants:</strong> Barriers to entry (capital, regulation, brand)</li>
+          <li><strong>Bargaining power of suppliers:</strong> How many? Switching costs?</li>
+          <li><strong>Bargaining power of buyers:</strong> Price sensitivity, alternatives</li>
+          <li><strong>Threat of substitutes:</strong> Alternative products/services</li>
+          <li><strong>Competitive rivalry:</strong> Number and strength of competitors</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-green">S</span> SWOT Analysis</div>
+        <ul>
+          <li><strong>Strengths:</strong> Internal advantages (brand, tech, team)</li>
+          <li><strong>Weaknesses:</strong> Internal disadvantages (costs, gaps)</li>
+          <li><strong>Opportunities:</strong> External favorable conditions (market growth, trends)</li>
+          <li><strong>Threats:</strong> External risks (regulation, competition, macro)</li>
+        </ul>
+        <p style="margin-top:.3rem;color:var(--gold);font-size:.85rem"><em>Use as a starting point, not the entire analysis.</em></p>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-gold">4</span> 4Ps / Marketing Mix</div>
+        <ul>
+          <li><strong>Product:</strong> What are we selling? Features, quality, differentiation</li>
+          <li><strong>Price:</strong> Pricing strategy (penetration, skimming, cost-plus, value-based)</li>
+          <li><strong>Place:</strong> Distribution channels (direct, retail, online, partnerships)</li>
+          <li><strong>Promotion:</strong> How to reach customers (digital, influencers, PR, events)</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-teal">M</span> More Useful Frameworks</div>
+        <ul>
+          <li><strong>PESTEL:</strong> Political, Economic, Social, Tech, Environmental, Legal — macro environment scan</li>
+          <li><strong>Value Chain:</strong> Primary vs. support activities — find cost/value advantages</li>
+          <li><strong>BCG Matrix:</strong> Stars, Cash Cows, Question Marks, Dogs — portfolio analysis</li>
+          <li><strong>Break-even:</strong> FC / (Price − VC per unit) — when does the business become profitable?</li>
+        </ul>
+      </div>
+      <div class="exam-tip"><p><strong>IEO Tip:</strong> Don't just name-drop frameworks. Apply them to the specific case with data. Judges reward relevant application, not textbook recitation.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 5: Quantitative Analysis -->
+<div class="slide slide-topic" id="s5">
+  <div class="topic-num">Framework 3</div>
+  <h2>Quantitative Analysis & Market Sizing</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-gold">M</span> Market Sizing (Fermi Estimation)</div>
+        <p>Estimate market size when data is limited:</p>
+        <ul>
+          <li><strong>Top-down:</strong> Total market → segment share → target</li>
+          <li><strong>Bottom-up:</strong> # customers × spend per customer × frequency</li>
+          <li>State your <strong>assumptions explicitly</strong></li>
+          <li>Use <strong>round numbers</strong> — precision isn't the point, logic is</li>
+        </ul>
+        <div class="framework-box">
+          <h4>Example: Coffee shop revenue in Hanoi</h4>
+          <p>Population 8M × 40% drink coffee × 5 cups/week × 30k VND × 52 weeks ÷ 10,000 shops = ~500M VND/shop/year</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-red">B</span> Break-Even Analysis</div>
+        <p><strong>BEP (units) = Fixed Costs / (Price − Variable Cost per unit)</strong></p>
+        <p><strong>BEP (revenue) = Fixed Costs / Contribution Margin Ratio</strong></p>
+        <p style="margin-top:.3rem">Always calculate: How long until the proposed investment pays off?</p>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-purple">P</span> Profitability Analysis</div>
+        <ul>
+          <li><strong>Revenue:</strong> Price × Volume. Can we increase either?</li>
+          <li><strong>Gross margin:</strong> (Revenue − COGS) / Revenue</li>
+          <li><strong>Operating margin:</strong> (Revenue − COGS − OpEx) / Revenue</li>
+          <li><strong>Unit economics:</strong> Revenue per unit − Cost per unit</li>
+          <li><strong>CAC vs LTV:</strong> Customer Acquisition Cost vs. Lifetime Value (LTV > 3× CAC is healthy)</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-teal">I</span> Impact Estimation</div>
+        <ul>
+          <li>Quantify the <strong>impact of each recommendation</strong></li>
+          <li>Use scenarios: Conservative / Base / Optimistic</li>
+          <li>Show <strong>sensitivity analysis</strong> — what if assumptions change?</li>
+          <li>Timeline: Short-term wins vs. long-term investments</li>
+        </ul>
+      </div>
+      <div class="key-point"><p><strong>Judge's perspective:</strong> "Show me the numbers." Even rough estimates show analytical rigor. A recommendation without quantification is just an opinion.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 6: Presentation Skills -->
+<div class="slide slide-topic" id="s6">
+  <div class="topic-num">Execution</div>
+  <h2>Slide Design & Presentation Delivery</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-pink">S</span> Slide Design Principles</div>
+        <ul>
+          <li><strong>One message per slide</strong> — use the slide title as the takeaway</li>
+          <li><strong>Action titles:</strong> "Revenue will grow 25% by 2026" not "Revenue Analysis"</li>
+          <li><strong>Minimal text:</strong> Bullets, not paragraphs. Speak the details.</li>
+          <li><strong>Visual hierarchy:</strong> Most important info is largest/most prominent</li>
+          <li><strong>Charts > Tables > Text</strong> for data presentation</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-blue">F</span> Recommended Slide Flow</div>
+        <div class="step-flow">
+          <div class="step"><div class="step-num">1</div><div class="step-label">Executive Summary</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-label">Situation & Problem</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-label">Analysis</div></div>
+        </div>
+        <div class="step-flow">
+          <div class="step"><div class="step-num">4</div><div class="step-label">Options & Evaluation</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-label">Recommendation</div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-label">Implementation & Risks</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-green">D</span> Delivery Tips</div>
+        <ul>
+          <li><strong>All members speak</strong> — assign sections based on strength</li>
+          <li><strong>Rehearse transitions</strong> between speakers (smooth handoffs)</li>
+          <li><strong>Time management:</strong> Practice to fit the allotted time</li>
+          <li><strong>Eye contact with judges</strong>, not the screen</li>
+          <li><strong>Speak slowly and clearly</strong> — English is a second language for most</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-gold">Q</span> Handling Q&A</div>
+        <ul>
+          <li><strong>Listen fully</strong> before answering — don't interrupt the judge</li>
+          <li><strong>Restate the question</strong> briefly to confirm understanding</li>
+          <li><strong>Answer directly first</strong>, then elaborate if needed</li>
+          <li>It's OK to say: <em>"That's a great point we didn't fully explore, but our initial thinking is..."</em></li>
+          <li><strong>Designate a Q&A lead</strong> who can redirect to the right team member</li>
+        </ul>
+      </div>
+      <div class="exam-tip"><p><strong>Pro tip:</strong> Judges often test your assumptions during Q&A. Prepare a list of your key assumptions and be ready to defend or adjust them.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 7: Common Case Types -->
+<div class="slide slide-topic" id="s7">
+  <div class="topic-num">Case Types</div>
+  <h2>Common Business Case Scenarios</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card" style="border-left:3px solid var(--accent)">
+        <div class="card-title"><span class="icon icon-purple">1</span> Market Entry</div>
+        <p>"Should company X enter market Y?"</p>
+        <ul>
+          <li>Market size & growth analysis</li>
+          <li>Competitive landscape (Porter's 5 Forces)</li>
+          <li>Entry mode: organic, acquisition, partnership?</li>
+          <li>Financial projection & break-even timeline</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem;border-left:3px solid var(--green)">
+        <div class="card-title"><span class="icon icon-green">2</span> Growth Strategy</div>
+        <p>"How should company X grow revenue by Z%?"</p>
+        <ul>
+          <li>Ansoff Matrix: market penetration, development, product development, diversification</li>
+          <li>Organic vs. inorganic growth (M&A)</li>
+          <li>Customer segment analysis</li>
+          <li>Quantify revenue impact of each option</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="border-left:3px solid var(--gold)">
+        <div class="card-title"><span class="icon icon-gold">3</span> Turnaround / Cost Reduction</div>
+        <p>"Company X is losing money. What should they do?"</p>
+        <ul>
+          <li>Diagnose: Revenue problem or cost problem?</li>
+          <li>Cost structure analysis (fixed vs variable)</li>
+          <li>Revenue optimization (pricing, mix, churn)</li>
+          <li>Prioritize by impact and feasibility</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem;border-left:3px solid var(--teal)">
+        <div class="card-title"><span class="icon icon-teal">4</span> Social Impact / Policy</div>
+        <p>"Design a solution for economic/social challenge Z."</p>
+        <ul>
+          <li>Stakeholder analysis (who benefits, who pays)</li>
+          <li>Market failure identification (externalities, public goods)</li>
+          <li>Policy tools: taxes, subsidies, regulation, education</li>
+          <li>Implementation plan with measurable KPIs</li>
+        </ul>
+      </div>
+      <div class="key-point"><p><strong>Past IEO cases:</strong> Have included sustainability/ESG themes, fintech disruption, post-COVID recovery, and emerging market challenges. Study past cases on the IEO website.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 8: Team Strategy -->
+<div class="slide slide-topic" id="s8">
+  <div class="topic-num">Team Work</div>
+  <h2>Team Strategy & Preparation Day</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-purple">R</span> Role Assignment</div>
+        <ul>
+          <li><strong>Team Lead:</strong> Facilitates discussion, manages time, makes final calls</li>
+          <li><strong>Analyst:</strong> Deep-dives into data, builds models, runs numbers</li>
+          <li><strong>Strategist:</strong> Develops the recommendation, evaluates options</li>
+          <li><strong>Slide Designer:</strong> Builds the presentation, ensures visual quality</li>
+          <li><strong>Q&A Lead:</strong> Prepares for judge questions, coordinates responses</li>
+        </ul>
+        <p style="margin-top:.4rem;font-size:.85rem;color:var(--muted)">Roles can overlap — in a team of 5, everyone does multiple things.</p>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-gold">T</span> Time Allocation (Prep Day)</div>
+        <ul>
+          <li><strong>First 20%:</strong> Read case thoroughly (everyone). Discuss, ask questions.</li>
+          <li><strong>Next 10%:</strong> Structure the problem. Agree on MECE framework.</li>
+          <li><strong>Next 30%:</strong> Deep analysis in parallel (split work by branch).</li>
+          <li><strong>Next 20%:</strong> Synthesize findings. Develop recommendation.</li>
+          <li><strong>Last 20%:</strong> Build slides. Rehearse. Polish.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-green">P</span> Pre-Competition Preparation</div>
+        <ul>
+          <li>Practice with <strong>past IEO business cases</strong> (2018–2024 on website)</li>
+          <li>Do <strong>timed mock presentations</strong> — simulate the real constraint</li>
+          <li>Build a <strong>slide template</strong> in advance (colors, fonts, chart styles)</li>
+          <li>Prepare a <strong>framework cheat sheet</strong> (Porter's, SWOT, 4Ps, break-even formulas)</li>
+          <li>Practice <strong>market sizing</strong> problems weekly</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-red">M</span> Common Mistakes</div>
+        <ul>
+          <li>❌ Spending too long reading, too little analyzing</li>
+          <li>❌ Not using data provided in the case</li>
+          <li>❌ Recommendation without financial quantification</li>
+          <li>❌ One person dominates the presentation</li>
+          <li>❌ Slides with walls of text</li>
+          <li>❌ No implementation plan or risk assessment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 9: Reading List & Resources -->
+<div class="slide slide-topic" id="s9">
+  <div class="topic-num">Resources</div>
+  <h2>Recommended Reading & Resources</h2>
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-purple">C</span> Case Solving (IEO Official)</div>
+        <ul>
+          <li><strong>The Pyramid Principle</strong> — Barbara Minto</li>
+          <li><strong>Crack the Case</strong> — David Ohrvall</li>
+          <li><strong>The Trusted Advisor</strong> — D. Maister, C. Green, R. Galford</li>
+          <li><strong>Case in Point</strong> — Marc Cosentino</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-blue">D</span> Data Analysis (IEO Official)</div>
+        <ul>
+          <li><strong>The McKinsey Way</strong> — Ethan Rasiel</li>
+          <li><strong>Strategic Management</strong> — Thompson & Strickland</li>
+          <li><strong>Thinking Fast and Slow</strong> — Daniel Kahneman</li>
+          <li><strong>The Fifth Discipline</strong> — Peter Senge</li>
+          <li><strong>BCG on Strategy</strong> — C. Stern, M. Deimler</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="icon icon-pink">P</span> Presentations (IEO Official)</div>
+        <ul>
+          <li><strong>Say It With Charts</strong> — Gene Zelazny</li>
+          <li><strong>Unfolding the Napkin</strong> — Dan Roam</li>
+          <li><strong>Visualize This</strong> — Nathan Yau</li>
+          <li><strong>Slide:ology</strong> — Nancy Duarte</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:.8rem">
+        <div class="card-title"><span class="icon icon-teal">O</span> Online Resources</div>
+        <ul>
+          <li><strong>Past IEO Cases:</strong> ieo-official.org/prepare (2018–2025)</li>
+          <li><strong>Case Interview Prep:</strong> Management Consulted, PrepLounge</li>
+          <li><strong>McKinsey Solve Game:</strong> Practice analytical thinking</li>
+          <li><strong>YouTube:</strong> IEO channel for past presentations</li>
+        </ul>
+      </div>
+      <div class="exam-tip"><p><strong>Best practice:</strong> Study at least 3 past IEO cases thoroughly. For each, write your own solution before reading the evaluation criteria. Compare and identify gaps.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 10: Summary -->
+<div class="slide slide-title" id="s10" style="background:linear-gradient(135deg,#13131F,#1A0F2E)">
+  <h1 style="font-size:clamp(1.8rem,4vw,2.8rem)"><span>Summary Checklist</span></h1>
+  <div style="text-align:left;max-width:620px;margin-top:1.5rem">
+    <p style="margin-bottom:.7rem;font-size:.95rem"><span style="color:var(--green)">✓</span> <strong>Structure first:</strong> MECE framework before diving into details</p>
+    <p style="margin-bottom:.7rem;font-size:.95rem"><span style="color:var(--green)">✓</span> <strong>Lead with the answer:</strong> Pyramid Principle — recommendation first, then support</p>
+    <p style="margin-bottom:.7rem;font-size:.95rem"><span style="color:var(--green)">✓</span> <strong>Quantify everything:</strong> Market size, revenue impact, break-even, ROI</p>
+    <p style="margin-bottom:.7rem;font-size:.95rem"><span style="color:var(--green)">✓</span> <strong>Use case data:</strong> Don't ignore numbers given in the case document</p>
+    <p style="margin-bottom:.7rem;font-size:.95rem"><span style="color:var(--green)">✓</span> <strong>All members contribute:</strong> In both prep and presentation</p>
+    <p style="margin-bottom:.7rem;font-size:.95rem"><span style="color:var(--green)">✓</span> <strong>Action titles:</strong> Each slide title states the takeaway message</p>
+    <p style="margin-bottom:.7rem;font-size:.95rem"><span style="color:var(--green)">✓</span> <strong>Implementation plan:</strong> Timeline, KPIs, risks, mitigation</p>
+    <p style="font-size:.95rem"><span style="color:var(--green)">✓</span> <strong>Prepare for Q&A:</strong> Know your assumptions and be ready to defend them</p>
+  </div>
+  <div class="badge" style="margin-top:1.5rem;border-color:var(--accent);color:var(--accent)">Prepared by MeritPath · IEO/VEO Coaching</div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="nav">
+  <div class="nav-info" id="navInfo">Slide 1 of 11</div>
+  <div class="progress-dots" id="dots"></div>
+  <div class="nav-btns">
+    <button class="nav-btn" id="prevBtn" onclick="prev()" disabled>← Prev</button>
+    <button class="nav-btn" id="nextBtn" onclick="next()">Next →</button>
+  </div>
+</div>
+
+<script>
+const total=11;let cur=0;
+function init(){const d=document.getElementById('dots');for(let i=0;i<total;i++){const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.onclick=()=>goTo(i);d.appendChild(dot)}}
+function goTo(n){document.getElementById('s'+cur).classList.remove('active');cur=n;document.getElementById('s'+cur).classList.add('active');update()}
+function next(){if(cur<total-1)goTo(cur+1)}
+function prev(){if(cur>0)goTo(cur-1)}
+function update(){document.getElementById('navInfo').textContent='Slide '+(cur+1)+' of '+total;document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.querySelectorAll('.dot').forEach((d,i)=>{d.className='dot'+(i===cur?' active':i<cur?' done':'')})}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')next();if(e.key==='ArrowLeft')prev()});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX});document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(d<-50)next();if(d>50)prev()});
+init();
+</script>
+</body>
+</html>

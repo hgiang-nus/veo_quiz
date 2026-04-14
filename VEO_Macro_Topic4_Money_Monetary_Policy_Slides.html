@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VEO Macro – Topic 4: Money &amp; Monetary Policy</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0c1222;--accent:#6366f1;--accent2:#a78bfa;--green:#10b981;--orange:#f59e0b;--red:#ef4444;--blue:#3b82f6;--teal:#14b8a6;--text:#f1f5f9;--muted:#94a3b8;--surface:#1e293b;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;width:100vw;}
+.deck{position:relative;width:100vw;height:100vh;}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;flex-direction:column;justify-content:center;padding:54px 74px;opacity:0;transition:opacity 0.4s;}
+.slide.active{display:flex;opacity:1;}
+.slide.title-slide{background:linear-gradient(135deg,#1a1040 0%,#0c1222 50%,#0d1b2a 100%);text-align:center;justify-content:center;align-items:center;}
+.slide.section-slide{background:linear-gradient(135deg,var(--accent),#4f46e5);text-align:center;justify-content:center;align-items:center;}
+.slide.content-slide{background:var(--bg);}
+.slide.veo-slide{background:linear-gradient(135deg,#1a1040,var(--bg));border-left:6px solid var(--orange);}
+.slide.calc-slide{background:linear-gradient(135deg,#071318,var(--bg));border-left:6px solid var(--green);}
+h1{font-family:'DM Serif Display',serif;font-size:3.1em;line-height:1.15;margin-bottom:14px;}
+h2{font-family:'DM Serif Display',serif;font-size:2.1em;line-height:1.2;margin-bottom:12px;color:var(--accent);}
+h3{font-size:1.2em;font-weight:700;margin-bottom:8px;color:var(--green);}
+p{font-size:1.06em;line-height:1.65;margin-bottom:9px;color:var(--muted);}
+.big{font-size:1.18em;color:var(--text);}
+li{font-size:1em;line-height:1.6;margin-bottom:5px;color:var(--muted);}
+ul,ol{padding-left:24px;}
+strong{color:var(--text);}
+.box{border-radius:12px;padding:15px 19px;margin:11px 0;}
+.box-def{background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);}
+.box-key{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);}
+.box-warn{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);}
+.box-veo{background:rgba(245,158,11,0.12);border:2px solid var(--orange);}
+.box-purple{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);}
+.box-calc{background:rgba(16,185,129,0.08);border:2px solid var(--green);}
+.box-red{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);}
+.box-blue{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);}
+.box-title{font-weight:700;font-size:0.96em;margin-bottom:6px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:11px 0;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:11px 0;}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:11px 0;}
+table{width:100%;border-collapse:collapse;margin:11px 0;font-size:0.91em;}
+th{background:var(--accent);color:#fff;padding:9px 12px;text-align:left;font-weight:600;}
+td{padding:8px 12px;border-bottom:1px solid var(--surface);color:var(--muted);}
+.nav{position:fixed;bottom:20px;right:30px;display:flex;gap:10px;z-index:100;}
+.nav button{background:var(--surface);color:var(--text);border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:600;transition:0.2s;}
+.nav button:hover{background:var(--accent);}
+.counter{position:fixed;bottom:24px;left:30px;color:var(--muted);font-size:0.95em;z-index:100;}
+.topic-badge{position:fixed;top:20px;left:30px;background:var(--accent);color:#fff;padding:6px 14px;border-radius:20px;font-size:0.8em;font-weight:600;z-index:100;}
+.hl{color:var(--accent);font-weight:700;}.hl-g{color:var(--green);font-weight:700;}.hl-o{color:var(--orange);font-weight:700;}.hl-r{color:var(--red);font-weight:700;}.hl-b{color:var(--blue);font-weight:700;}
+.formula-big{font-size:1.5em;text-align:center;padding:16px;color:var(--green);font-weight:700;font-family:'DM Serif Display',serif;}
+.tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.83em;font-weight:600;}
+.tag-b{background:rgba(99,102,241,0.2);color:var(--accent);}.tag-g{background:rgba(16,185,129,0.2);color:var(--green);}.tag-o{background:rgba(245,158,11,0.2);color:var(--orange);}.tag-r{background:rgba(239,68,68,0.2);color:var(--red);}
+.subtitle{font-size:1.2em;color:var(--muted);font-weight:300;}
+.diagram{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0;flex-wrap:wrap;}
+.d-box{background:var(--surface);padding:12px 18px;border-radius:10px;text-align:center;font-weight:600;font-size:0.88em;min-width:105px;}
+.d-arrow{font-size:1.5em;color:var(--accent);}
+.d-box.blue{border:2px solid var(--blue);color:var(--blue);}.d-box.green{border:2px solid var(--green);color:var(--green);}.d-box.orange{border:2px solid var(--orange);color:var(--orange);}.d-box.purple{border:2px solid var(--accent2);color:var(--accent2);}.d-box.red{border:2px solid var(--red);color:var(--red);}.d-box.indigo{border:2px solid var(--accent);color:var(--accent);}
+@media(max-width:900px){.slide{padding:26px 20px;}h1{font-size:1.9em;}h2{font-size:1.45em;}.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="topic-badge">Topic 04 — Money &amp; Monetary Policy</div>
+<div class="counter"><span id="cur">1</span> / <span id="tot"></span></div>
+<div class="nav"><button onclick="prev()">← Prev</button><button onclick="next()">Next →</button></div>
+
+<div class="deck" id="deck">
+
+<!-- ===== S1 TITLE ===== -->
+<div class="slide title-slide active">
+<p style="font-size:1em;color:var(--accent);font-weight:600;letter-spacing:3px;">VIETNAM ECONOMICS OLYMPIAD</p>
+<h1 style="font-size:3.5em;color:#fff;">Money &amp;<br>Monetary Policy</h1>
+<p class="subtitle" style="margin-top:12px;">Topic 04 &bull; Functions of Money &bull; Central Banking &bull; Money Creation</p>
+<p style="color:var(--muted);margin-top:24px;">Instructor: Jan Nguyen</p>
+</div>
+
+<!-- S2 Objectives -->
+<div class="slide content-slide">
+<h2>🎯 Learning Objectives</h2>
+<div class="grid-3">
+<div class="box box-def"><h3 style="color:var(--accent);">Money Basics</h3><ul><li>Define money &amp; its 3 functions</li><li>Commodity vs fiat money</li><li>Money supply: M1, M2</li></ul></div>
+<div class="box box-key"><h3>Money Creation</h3><ul><li>Fractional-reserve banking</li><li>The money multiplier</li><li>Step-by-step deposit expansion</li></ul></div>
+<div class="box box-purple"><h3 style="color:var(--accent2);">Monetary Policy</h3><ul><li>Central bank tools (3 instruments)</li><li>Expansionary vs contractionary</li><li>Transmission mechanism</li><li>Quantity Theory of Money</li><li>Vietnam: SBV in practice</li></ul></div>
+</div>
+</div>
+
+<!-- S3 Section: What is Money -->
+<div class="slide section-slide">
+<p style="font-size:1em;letter-spacing:3px;font-weight:600;opacity:0.8;">PART 1</p>
+<h1 style="color:#fff;font-size:3.2em;">What Is Money?</h1>
+<p style="color:rgba(255,255,255,0.8);font-size:1.15em;">Not all wealth is money. Not all assets are money.</p>
+</div>
+
+<!-- S4 Definition -->
+<div class="slide content-slide">
+<h2>Definition of Money</h2>
+<div class="box box-def" style="padding:24px;text-align:center;">
+<p style="font-size:1.4em;color:var(--accent);font-weight:700;"><strong>Money</strong> = any commodity or token that is <span class="hl-g">generally acceptable</span> as a means of payment for goods and services.</p>
+</div>
+<div class="box box-warn" style="margin-top:16px;">
+<div class="box-title">⚠️ Common Misconception</div>
+<p style="color:var(--text);">Money ≠ wealth. Money ≠ income. Money ≠ all financial assets.</p>
+<ul><li><strong>Wealth:</strong> Total assets (house, stocks, cash). A house is wealth but NOT money.</li>
+<li><strong>Income:</strong> Flow of earnings over time. Income is earned; money is held.</li>
+<li><strong>Money:</strong> Specifically the assets <em>routinely accepted</em> in transactions.</li></ul>
+</div>
+</div>
+
+<!-- S5 Three functions -->
+<div class="slide content-slide">
+<h2>The Three Functions of Money</h2>
+<div class="grid-3">
+<div class="box box-def" style="text-align:center;padding:20px;">
+<div style="font-size:2.5em;">🔄</div>
+<h3 style="color:var(--accent);">1. Medium of Exchange</h3>
+<p>Accepted in exchange for goods &amp; services. Eliminates the need for <strong>barter</strong> (double coincidence of wants).</p>
+<p style="margin-top:8px;"><em>"I give you money; you give me phở."</em></p>
+</div>
+<div class="box box-key" style="text-align:center;padding:20px;">
+<div style="font-size:2.5em;">📏</div>
+<h3>2. Unit of Account</h3>
+<p>Common measure to state prices and compare values of different goods.</p>
+<p style="margin-top:8px;"><em>"This laptop costs 15 million VND."</em></p>
+</div>
+<div class="box box-purple" style="text-align:center;padding:20px;">
+<div style="font-size:2.5em;">🏦</div>
+<h3 style="color:var(--accent2);">3. Store of Value</h3>
+<p>Can be held and exchanged <em>later</em> for goods and services. Transfers purchasing power over time.</p>
+<p style="margin-top:8px;"><em>"I save VND today, spend it next year."</em></p>
+</div>
+</div>
+</div>
+
+<!-- S6 Functions detail -->
+<div class="slide content-slide">
+<h2>Understanding Each Function</h2>
+<table>
+<tr><th>Function</th><th>Without money</th><th>With money</th><th>Example</th></tr>
+<tr><td><strong>Medium of exchange</strong></td><td>Barter: need "double coincidence of wants" — very inefficient</td><td>Buy anything from anyone instantly</td><td>Using VND to buy groceries</td></tr>
+<tr><td><strong>Unit of account</strong></td><td>Need exchange rates between every pair of goods (N goods → N(N-1)/2 prices!)</td><td>Just N prices, all in one unit</td><td>All prices quoted in VND</td></tr>
+<tr><td><strong>Store of value</strong></td><td>Must hold perishable goods or barter immediately</td><td>Save purchasing power for the future</td><td>Savings account in VND</td></tr>
+</table>
+<div class="box box-warn" style="margin-top:12px;">
+<div class="box-title">⚠️ Inflation erodes the "store of value" function</div>
+If inflation is 10%, money held for a year loses 10% of its purchasing power. This is why people in high-inflation countries prefer to hold foreign currency or real assets.
+</div>
+</div>
+
+<!-- S7 VEO Money function Q -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 VEO 2021: Money Functions</h2>
+<div class="box box-veo">
+<p class="big" style="color:var(--text);">You need to <strong>estimate total learning costs</strong> for next school year. Which function of money do you apply?</p>
+<ul style="font-size:1.1em;margin-top:10px;">
+<li>(a) Medium of exchange</li>
+<li>(b) Store of value</li>
+<li style="color:var(--green);font-weight:700;">(c) Unit of account (measure of value) ✓</li>
+<li>(d) All of the above</li>
+</ul>
+</div>
+<div class="box box-key" style="margin-top:12px;">
+<div class="box-title">💡 Explanation</div>
+You're using money as a <strong>measuring stick</strong> to calculate and compare costs. You're not exchanging money (a) or storing it (b) — just using it to <strong>evaluate</strong> and <strong>add up</strong> expenses.
+</div>
+</div>
+
+<!-- S8 VEO 2022 Q -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 VEO 2022: Money Functions</h2>
+<div class="box box-veo">
+<p class="big" style="color:var(--text);">Money has the following functions, <strong>EXCEPT</strong>:</p>
+<ul style="font-size:1.1em;margin-top:10px;">
+<li style="color:var(--green);font-weight:700;">(A) The value of money does not change in inflation times ✓ (This is FALSE)</li>
+<li>(B) Money makes it easier to trade services</li>
+<li>(C) Money makes saving easier</li>
+<li>(D) Money makes it easier to buy and sell goods</li>
+</ul>
+</div>
+<div class="box box-key" style="margin-top:12px;">
+(B) = medium of exchange. (C) = store of value. (D) = medium of exchange. (A) is <strong>false</strong> — money <em>loses value</em> during inflation. This is NOT a function of money; it's a <strong>limitation</strong>.
+</div>
+</div>
+
+<!-- S9 Types of money -->
+<div class="slide content-slide">
+<h2>Types of Money</h2>
+<div class="grid-2">
+<div class="box box-def">
+<h3 style="color:var(--accent);">By Intrinsic Value</h3>
+<table>
+<tr><th>Type</th><th>Description</th><th>Example</th></tr>
+<tr><td><strong>Commodity money</strong></td><td>Has intrinsic value — useful even if not used as money</td><td>Gold coins, salt, cattle</td></tr>
+<tr><td><strong>Fiat money</strong></td><td>No intrinsic value — declared money by government decree</td><td>VND, USD, EUR banknotes</td></tr>
+</table>
+</div>
+<div class="box box-key">
+<h3>By Liquidity (Money Supply)</h3>
+<table>
+<tr><th>Measure</th><th>Includes</th></tr>
+<tr><td><strong>M0 (Base money)</strong></td><td>Currency in circulation + bank reserves at central bank</td></tr>
+<tr><td><strong>M1 (Narrow money)</strong></td><td>Currency + demand deposits (chequing accounts)</td></tr>
+<tr><td><strong>M2 (Broad money)</strong></td><td>M1 + savings deposits + time deposits + money market funds</td></tr>
+</table>
+</div>
+</div>
+<div class="box box-purple" style="margin-top:10px;">
+<strong>Liquidity</strong> = how easily an asset can be converted to cash. Cash = most liquid. A house = very illiquid. M1 is more liquid than M2.
+</div>
+</div>
+
+<!-- S10 Brief history -->
+<div class="slide content-slide">
+<h2>A Brief History of Money</h2>
+<div class="diagram">
+<div class="d-box orange" style="min-width:130px;"><strong>Barter</strong><br><span style="font-size:0.8em;">Goods for goods<br>Inefficient</span></div>
+<div class="d-arrow">→</div>
+<div class="d-box purple" style="min-width:130px;"><strong>Commodity</strong><br><span style="font-size:0.8em;">Gold, silver, salt<br>Has intrinsic value</span></div>
+<div class="d-arrow">→</div>
+<div class="d-box indigo" style="min-width:130px;"><strong>Paper (backed)</strong><br><span style="font-size:0.8em;">Gold standard<br>Convertible to gold</span></div>
+<div class="d-arrow">→</div>
+<div class="d-box green" style="min-width:130px;"><strong>Fiat money</strong><br><span style="font-size:0.8em;">No backing<br>Trust in government</span></div>
+<div class="d-arrow">→</div>
+<div class="d-box blue" style="min-width:130px;"><strong>Digital</strong><br><span style="font-size:0.8em;">Electronic transfers<br>Crypto, CBDCs</span></div>
+</div>
+<div class="box box-warn" style="margin-top:14px;">
+<div class="box-title">🇻🇳 Vietnam</div>
+The Vietnamese Đồng (VND) is <strong>fiat money</strong> — it has no intrinsic value and is not backed by gold. Its value comes from legal tender laws and trust in the State Bank of Vietnam (SBV).
+</div>
+</div>
+
+<!-- S11 Section: Banking -->
+<div class="slide section-slide">
+<p style="font-size:1em;letter-spacing:3px;font-weight:600;opacity:0.8;">PART 2</p>
+<h1 style="color:#fff;font-size:3em;">Banks &amp;<br>Money Creation</h1>
+<p style="color:rgba(255,255,255,0.8);">How commercial banks "create" money through lending</p>
+</div>
+
+<!-- S12 Banking system -->
+<div class="slide content-slide">
+<h2>The Banking System</h2>
+<div class="grid-2">
+<div class="box box-def">
+<div style="font-size:2em;text-align:center;">🏛️</div>
+<h3 style="color:var(--accent);">Central Bank (1 per country)</h3>
+<ul><li>Issues currency</li><li>Sets monetary policy</li><li>Regulates commercial banks</li><li>Lender of last resort</li><li>Manages government's accounts</li></ul>
+<p style="margin-top:6px;"><strong>Vietnam:</strong> State Bank of Vietnam (SBV / Ngân hàng Nhà nước)</p>
+</div>
+<div class="box box-key">
+<div style="font-size:2em;text-align:center;">🏦</div>
+<h3>Commercial Banks (many)</h3>
+<ul><li>Accept deposits from public</li><li>Make loans to businesses &amp; individuals</li><li><strong>Financial intermediaries:</strong> channel funds from savers to borrowers</li><li>Create money through lending</li></ul>
+<p style="margin-top:6px;"><strong>Vietnam:</strong> Vietcombank, BIDV, Techcombank, etc.</p>
+</div>
+</div>
+</div>
+
+<!-- S13 Central bank functions -->
+<div class="slide content-slide">
+<h2>Functions of the Central Bank</h2>
+<table>
+<tr><th>#</th><th>Function</th><th>Description</th></tr>
+<tr><td>1</td><td><strong>Issue banknotes</strong></td><td>Sole authority to print/issue currency</td></tr>
+<tr><td>2</td><td><strong>Banker to government</strong></td><td>Holds government deposits; manages government borrowing</td></tr>
+<tr><td>3</td><td><strong>Banker to banks</strong></td><td>Commercial banks hold reserves at the CB; clearing system</td></tr>
+<tr><td>4</td><td><strong>Lender of last resort</strong></td><td>Provides emergency liquidity to banks facing shortfalls</td></tr>
+<tr><td>5</td><td><strong>Monetary policy</strong></td><td>Controls money supply and interest rates to achieve economic goals</td></tr>
+<tr><td>6</td><td><strong>Exchange rate management</strong></td><td>Manages foreign currency reserves; intervenes in forex market</td></tr>
+<tr><td>7</td><td><strong>Financial supervision</strong></td><td>Ensures banks operate safely; prudential regulation</td></tr>
+</table>
+</div>
+
+<!-- S14 Fractional reserve -->
+<div class="slide content-slide">
+<h2>Fractional-Reserve Banking</h2>
+<div class="box box-def"><div class="box-title">📘 Key Concept</div>
+Banks keep only a <strong>fraction</strong> of deposits as reserves and lend out the rest. This is how money gets created.
+</div>
+<div class="grid-2" style="margin-top:14px;">
+<div class="box box-key">
+<h3>Reserve Ratio (rr)</h3>
+$$rr = \frac{\text{Reserves}}{\text{Deposits}}$$
+<p>The <strong>required reserve ratio</strong> is set by the central bank. Banks must hold at least this fraction.</p>
+<p style="margin-top:6px;"><strong>Example:</strong> If rr = 10%, a bank with $1,000 in deposits must keep $100 as reserves and can lend $900.</p>
+</div>
+<div class="box box-purple">
+<h3 style="color:var(--accent2);">Why this creates money</h3>
+<p>When a bank lends $900, that $900 gets deposited in another bank. That bank keeps 10% ($90) and lends $810. The $810 gets deposited again...</p>
+<p style="margin-top:6px;">Each loan <strong>creates a new deposit</strong> → the money supply <strong>expands</strong> beyond the original deposit!</p>
+</div>
+</div>
+</div>
+
+<!-- S15 Money creation step by step -->
+<div class="slide calc-slide">
+<h2 style="color:var(--green);">📊 Money Creation: Step by Step</h2>
+<p style="color:var(--text);">Initial deposit: <strong>$1,000</strong>. Reserve ratio: <strong>rr = 20%</strong></p>
+<table style="font-size:0.88em;">
+<tr><th>Round</th><th>Deposit</th><th>Reserves (20%)</th><th>Loan (80%)</th><th>Cumulative Money</th></tr>
+<tr><td>1</td><td>$1,000.00</td><td>$200.00</td><td>$800.00</td><td>$1,000</td></tr>
+<tr><td>2</td><td>$800.00</td><td>$160.00</td><td>$640.00</td><td>$1,800</td></tr>
+<tr><td>3</td><td>$640.00</td><td>$128.00</td><td>$512.00</td><td>$2,440</td></tr>
+<tr><td>4</td><td>$512.00</td><td>$102.40</td><td>$409.60</td><td>$2,952</td></tr>
+<tr><td>5</td><td>$409.60</td><td>$81.92</td><td>$327.68</td><td>$3,362</td></tr>
+<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+<tr style="font-weight:700;"><td>∞</td><td colspan="3">Process continues until all money is in reserves</td><td style="color:var(--green);font-size:1.1em;">$5,000</td></tr>
+</table>
+</div>
+
+<!-- S16 Money multiplier -->
+<div class="slide content-slide">
+<h2>The Money Multiplier</h2>
+<div class="box box-key" style="text-align:center;padding:28px;">
+<p class="formula-big" style="font-size:2em;">Money Multiplier $= \dfrac{1}{rr}$</p>
+<p style="color:var(--muted);margin-top:8px;">Total Money Created = Initial Deposit × $\dfrac{1}{rr}$</p>
+</div>
+<div class="box box-calc" style="margin-top:16px;">
+<div class="box-title">📊 Example from previous slide</div>
+<p>$rr = 20\% = 0.20$. Initial deposit = $1,000.</p>
+<p>Multiplier $= 1/0.20 = 5$</p>
+<p>Total money = $1,000 × 5 = <strong class="hl-g" style="font-size:1.2em;">$5,000</strong></p>
+</div>
+<table style="margin-top:14px;">
+<tr><th>Reserve Ratio</th><th>Money Multiplier</th><th>$1,000 deposit creates:</th></tr>
+<tr><td>5%</td><td><strong>20</strong></td><td>$20,000</td></tr>
+<tr><td>10%</td><td><strong>10</strong></td><td>$10,000</td></tr>
+<tr><td>20%</td><td><strong>5</strong></td><td>$5,000</td></tr>
+<tr><td>25%</td><td><strong>4</strong></td><td>$4,000</td></tr>
+<tr><td>50%</td><td><strong>2</strong></td><td>$2,000</td></tr>
+</table>
+</div>
+
+<!-- S17 VEO money multiplier -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 VEO 2021: Money Multiplier</h2>
+<div class="box box-veo">
+<p class="big" style="color:var(--text);">If all banks have a reserve ratio of <strong>25%</strong>, then new reserves of <strong>3 million VND</strong> can generate:</p>
+<ul style="font-size:1.1em;margin-top:10px;">
+<li>(a) 6 million VND</li>
+<li>(b) 750,000 VND</li>
+<li style="color:var(--green);font-weight:700;">(c) 12 million VND ✓</li>
+<li>(d) 7.5 million VND</li>
+</ul>
+</div>
+<div class="box box-calc" style="margin-top:14px;">
+<h3>Solution:</h3>
+<p>Multiplier $= 1 / 0.25 = 4$</p>
+<p>Total new money $= 3{,}000{,}000 \times 4 = $ <strong class="hl-g">12,000,000 VND</strong></p>
+</div>
+</div>
+
+<!-- S18 VEO 2022 loan repayment -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 VEO 2022: Loan Repayment</h2>
+<div class="box box-veo">
+<p class="big" style="color:var(--text);">When a bank loan is repaid, the supply of money:</p>
+<ul style="font-size:1.1em;margin-top:10px;">
+<li>(a) may either increase or decrease</li>
+<li>(b) is constant but composition changed</li>
+<li>(c) is increased</li>
+<li style="color:var(--green);font-weight:700;">(d) is decreased ✓</li>
+</ul>
+</div>
+<div class="box box-key" style="margin-top:14px;">
+<div class="box-title">💡 Explanation</div>
+Bank lending <strong>creates</strong> money (new deposits). When loans are <strong>repaid</strong>, the process <em>reverses</em>: deposits are destroyed → money supply <strong>decreases</strong>. Think of it as "un-creating" money.
+</div>
+</div>
+
+<!-- S19 Section: Monetary Policy -->
+<div class="slide section-slide">
+<p style="font-size:1em;letter-spacing:3px;font-weight:600;opacity:0.8;">PART 3</p>
+<h1 style="color:#fff;font-size:3em;">Monetary Policy</h1>
+<p style="color:rgba(255,255,255,0.8);">How the central bank controls money supply and interest rates</p>
+</div>
+
+<!-- S20 Definition -->
+<div class="slide content-slide">
+<h2>What is Monetary Policy?</h2>
+<div class="box box-def" style="padding:22px;">
+<div class="box-title">📘 Definition</div>
+<strong>Monetary policy</strong> = the control of the <strong>money supply</strong> and <strong>interest rates</strong> by the central bank to achieve macroeconomic goals (price stability, full employment, growth).
+</div>
+<div class="grid-2" style="margin-top:18px;">
+<div class="box box-key" style="text-align:center;padding:22px;">
+<div style="font-size:2.5em;">📈</div>
+<h3>Expansionary ("Easy money")</h3>
+<p><strong>↑ Money Supply</strong> / <strong>↓ Interest Rates</strong></p>
+<p>Goal: stimulate economy, fight recession</p>
+<p style="margin-top:6px;">AD shifts <strong>right</strong></p>
+</div>
+<div class="box box-red" style="text-align:center;padding:22px;">
+<div style="font-size:2.5em;">📉</div>
+<h3 style="color:var(--red);">Contractionary ("Tight money")</h3>
+<p><strong>↓ Money Supply</strong> / <strong>↑ Interest Rates</strong></p>
+<p>Goal: cool economy, fight inflation</p>
+<p style="margin-top:6px;">AD shifts <strong>left</strong></p>
+</div>
+</div>
+</div>
+
+<!-- S21 Three tools -->
+<div class="slide content-slide">
+<h2>The Central Bank's 3 Policy Tools</h2>
+<div class="grid-3">
+<div class="box box-def" style="text-align:center;">
+<div style="font-size:2em;">📊</div>
+<h3 style="color:var(--accent);">1. Reserve Requirements</h3>
+<p>Min fraction of deposits banks must hold as reserves.</p>
+<p style="margin-top:8px;">↓ rr → multiplier ↑ → <span class="tag tag-g">MS ↑</span><br>↑ rr → multiplier ↓ → <span class="tag tag-r">MS ↓</span></p>
+</div>
+<div class="box box-key" style="text-align:center;">
+<div style="font-size:2em;">💰</div>
+<h3>2. Discount Rate</h3>
+<p>Interest rate CB charges banks for short-term loans.</p>
+<p style="margin-top:8px;">↓ rate → banks borrow more → <span class="tag tag-g">MS ↑</span><br>↑ rate → banks borrow less → <span class="tag tag-r">MS ↓</span></p>
+</div>
+<div class="box box-purple" style="text-align:center;">
+<div style="font-size:2em;">📜</div>
+<h3 style="color:var(--accent2);">3. Open Market Operations</h3>
+<p>CB buys/sells government bonds.</p>
+<p style="margin-top:8px;">Buy bonds → inject money → <span class="tag tag-g">MS ↑</span><br>Sell bonds → absorb money → <span class="tag tag-r">MS ↓</span></p>
+</div>
+</div>
+<div class="box box-warn" style="margin-top:10px;">
+<strong>Most commonly used:</strong> Open Market Operations (OMO) — most flexible, can be done daily in any amount.
+</div>
+</div>
+
+<!-- S22 OMO detail -->
+<div class="slide content-slide">
+<h2>Open Market Operations (OMO) — In Detail</h2>
+<div class="grid-2">
+<div class="box box-key">
+<h3>CB BUYS bonds (Expansionary)</h3>
+<div class="diagram" style="font-size:0.85em;">
+<div class="d-box green">CB buys bonds<br>from public/banks</div>
+<div class="d-arrow">→</div>
+<div class="d-box green">Pays with<br>new money</div>
+<div class="d-arrow">→</div>
+<div class="d-box green">Bank reserves ↑</div>
+<div class="d-arrow">→</div>
+<div class="d-box green">More lending<br>→ MS ↑</div>
+</div>
+</div>
+<div class="box box-red">
+<h3 style="color:var(--red);">CB SELLS bonds (Contractionary)</h3>
+<div class="diagram" style="font-size:0.85em;">
+<div class="d-box red">CB sells bonds<br>to public/banks</div>
+<div class="d-arrow">→</div>
+<div class="d-box red">Receives money<br>(withdrawn)</div>
+<div class="d-arrow">→</div>
+<div class="d-box red">Bank reserves ↓</div>
+<div class="d-arrow">→</div>
+<div class="d-box red">Less lending<br>→ MS ↓</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- S23 VEO OMO -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 VEO 2022: Open Market Operations</h2>
+<div class="box box-veo">
+<p class="big" style="color:var(--text);">When the SBV (State Bank of Vietnam) <strong>buys</strong> government bonds:</p>
+<ul style="font-size:1.1em;margin-top:10px;">
+<li>(a) the money supply decreases</li>
+<li>(b) the money supply does not change</li>
+<li style="color:var(--green);font-weight:700;">(c) the money supply increases ✓</li>
+<li>(d) the money supply decreases then increases</li>
+</ul>
+</div>
+<div class="box box-key" style="margin-top:12px;">
+CB <strong>buys</strong> bonds = <strong>pays money</strong> to bondholders = money enters banking system = <strong>MS increases</strong>.
+</div>
+</div>
+
+<!-- S24 Tools summary table -->
+<div class="slide content-slide">
+<h2>Monetary Policy Tools — Summary</h2>
+<table>
+<tr><th>Tool</th><th>To EXPAND (↑ MS)</th><th>To CONTRACT (↓ MS)</th></tr>
+<tr><td><strong>Reserve Requirements</strong></td><td>Lower rr → bigger multiplier</td><td>Raise rr → smaller multiplier</td></tr>
+<tr><td><strong>Discount Rate</strong></td><td>Lower rate → banks borrow more from CB</td><td>Raise rate → banks borrow less</td></tr>
+<tr><td><strong>Open Market Operations</strong></td><td><strong>BUY</strong> bonds → inject money</td><td><strong>SELL</strong> bonds → absorb money</td></tr>
+</table>
+<div class="box box-purple" style="margin-top:14px;">
+<div class="box-title">💡 Memory Trick: "BBS" for Expansionary</div>
+<strong>B</strong>uy bonds, <strong>B</strong>ring down rates, <strong>S</strong>hrink reserves ratio → all <strong>increase</strong> money supply.
+</div>
+</div>
+
+<!-- S25 Transmission mechanism -->
+<div class="slide content-slide">
+<h2>Monetary Policy Transmission Mechanism</h2>
+<p class="big" style="color:var(--text);margin-bottom:14px;">How does changing the money supply affect the real economy?</p>
+<h3>Expansionary Policy Chain:</h3>
+<div class="diagram">
+<div class="d-box indigo">CB ↑ MS</div><div class="d-arrow">→</div>
+<div class="d-box purple">Interest<br>rates ↓</div><div class="d-arrow">→</div>
+<div class="d-box green">Borrowing<br>cheaper</div><div class="d-arrow">→</div>
+<div class="d-box green">I ↑, C ↑</div><div class="d-arrow">→</div>
+<div class="d-box green">AD ↑</div><div class="d-arrow">→</div>
+<div class="d-box green">Y ↑, Employment ↑</div>
+</div>
+<h3 style="margin-top:16px;">Contractionary Policy Chain:</h3>
+<div class="diagram">
+<div class="d-box indigo">CB ↓ MS</div><div class="d-arrow">→</div>
+<div class="d-box red">Interest<br>rates ↑</div><div class="d-arrow">→</div>
+<div class="d-box red">Borrowing<br>costlier</div><div class="d-arrow">→</div>
+<div class="d-box red">I ↓, C ↓</div><div class="d-arrow">→</div>
+<div class="d-box red">AD ↓</div><div class="d-arrow">→</div>
+<div class="d-box red">Inflation ↓</div>
+</div>
+</div>
+
+<!-- S26 Money market -->
+<div class="slide content-slide">
+<h2>The Money Market</h2>
+<div class="grid-2">
+<div>
+<div class="box box-def"><div class="box-title">📘 Money Demand ($M^d$)</div>
+<p>People hold money for transactions, precaution, and speculation. Money demand depends on:</p>
+<ul><li><strong>Income (Y):</strong> ↑Y → ↑M^d (more transactions)</li>
+<li><strong>Interest rate (r):</strong> ↑r → ↓M^d (higher opportunity cost of holding cash)</li>
+<li><strong>Price level (P):</strong> ↑P → ↑M^d (need more money for same purchases)</li></ul></div>
+<div class="box box-key" style="margin-top:10px;"><div class="box-title">📘 Money Supply ($M^s$)</div>
+Set by the central bank. <strong>Vertical</strong> line (does not depend on interest rate — CB chooses it).</div>
+</div>
+<div style="display:flex;align-items:center;justify-content:center;">
+<svg viewBox="0 0 280 250" style="width:100%;max-width:270px;">
+<defs><marker id="ah3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker></defs>
+<line x1="40" y1="220" x2="260" y2="220" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah3)"/>
+<line x1="40" y1="220" x2="40" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah3)"/>
+<text x="150" y="245" fill="#94a3b8" text-anchor="middle" font-size="12" font-family="Inter">Quantity of Money</text>
+<text x="15" y="120" fill="#94a3b8" text-anchor="middle" font-size="12" font-family="Inter" transform="rotate(-90,15,120)">Interest Rate (r)</text>
+<line x1="150" y1="30" x2="150" y2="220" stroke="#6366f1" stroke-width="3"/>
+<text x="160" y="25" fill="#6366f1" font-size="12" font-weight="700" font-family="Inter">Mˢ</text>
+<path d="M60,50 Q140,120 240,190" fill="none" stroke="#ef4444" stroke-width="3"/>
+<text x="245" y="195" fill="#ef4444" font-size="12" font-weight="700" font-family="Inter">Mᵈ</text>
+<circle cx="150" cy="130" r="5" fill="#10b981"/>
+<text x="165" y="125" fill="#10b981" font-size="11" font-weight="700" font-family="Inter">r*</text>
+<line x1="40" y1="130" x2="150" y2="130" stroke="#10b981" stroke-width="1" stroke-dasharray="5,5"/>
+</svg>
+</div>
+</div>
+</div>
+
+<!-- S27 How MS change affects r -->
+<div class="slide content-slide">
+<h2>How Money Supply Changes Affect Interest Rates</h2>
+<div class="grid-2">
+<div class="box box-key">
+<h3>MS Increases (Expansionary)</h3>
+<p>Ms curve shifts <strong>right</strong> → surplus of money at old rate → interest rate <strong>falls</strong> to new equilibrium.</p>
+<p style="margin-top:8px;">Lower r → more borrowing → more spending → <strong>AD shifts right</strong></p>
+</div>
+<div class="box box-red">
+<h3 style="color:var(--red);">MS Decreases (Contractionary)</h3>
+<p>Ms curve shifts <strong>left</strong> → shortage of money at old rate → interest rate <strong>rises</strong> to new equilibrium.</p>
+<p style="margin-top:8px;">Higher r → less borrowing → less spending → <strong>AD shifts left</strong></p>
+</div>
+</div>
+<div class="box box-warn" style="margin-top:14px;">
+<div class="box-title">📝 VEO Exam Tip</div>
+The chain is: <strong>MS → Interest rate → Investment/Consumption → AD → Output/Prices</strong>. Always trace through the full transmission mechanism in your answer.
+</div>
+</div>
+
+<!-- S28 Section: QTM -->
+<div class="slide section-slide">
+<p style="font-size:1em;letter-spacing:3px;font-weight:600;opacity:0.8;">THE LONG RUN</p>
+<h1 style="color:#fff;font-size:3em;">Quantity Theory<br>of Money</h1>
+</div>
+
+<!-- S29 QTM -->
+<div class="slide content-slide">
+<h2>The Quantity Theory of Money</h2>
+<div class="box box-def" style="text-align:center;padding:28px;">
+<p class="formula-big" style="font-size:2.2em;">$M \times V = P \times Y$</p>
+</div>
+<table style="margin-top:18px;">
+<tr><th>Variable</th><th>Meaning</th><th>Determined by</th></tr>
+<tr><td><strong>M</strong></td><td>Money supply</td><td>Central bank</td></tr>
+<tr><td><strong>V</strong></td><td>Velocity of money (how many times each unit of money changes hands per year)</td><td>Institutional factors (assumed <strong>constant</strong> in the short run)</td></tr>
+<tr><td><strong>P</strong></td><td>Price level</td><td>Endogenous</td></tr>
+<tr><td><strong>Y</strong></td><td>Real GDP (real output)</td><td>Supply-side factors (in the long run)</td></tr>
+</table>
+</div>
+
+<!-- S30 QTM implications -->
+<div class="slide content-slide">
+<h2>QTM: Key Implications</h2>
+<div class="box box-key" style="padding:20px;">
+<p style="font-size:1.3em;color:var(--text);font-weight:600;">If V is constant and Y is at full employment:</p>
+<p class="formula-big" style="margin-top:8px;">↑ M → ↑ P (proportionally)</p>
+<p style="text-align:center;color:var(--muted);">"Inflation is always and everywhere a monetary phenomenon." — Milton Friedman</p>
+</div>
+<div class="box box-calc" style="margin-top:16px;">
+<div class="box-title">📊 In growth rates:</div>
+$$\%\Delta M + \%\Delta V = \%\Delta P + \%\Delta Y$$
+<p style="margin-top:8px;">If V is constant ($\%\Delta V = 0$):</p>
+$$\text{Inflation} = \%\Delta M - \%\Delta Y$$
+<p><strong>Example:</strong> Money supply grows 10%, real GDP grows 3% → Inflation ≈ 7%.</p>
+</div>
+<div class="box box-warn" style="margin-top:10px;">
+<strong>This is why printing money to finance government spending causes inflation</strong> (see VEO 2021 Q1c2!).
+</div>
+</div>
+
+<!-- S31 Vietnam context -->
+<div class="slide content-slide">
+<h2>🇻🇳 SBV Monetary Policy in Practice</h2>
+<div class="box box-veo"><div class="box-title">COVID-19 Response (2020–2021)</div>
+<ul><li><strong>Three rate cuts</strong> (March, May, October 2020): discount rate to 2.5%/year, refinancing rate to 4%/year</li>
+<li>Short-term lending rate cap lowered to 5%/year</li>
+<li>Goal: reduce borrowing costs → stimulate investment → support recovery</li>
+<li>Result: credit growth maintained; economy recovered faster than many peers</li></ul></div>
+<div class="box box-key" style="margin-top:12px;"><div class="box-title">2022–2023: Tightening Cycle</div>
+<ul><li>Global inflation + Fed rate hikes → SBV raised rates to defend VND and control inflation</li>
+<li>Credit growth targets tightened</li>
+<li>Then eased again in 2023 to support recovery after real estate market stress</li></ul></div>
+<div class="box box-purple" style="margin-top:10px;">
+<strong>Vietnam's exchange rate regime:</strong> <em>Managed float</em> — SBV allows market forces but intervenes to prevent excessive volatility. VND is managed within a band against USD.
+</div>
+</div>
+
+<!-- S32 Practice: Policy chain -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Trace the Chain</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">The SBV decides to <strong>buy government bonds</strong> on the open market. Trace the full effect on the economy.</p>
+</div>
+<div class="box box-calc" style="margin-top:14px;">
+<h3>Answer:</h3>
+<div class="diagram" style="font-size:0.85em;">
+<div class="d-box indigo">SBV buys bonds</div><div class="d-arrow">→</div>
+<div class="d-box green">Money enters<br>banking system</div><div class="d-arrow">→</div>
+<div class="d-box green">Bank reserves ↑</div><div class="d-arrow">→</div>
+<div class="d-box green">Banks lend more<br>(money multiplier)</div>
+</div>
+<div class="diagram" style="font-size:0.85em;">
+<div class="d-box green">Money supply ↑</div><div class="d-arrow">→</div>
+<div class="d-box green">Interest rates ↓</div><div class="d-arrow">→</div>
+<div class="d-box green">I ↑ and C ↑</div><div class="d-arrow">→</div>
+<div class="d-box green">AD shifts right</div><div class="d-arrow">→</div>
+<div class="d-box green">Y ↑, P ↑</div>
+</div>
+</div>
+</div>
+
+<!-- S33 Limitations -->
+<div class="slide content-slide">
+<h2>Limitations of Monetary Policy</h2>
+<table>
+<tr><th>Limitation</th><th>Description</th></tr>
+<tr><td><strong>Liquidity trap</strong></td><td>When interest rates are already near zero, CB can't lower them further. Extra money just gets hoarded. (Japan 1990s–2010s)</td></tr>
+<tr><td><strong>Pushing on a string</strong></td><td>CB can make borrowing cheap, but can't <em>force</em> businesses to borrow or consumers to spend if confidence is low</td></tr>
+<tr><td><strong>Time lags</strong></td><td>Monetary policy affects economy with 6–18 month delay. Hard to time correctly.</td></tr>
+<tr><td><strong>Asset bubbles</strong></td><td>Low rates can inflate stock/property prices → instability</td></tr>
+<tr><td><strong>Exchange rate effects</strong></td><td>Lowering rates can cause capital outflows → currency depreciation → imported inflation</td></tr>
+<tr><td><strong>Inequality</strong></td><td>Low rates benefit asset owners (stocks/property rise) more than workers</td></tr>
+</table>
+</div>
+
+<!-- S34 Liquidity trap -->
+<div class="slide content-slide">
+<h2>The Liquidity Trap</h2>
+<div class="box box-def"><div class="box-title">📘 Definition</div>
+A situation where interest rates are at or near <strong>zero</strong>, and monetary policy becomes <strong>ineffective</strong>. Increasing the money supply doesn't lower rates further — people just hold the extra cash.
+</div>
+<div class="box box-warn" style="margin-top:14px;">
+<div class="box-title">⚠️ When this happens:</div>
+<ul><li>Conventional monetary policy is "trapped" — can't cut rates below zero (the "zero lower bound")</li>
+<li>Central banks resort to <strong>unconventional tools:</strong> Quantitative Easing (QE) = buying long-term bonds to push down long-term rates</li>
+<li><strong>Fiscal policy becomes essential</strong> in a liquidity trap (Keynesian argument)</li></ul>
+</div>
+<div class="box box-purple" style="margin-top:10px;">
+<strong>Examples:</strong> Japan (1990s–2020s), US and Europe after 2008 financial crisis, global response to COVID-19.
+</div>
+</div>
+
+<!-- S35 Monetary vs Fiscal -->
+<div class="slide content-slide">
+<h2>Monetary vs Fiscal Policy</h2>
+<table>
+<tr><th>Feature</th><th>Monetary Policy</th><th>Fiscal Policy</th></tr>
+<tr><td><strong>Authority</strong></td><td>Central Bank (independent)</td><td>Government (elected politicians)</td></tr>
+<tr><td><strong>Tools</strong></td><td>Interest rates, OMO, reserves</td><td>G, T</td></tr>
+<tr><td><strong>Speed</strong></td><td>Fast decision, slow effect (6–18 mo lag)</td><td>Slow decision (legislation), varies in speed</td></tr>
+<tr><td><strong>Precision</strong></td><td>Blunt — affects whole economy</td><td>Can target specific sectors/groups</td></tr>
+<tr><td><strong>Works through</strong></td><td>Interest rates → I, C</td><td>Direct spending or disposable income</td></tr>
+<tr><td><strong>Crowding out?</strong></td><td>No (opposite: lower rates encourage I)</td><td>Yes (government borrowing raises rates)</td></tr>
+<tr><td><strong>At zero rates?</strong></td><td>Ineffective (liquidity trap)</td><td>Still works (direct spending)</td></tr>
+<tr><td><strong>Inflation risk</strong></td><td>If excessive → inflation</td><td>If debt-financed → inflationary</td></tr>
+</table>
+</div>
+
+<!-- S36 Practice classify -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Classify the Policy</h2>
+<table>
+<tr><th>Action</th><th>Type</th><th>Direction</th></tr>
+<tr><td>SBV cuts the discount rate by 1%</td><td><span class="tag tag-b">Monetary</span></td><td><span class="tag tag-g">Expansionary</span></td></tr>
+<tr><td>Government increases infrastructure spending</td><td><span class="tag tag-o">Fiscal</span></td><td><span class="tag tag-g">Expansionary</span></td></tr>
+<tr><td>SBV sells government bonds</td><td><span class="tag tag-b">Monetary</span></td><td><span class="tag tag-r">Contractionary</span></td></tr>
+<tr><td>Government raises VAT from 8% to 10%</td><td><span class="tag tag-o">Fiscal</span></td><td><span class="tag tag-r">Contractionary</span></td></tr>
+<tr><td>SBV lowers reserve requirements</td><td><span class="tag tag-b">Monetary</span></td><td><span class="tag tag-g">Expansionary</span></td></tr>
+<tr><td>Government sends stimulus cheques</td><td><span class="tag tag-o">Fiscal</span></td><td><span class="tag tag-g">Expansionary</span></td></tr>
+<tr><td>SBV raises refinancing rate</td><td><span class="tag tag-b">Monetary</span></td><td><span class="tag tag-r">Contractionary</span></td></tr>
+</table>
+</div>
+
+<!-- S37 Practice calculation -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Money Multiplier Advanced</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">The SBV requires a reserve ratio of 10%. A new deposit of 500 million VND enters the banking system.</p>
+<p style="color:var(--text);margin-top:6px;">(a) What is the money multiplier?<br>(b) What is the maximum total money created?<br>(c) If the SBV raises the reserve ratio to 20%, what happens?</p>
+</div>
+<div class="box box-calc" style="margin-top:14px;">
+<h3>Solutions:</h3>
+<p>(a) $k = 1/0.10 = $ <strong>10</strong></p>
+<p>(b) $500M \times 10 = $ <strong class="hl-g">5,000 million VND = 5 billion VND</strong></p>
+<p>(c) New multiplier $= 1/0.20 = 5$. Max money $= 500M \times 5 = 2,500M$ VND. Money creation <strong>halved</strong> — this is contractionary.</p>
+</div>
+</div>
+
+<!-- S38 QTM practice -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Quantity Theory</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">Money supply grows at 12% per year. Real GDP grows at 5%. Velocity is constant. What is the inflation rate?</p>
+</div>
+<div class="box box-calc" style="margin-top:14px;">
+<h3>Solution:</h3>
+<p>$\%\Delta M + \%\Delta V = \%\Delta P + \%\Delta Y$</p>
+<p>$12\% + 0\% = \pi + 5\%$</p>
+<p>$\pi = 12\% - 5\% = $ <strong class="hl-g">7%</strong></p>
+</div>
+<div class="box box-veo" style="margin-top:14px;">
+<p style="color:var(--text);"><strong>Follow-up:</strong> The government prints money equal to 8% of GDP to finance a vaccine fund. What happens to inflation if real GDP growth stays at 5%?</p>
+<p style="color:var(--green);font-weight:700;margin-top:6px;">Money growth = 8% (new) + whatever existing growth. If total M growth = 13%: π = 13% − 5% = 8%. Inflation jumps — this is why "printing money" is inflationary.</p>
+</div>
+</div>
+
+<!-- S39 Cryptocurrencies -->
+<div class="slide content-slide">
+<h2>Modern Money: Cryptocurrencies</h2>
+<div class="box box-def"><div class="box-title">📘 What are cryptocurrencies?</div>
+Digital currencies using <strong>blockchain</strong> technology. Decentralised — not controlled by any central bank.</div>
+<table style="margin-top:14px;">
+<tr><th>Feature</th><th>Traditional Money (VND)</th><th>Cryptocurrency (Bitcoin)</th></tr>
+<tr><td>Issuer</td><td>Central bank (SBV)</td><td>Decentralised network</td></tr>
+<tr><td>Backing</td><td>Government trust + legal tender laws</td><td>Cryptographic proof + limited supply</td></tr>
+<tr><td>Volatility</td><td>Low (managed by CB)</td><td>Very high (speculative)</td></tr>
+<tr><td>Anonymity</td><td>Limited (banking records)</td><td>Pseudonymous (NOT fully anonymous!)</td></tr>
+<tr><td>Legal tender</td><td>Yes</td><td>Not in most countries (incl. Vietnam)</td></tr>
+</table>
+<div class="box box-veo" style="margin-top:10px;">
+<strong>VEO Practice 2022:</strong> Which is NOT true about crypto?<br>
+<strong>Answer: "All transactions are untraceable and completely anonymous"</strong> — FALSE. Blockchain is a <em>public</em> ledger; transactions are pseudonymous but traceable.
+</div>
+</div>
+
+<!-- S40 Common mistakes -->
+<div class="slide content-slide">
+<h2>⚠️ Common Exam Mistakes</h2>
+<div class="grid-2">
+<div class="box box-red"><div class="box-title" style="color:var(--red);">❌ Don't</div>
+<ul><li>Say "the CB prints money" as fiscal policy (that's monetary)</li>
+<li>Forget that loan repayment <strong>destroys</strong> money</li>
+<li>Confuse the money multiplier ($1/rr$) with the spending multiplier ($1/(1-MPC)$)</li>
+<li>Say "CB controls interest rates directly" — CB controls <em>money supply</em>; interest rates adjust in the money market</li>
+<li>Forget to trace the full transmission mechanism</li></ul></div>
+<div class="box box-key"><div class="box-title">✅ Do</div>
+<ul><li>Always specify <em>which</em> CB tool is used</li>
+<li>Trace: Tool → MS → r → I/C → AD → Y/P</li>
+<li>Distinguish short-run (r changes → real effects) vs long-run (money neutrality → only P changes)</li>
+<li>Remember: higher rr → <em>smaller</em> multiplier → <em>less</em> money created</li>
+<li>Connect to Vietnam/SBV for VEO bonus marks</li></ul></div>
+</div>
+</div>
+
+<!-- S41 Key terms -->
+<div class="slide content-slide">
+<h2>📝 Key Terms — Topic 4</h2>
+<div class="grid-3">
+<div class="box box-def"><h3 style="color:var(--accent);">Money</h3><ul><li>3 functions</li><li>Commodity vs fiat</li><li>M0, M1, M2</li><li>Liquidity</li></ul></div>
+<div class="box box-key"><h3>Banking</h3><ul><li>Central bank (7 functions)</li><li>Commercial banks</li><li>Fractional reserves</li><li>Money multiplier</li><li>Reserve ratio</li></ul></div>
+<div class="box box-purple"><h3 style="color:var(--accent2);">Monetary Policy</h3><ul><li>OMO, discount rate, rr</li><li>Expansionary/contractionary</li><li>Transmission mechanism</li><li>Quantity Theory (MV=PY)</li><li>Liquidity trap</li></ul></div>
+</div>
+</div>
+
+<!-- S42 Formula cheat sheet -->
+<div class="slide content-slide">
+<h2>📋 Formula Cheat Sheet — Topic 4</h2>
+<table>
+<tr><th>Formula</th><th>Name</th></tr>
+<tr><td>$\text{Money Multiplier} = \frac{1}{rr}$</td><td>Money multiplier</td></tr>
+<tr><td>$\text{Total Money} = \text{Deposit} \times \frac{1}{rr}$</td><td>Total money created</td></tr>
+<tr><td>$M \times V = P \times Y$</td><td>Quantity Theory of Money</td></tr>
+<tr><td>$\pi \approx \%\Delta M - \%\Delta Y$ (if V constant)</td><td>Inflation from money growth</td></tr>
+<tr><td>$\text{MS} \uparrow \Rightarrow r \downarrow \Rightarrow I \uparrow \Rightarrow AD \uparrow$</td><td>Expansionary transmission</td></tr>
+<tr><td>$\text{MS} \downarrow \Rightarrow r \uparrow \Rightarrow I \downarrow \Rightarrow AD \downarrow$</td><td>Contractionary transmission</td></tr>
+</table>
+</div>
+
+<!-- S43 Review quiz 1 -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🧠 Review Quiz (1/2)</h2>
+<table>
+<tr><th>#</th><th>Question</th><th>Answer</th></tr>
+<tr><td>1</td><td>Name the 3 functions of money</td><td>Medium of exchange, unit of account, store of value</td></tr>
+<tr><td>2</td><td>What is fiat money?</td><td>Money with no intrinsic value, declared by government</td></tr>
+<tr><td>3</td><td>Reserve ratio = 10%. Multiplier = ?</td><td>1/0.10 = 10</td></tr>
+<tr><td>4</td><td>CB buys bonds → MS?</td><td>Increases</td></tr>
+<tr><td>5</td><td>Loan repaid → MS?</td><td>Decreases</td></tr>
+</table>
+</div>
+
+<!-- S44 Review quiz 2 -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🧠 Review Quiz (2/2)</h2>
+<table>
+<tr><th>#</th><th>Question</th><th>Answer</th></tr>
+<tr><td>6</td><td>Name the 3 CB tools</td><td>Reserve requirements, discount rate, OMO</td></tr>
+<tr><td>7</td><td>Expansionary MP: what happens to rates?</td><td>Interest rates fall</td></tr>
+<tr><td>8</td><td>MV = PY. M↑10%, Y↑3%, V constant. π = ?</td><td>7%</td></tr>
+<tr><td>9</td><td>What is a liquidity trap?</td><td>Rates at zero, MP ineffective</td></tr>
+<tr><td>10</td><td>Which is faster: monetary or fiscal policy decisions?</td><td>Monetary (CB decides immediately vs parliament debate)</td></tr>
+</table>
+</div>
+
+<!-- S45 What's next -->
+<div class="slide content-slide">
+<h2>🔮 What's Coming Next?</h2>
+<p class="big" style="color:var(--text);">In <strong>Topic 5: Inflation &amp; Unemployment</strong>:</p>
+<div class="grid-2" style="margin-top:16px;">
+<div class="box box-def"><h3 style="color:var(--accent);">Unemployment</h3><ul><li>Types: frictional, structural, cyclical</li><li>Natural rate of unemployment</li><li>Labour force statistics</li></ul></div>
+<div class="box box-key"><h3>Inflation</h3><ul><li>Causes: demand-pull, cost-push</li><li>Phillips Curve trade-off</li><li>Costs of inflation</li><li>Vietnam inflation management</li></ul></div>
+</div>
+</div>
+
+<!-- S46 Homework -->
+<div class="slide content-slide">
+<h2>📚 Homework &amp; Practice</h2>
+<div class="grid-2">
+<div class="box box-def"><h3 style="color:var(--accent);">Read</h3><ul><li>Mankiw Ch. 4 (Money System)</li><li>Mankiw Ch. 18–19 (Money Supply &amp; MP)</li><li>Sloman Ch. 10 (Money &amp; Banking)</li></ul></div>
+<div class="box box-key"><h3>Practice</h3><ul><li>Compute money multiplier for 5 different reserve ratios</li><li>Trace transmission mechanism for 3 policy scenarios</li><li>Solve VEO 2021 &amp; 2022 money/CB questions</li><li>Calculate inflation using QTM for 3 scenarios</li></ul></div>
+</div>
+</div>
+
+<!-- S47 Thank you -->
+<div class="slide title-slide">
+<p style="font-size:1em;color:var(--accent);font-weight:600;letter-spacing:3px;">END OF TOPIC 04</p>
+<h1 style="font-size:3em;color:#fff;">Thank You!</h1>
+<p class="subtitle" style="margin-top:12px;">Next: Topic 05 — Inflation &amp; Unemployment</p>
+<p style="color:var(--muted);margin-top:24px;">Questions? 🙋</p>
+</div>
+
+</div>
+
+<script>
+let current=0;const slides=document.querySelectorAll('.slide'),total=slides.length;
+document.getElementById('tot').textContent=total;
+function show(n){slides.forEach(s=>s.classList.remove('active'));slides[n].classList.add('active');document.getElementById('cur').textContent=n+1;}
+function next(){if(current<total-1){current++;show(current);}}
+function prev(){if(current>0){current--;show(current);}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}if(e.key==='ArrowLeft')prev();});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(dx<-50)next();if(dx>50)prev();});
+</script>
+</body>
+</html>

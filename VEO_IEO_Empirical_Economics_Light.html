@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empirical Economics & Nobel Frontiers — VEO/IEO</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF8;--bg2:#FFFFFF;--bg3:#F3F1EE;--bg4:#EAE7E1;
+  --ink:#1A1A1A;--ink2:#4A4A4A;--ink3:#8A8A8A;--ink4:#B8B8B8;
+  --gold:#C49A2A;--teal:#1A9E85;--coral:#D4604A;--blue:#3B7DD8;
+  --violet:#7B5EA7;--green:#3A8F5C;--pink:#C4577A;--orange:#CC7A2F;
+  --cyan:#2A8FAF;--red:#C44A4A;
+  --card-shadow:0 1px 4px rgba(0,0,0,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);overflow:hidden;height:100vh}
+
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:40px 60px 58px;background:var(--bg2);overflow-y:auto}
+.slide.active{display:flex}
+
+h1{font-family:'DM Serif Display',serif;font-size:2.6rem;line-height:1.15;color:var(--ink)}
+h2{font-family:'DM Serif Display',serif;font-size:1.6rem;line-height:1.25;color:var(--ink);margin-bottom:4px}
+h3{font-weight:700;font-size:0.78rem;text-transform:uppercase;letter-spacing:2.5px;margin-bottom:2px}
+p,li{font-size:0.95rem;line-height:1.7;color:var(--ink2)}
+li{margin-bottom:5px}
+ul,ol{padding-left:22px}
+strong{color:var(--ink);font-weight:700}
+em{font-style:italic}
+
+/* Topic header */
+.topic-bar{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid var(--bg3)}
+.topic-num{font-family:'DM Serif Display',serif;font-size:2.4rem;line-height:1;opacity:0.12}
+.topic-label{display:flex;flex-direction:column}
+
+/* Grid */
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;align-content:start}
+.content-full{flex:1}
+
+/* Cards */
+.card{background:var(--bg2);border-radius:12px;padding:20px 22px;border:1px solid var(--bg4);box-shadow:var(--card-shadow)}
+.card-header{font-weight:700;font-size:0.92rem;margin-bottom:10px;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.card-icon{font-size:1.2rem;line-height:1}
+
+/* Highlight boxes */
+.box{border-radius:10px;padding:14px 18px;margin-top:12px}
+.box .label{font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.box p,.box li{font-size:0.9rem}
+
+.box.gold{background:#FDF8ED;border-left:3px solid var(--gold)}.box.gold .label{color:var(--gold)}
+.box.teal{background:#EDF8F5;border-left:3px solid var(--teal)}.box.teal .label{color:var(--teal)}
+.box.purple{background:#F4F0F8;border-left:3px solid var(--violet)}.box.purple .label{color:var(--violet)}
+.box.blue{background:#EEF3FB;border-left:3px solid var(--blue)}.box.blue .label{color:var(--blue)}
+.box.coral{background:#FDF0EE;border-left:3px solid var(--coral)}.box.coral .label{color:var(--coral)}
+
+/* Stats */
+.stats{display:flex;gap:12px;margin:12px 0;flex-wrap:wrap}
+.stat{background:var(--bg3);border-radius:10px;padding:12px 16px;text-align:center;flex:1;min-width:100px}
+.stat b{display:block;font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ink)}
+.stat span{font-size:0.72rem;color:var(--ink3);line-height:1.3;display:block;margin-top:2px}
+
+/* Timeline */
+.tl{margin:8px 0}
+.tl-item{display:flex;gap:10px;margin-bottom:7px;align-items:baseline}
+.tl-yr{font-weight:700;font-size:0.82rem;min-width:42px}
+.tl-tx{font-size:0.88rem;color:var(--ink2)}
+
+/* Mini cards */
+.stack{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.mc{background:var(--bg3);border-radius:8px;padding:10px 14px}
+.mc b{display:block;font-size:0.88rem;margin-bottom:2px;color:var(--ink)}
+.mc p{font-size:0.85rem;margin:0}
+
+/* Code (optional, lighter) */
+.code{font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg3);border-radius:8px;padding:10px 14px;margin:8px 0;line-height:1.6;white-space:pre-wrap;color:var(--ink2);border:1px solid var(--bg4)}
+
+/* Compare */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.vs-item{background:var(--bg3);border-radius:8px;padding:12px 14px}
+.vs-item b{display:block;margin-bottom:3px;font-size:0.9rem}
+.vs-item p{font-size:0.85rem;margin:0}
+
+/* Summary grid */
+.sum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.sum-col h3{margin-bottom:8px}
+.sum-col li{font-size:0.88rem;margin-bottom:3px}
+
+/* Cover */
+.slide-cover{justify-content:center;align-items:center;text-align:center;background:linear-gradient(160deg,#FAFAF8 0%,#F0EDE6 50%,#E8E3DA 100%);position:relative}
+.slide-cover::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(196,154,42,0.08),transparent 70%);border-radius:50%}
+.cv-over{font-size:0.78rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.cv-title{font-family:'DM Serif Display',serif;font-size:3.2rem;line-height:1.1;max-width:750px}
+.cv-sub{font-size:1.05rem;color:var(--ink2);margin-top:14px;font-weight:300;max-width:600px;line-height:1.6}
+.cv-meta{margin-top:28px;font-size:0.82rem;color:var(--ink3)}
+
+/* TOC */
+.toc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px}
+.toc-i{background:var(--bg2);border:1px solid var(--bg4);border-radius:10px;padding:16px 18px;cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;box-shadow:var(--card-shadow)}
+.toc-i:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.toc-i .n{font-family:'DM Serif Display',serif;font-size:1.5rem;opacity:0.15}
+.toc-i .t{font-weight:700;font-size:0.92rem;margin-bottom:3px}
+.toc-i .info{font-size:0.75rem;color:var(--gold)}
+
+/* Story callout (new: for lighter feel) */
+.story{background:var(--bg3);border-radius:12px;padding:16px 20px;margin:12px 0;position:relative}
+.story::before{content:'💬';position:absolute;top:-8px;left:14px;font-size:1rem;background:var(--bg2);padding:0 4px}
+.story p{font-size:0.92rem;font-style:italic;color:var(--ink2)}
+.story .attr{font-size:0.78rem;color:var(--ink3);font-style:normal;margin-top:4px}
+
+/* Question callout */
+.question{background:linear-gradient(135deg,#FDF8ED,#FEF5E0);border-radius:12px;padding:16px 20px;margin:12px 0;border:1px solid rgba(196,154,42,0.2)}
+.question .q{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ink)}
+
+/* Nav */
+.nav{position:fixed;bottom:0;left:0;right:0;height:48px;background:rgba(250,250,248,0.95);backdrop-filter:blur(12px);border-top:1px solid var(--bg4);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:100}
+.nav-info{font-size:0.78rem;color:var(--ink3)}
+.nav-info .ct{color:var(--ink2);font-weight:600}
+.nav-controls{display:flex;align-items:center;gap:6px}
+.nb{background:var(--bg3);border:1px solid var(--bg4);border-radius:6px;color:var(--ink2);width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.85rem;transition:all 0.15s}
+.nb:hover{background:var(--bg4);color:var(--ink)}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--gold);transition:width 0.25s;z-index:101}
+
+/* Sidebar */
+.sidebar{position:fixed;left:0;top:0;bottom:48px;width:200px;background:rgba(250,250,248,0.98);border-right:1px solid var(--bg4);z-index:99;overflow-y:auto;padding:12px 0;display:none}
+.sidebar.open{display:block}
+.sb-h{padding:8px 16px;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--ink3);margin-top:4px}
+.sb-t{padding:6px 16px;font-size:0.78rem;cursor:pointer;color:var(--ink3);border-left:2px solid transparent;transition:all 0.15s}
+.sb-t:hover{color:var(--ink2);background:var(--bg3)}
+.sb-t.active{color:var(--gold);border-left-color:var(--gold);background:#FDF8ED}
+
+@media print{.nav,.progress,.sidebar{display:none}.slide{page-break-after:always;position:relative;display:flex!important;height:100vh}}
+@media(max-width:900px){.content-grid{grid-template-columns:1fr}.sum{grid-template-columns:1fr}.slide{padding:20px 24px 56px}.sidebar{display:none!important}.toc{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="sidebar" id="sidebar"></div>
+<div id="deck">
+<div class="slide slide-cover active" data-topic="Cover">
+<div class="cv-over">VEO / IEO Competition Preparation</div>
+<div class="cv-title">Empirical Economics<br>&amp; Nobel Frontiers</div>
+<div class="cv-sub">Nine big ideas that shaped modern economics — told through the stories of Nobel laureates, real-world policies, and the methods that changed how we think about cause and effect.</div>
+<div class="cv-meta">Press → or Space to navigate · M for sidebar menu · Works on mobile too</div>
+</div>
+<div class="slide" data-topic="Overview"><div class="topic-bar"><div class="topic-label"><h3 style="color:var(--gold)">Roadmap</h3><h2>Nine Big Ideas in Economics</h2></div></div><div class="toc"><div class="toc-i" style="border-left-color:#D4604A" onclick="go(2)"><div class="n">01</div><div class="t">Economics of Education</div><div class="info">🏅 Card, Angrist & Imbens 2021</div></div><div class="toc-i" style="border-left-color:#3A8F5C" onclick="go(15)"><div class="n">02</div><div class="t">Environmental Economics</div><div class="info">🏅 Nordhaus 2018</div></div><div class="toc-i" style="border-left-color:#C4577A" onclick="go(26)"><div class="n">03</div><div class="t">Gender Equality</div><div class="info">🏅 Goldin 2023</div></div><div class="toc-i" style="border-left-color:#3B7DD8" onclick="go(33)"><div class="n">04</div><div class="t">Development Economics</div><div class="info">🏅 Banerjee, Duflo & Kremer 2019</div></div><div class="toc-i" style="border-left-color:#C44A4A" onclick="go(41)"><div class="n">05</div><div class="t">Health Economics</div><div class="info">🏅 Deaton 2015</div></div><div class="toc-i" style="border-left-color:#CC7A2F" onclick="go(45)"><div class="n">06</div><div class="t">Industrial Organization</div><div class="info">🏅 Tirole 2014</div></div><div class="toc-i" style="border-left-color:#2A8FAF" onclick="go(49)"><div class="n">07</div><div class="t">Innovation & Technology</div><div class="info">🏅 Romer 2018</div></div><div class="toc-i" style="border-left-color:#7B5EA7" onclick="go(53)"><div class="n">08</div><div class="t">International Trade</div><div class="info">🏅 Krugman 2008</div></div><div class="toc-i" style="border-left-color:#1A9E85" onclick="go(57)"><div class="n">09</div><div class="t">Causal Inference</div><div class="info">🏅 Angrist & Imbens 2021</div></div></div></div>
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Nobel Prize</h3><h2>Nobel 2021: Does More School = More Money?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> The Nobel Story</div><p>In 2021, <strong>David Card, Joshua Angrist, and Guido Imbens</strong> won the Nobel Prize for showing economists how to answer cause-and-effect questions using <em>natural experiments</em> — real-world situations that mimic a lab experiment.</p>
+<p>Their biggest question? <strong>Does going to school longer actually make you earn more — or do smart people just stay in school longer?</strong></p><div class="story"><p>Everyone assumes education pays off. But proving it is surprisingly hard — because the students who go to college are already different from those who don't.</p><div class="attr">— The identification problem</div></div></div><div class="card"><div class="card-header"><span class="card-icon">🎯</span> Why It's Tricky</div><p>Imagine comparing college graduates to non-graduates. Graduates earn more. But is that because:</p>
+<ul><li>📚 College taught them useful skills? <strong>(human capital)</strong></li>
+<li>🧠 They were already smarter/more motivated? <strong>(selection bias)</strong></li>
+<li>📜 The degree just signals ability to employers? <strong>(signaling)</strong></li></ul><div class="box gold"><div class="label">The Big Idea</div><p>You can't just compare people who went to college with people who didn't. You need to find situations where some people <em>accidentally</em> got more education than others — then see if they earned more.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Clever Trick #1</h3><h2>Quarter-of-Birth: When Your Birthday Decides Your Education</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">📅</span> Angrist & Krueger (1991)</div><p>Here's a fun fact: in the US, kids born in January start school almost a year older than kids born in December. Since the law says you can drop out at age 16, January-born kids can leave school earlier — with <em>slightly</em> less education.</p>
+<p><strong>The trick:</strong> Your birthday is basically random. So this creates a natural experiment!</p><div class="stats"><div class="stat"><b>~0.1 yr</b><span>less schooling for Q1-born</span></div><div class="stat"><b>7-8%</b><span>return per extra year</span></div><div class="stat"><b>~6%</b><span>naive OLS estimate</span></div></div></div><div class="card"><div class="card-header"><span class="card-icon">💡</span> What We Learned</div><p><strong>Surprise:</strong> The IV estimate (7-8%) was <em>higher</em> than the simple regression (6%). This suggests the students forced to stay in school by birthday luck actually benefited a lot.</p><div class="box purple"><div class="label">But Wait...</div><p>Later researchers found problems: winter births are more common among disadvantaged families. So birthday may not be truly random after all. <strong>Lesson: even clever research designs can have hidden flaws.</strong></p></div><div class="box teal"><div class="label">VEO/IEO Tip</div><p>This is the <em>perfect</em> example to cite when a question asks about instrumental variables or natural experiments.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Clever Trick #2</h3><h2>Living Near a College = Going to College?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏫</span> Card (1995)</div><p><strong>Idea:</strong> People who grew up near a college are more likely to attend — simply because it's cheaper and easier. But where you grow up doesn't directly affect your future wages (in theory).</p><div class="stats"><div class="stat"><b>~12%</b><span>IV return per year</span></div><div class="stat"><b>~7%</b><span>simple OLS return</span></div><div class="stat"><b>0.32 yr</b><span>extra schooling if near college</span></div></div></div><div class="card"><div class="card-header"><span class="card-icon">🔑</span> The Key Insight</div><p>The return is <em>higher</em> for students at the margin — those who wouldn't have attended college without the proximity advantage. These tend to be lower-income students.</p><div class="question"><div class="q">If the students who barely make it to college benefit the most, what does that tell us about expanding access?</div></div><div class="box gold"><div class="label">Policy Implication</div><p>Building colleges in underserved areas isn't just about fairness — it's about efficiency. The marginal student has the <em>highest</em> return on investment.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Early Childhood</h3><h2>The Best Investment You Can Make: Ages 0–5</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">👶</span> The Heckman Curve</div><p><strong>James Heckman (Nobel 2000)</strong> showed that the rate of return on education spending is highest in early childhood and declines with age.</p>
+<p>Think of it like compound interest — skills build on skills. A child who enters school ready to learn gains more from every subsequent year.</p><div class="stats"><div class="stat"><b>7-10%</b><span>annual social ROI for preschool</span></div><div class="stat"><b>+$11K</b><span>annual earnings at age 40 (Perry Preschool)</span></div><div class="stat"><b>-44%</b><span>arrest rate for treated group</span></div></div></div><div class="card"><div class="card-header"><span class="card-icon">🧩</span> Why Early > Late</div><p>The Perry Preschool experiment (1962) randomly assigned low-income children to preschool. Follow-up at age 40 showed massive benefits.</p>
+<p><strong>The twist:</strong> IQ effects faded by age 8. But the real gains came from <em>non-cognitive skills</em> — patience, self-control, working with others. These are easier to shape in young children.</p><div class="box teal"><div class="label">Vietnam Context</div><p>Vietnam's preschool enrollment is ~93% for 5-year-olds but only ~30% for under-3s. Expanding access in rural and ethnic minority areas may be the single highest-return public investment available.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Teacher Quality</h3><h2>One Great Teacher Can Change Everything</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">👩‍🏫</span> Chetty, Friedman & Rockoff (2014)</div><p>Using tax records linked to school data, Chetty found that replacing a below-average teacher with an above-average one would increase a single classroom's <strong>lifetime earnings by $320,000</strong>.</p>
+<p>Students with better kindergarten teachers were also more likely to attend college, less likely to become teen parents, and saved more for retirement.</p></div><div class="card"><div class="card-header"><span class="card-icon">🌏</span> What Works in Developing Countries?</div><ul>
+<li>🪱 <strong>Deworming (Kenya):</strong> $3.50/student → attendance ↑25%. One of the cheapest interventions ever measured</li>
+<li>📱 <strong>Adaptive learning software (India):</strong> Mindspark app personalizes to each student's level → +0.37 SD in math in 4.5 months</li>
+<li>💰 <strong>Conditional cash transfers (Mexico):</strong> Pay families if kids attend school → girls' enrollment ↑9.3%</li>
+<li>📖 <strong>Textbooks alone (Kenya):</strong> No effect! Why? Books were in English; students spoke local languages. Inputs without pedagogy don't work.</li></ul><div class="box gold"><div class="label">J-PAL Cost-Effectiveness</div><p>Per $100 spent, the ranking: structured teaching methods > adaptive technology > deworming > teacher training. Reducing class size is surprisingly low on the list.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">The Signaling Debate</h3><h2>Is College About Learning or Showing Off?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">📚</span> Human Capital View</div><p><strong>Becker (1964):</strong> Education <em>builds</em> skills that make you more productive. Higher wages reflect real ability gained in school.</p>
+<p><strong>Evidence:</strong> Returns vary by field (STEM > humanities), employer learning reduces the signaling premium over time, and test score gains predict wage gains.</p></div><div class="card"><div class="card-header"><span class="card-icon">📜</span> Signaling View</div><p><strong>Spence (1973):</strong> Education just <em>reveals</em> pre-existing ability. The degree is a costly signal — smart people find it cheaper to get.</p>
+<p><strong>Evidence:</strong> "Sheepskin effects" — wages jump at diploma/degree completion, not gradually per year. If it were about learning, each year should count equally.</p><div class="box gold"><div class="label">The Verdict</div><p>Probably <strong>both</strong>. Early education (literacy, numeracy) is mostly human capital. College may be 50-80% signaling for some fields. <em>Even if partly signaling, education still helps individuals</em> — but the social return is lower than the private return.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Inequality & Mobility</h3><h2>The Great Gatsby Curve: Why Inequality Sticks</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">📊</span> Chetty's Mobility Atlas</div><p><strong>Key finding:</strong> Where you grow up in America matters enormously. Children in some neighborhoods have a 75% chance of moving up; in others, just 4%.</p>
+<p>What predicts upward mobility? <strong>School quality, low segregation, two-parent families, social capital, less inequality.</strong></p><div class="story"><p>A child born to parents in the bottom 20% in Dubuque, Iowa has a better chance of reaching the top 20% than a child born in Charlotte, North Carolina. Geography is destiny — unless policy intervenes.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">🌏</span> Cross-Country Evidence</div><ul>
+<li>🇫🇮 <strong>Finland:</strong> Abolished tracking in the 1970s → inequality fell 23% with no loss in average achievement</li>
+<li>🇻🇳 <strong>Vietnam's paradox:</strong> PISA scores in the top 20 globally despite GDP/capita in the bottom 1/3 of test-takers. How? High parental aspirations, focused curriculum, teacher commitment</li>
+<li>⚠️ <strong>But:</strong> Urban-rural and ethnic gaps remain large — Kinh students outperform ethnic minorities by ~1 standard deviation</li></ul><div class="box teal"><div class="label">The Big Picture</div><p>More equal education → more equal outcomes → more social mobility. This is where economics of education meets inequality.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">EdTech & AI</h3><h2>Will AI Replace Teachers? Not So Fast</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🤖</span> Early Evidence on AI in Education</div><ul>
+<li><strong>Adaptive learning (Mindspark):</strong> +0.37 SD because it meets students at their level — not the curriculum's level</li>
+<li><strong>AI tutoring:</strong> Students using Socratic-style AI tutors scored +0.2 SD better — but only when AI <em>guided</em> rather than <em>answered</em></li>
+<li><strong>MOOCs:</strong> Only 5-10% complete online courses. Learners are mostly already educated. Not the great equalizer hoped for.</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">⚡</span> The Real Question</div><div class="question"><div class="q">Should schools teach students how to <em>use</em> AI, or teach them skills that AI <em>cannot</em> do?</div></div><p>Early evidence suggests AI <strong>compresses the skill distribution</strong> — weak students gain the most. But students may learn to prompt rather than think.</p><div class="box teal"><div class="label">ASEAN Opportunity</div><p>700 million people, many in areas with teacher shortages. AI-powered adaptive learning via smartphones could leapfrog traditional infrastructure. Vietnam's 79% internet penetration makes it a prime candidate.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">COVID Learning Loss</h3><h2>The Pandemic's Hidden Scar: What Kids Lost</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🦠</span> The Numbers</div><div class="stats"><div class="stat"><b>-0.14 SD</b><span>average global learning loss</span></div><div class="stat"><b>-0.29 SD</b><span>loss for low-SES students</span></div><div class="stat"><b>~2 yrs</b><span>to recover (optimistic estimate)</span></div></div><p><strong>Betthäuser et al. (2023):</strong> Meta-analysis across 42 countries. COVID didn't just close schools — it widened every existing gap. Low-income students, girls in developing countries, and students with disabilities were hit hardest.</p></div><div class="card"><div class="card-header"><span class="card-icon">💡</span> What Helped vs. What Didn't</div><ul>
+<li>✅ <strong>Structured tutoring</strong> (UK National Tutoring Programme): +0.1–0.2 SD recovery</li>
+<li>✅ <strong>Extended school time</strong> (summer programs): moderate effects</li>
+<li>❌ <strong>Just distributing laptops:</strong> minimal effect without teacher training and content</li>
+<li>❌ <strong>Online-only instruction:</strong> 50-70% less effective than in-person for young children</li></ul><div class="box gold"><div class="label">Key Lesson</div><p>Technology <em>enables</em> learning but doesn't <em>cause</em> it. The teacher-student relationship, structured curriculum, and face-to-face interaction remain irreplaceable — even in the AI age.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Methods Toolkit</h3><h2>How Economists Study Education: The Toolkit</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🔧</span> The Five Approaches</div><div class="stack">
+<div class="mc"><b>🎲 RCT</b><p>Random assignment (STAR class size, deworming, cash transfers)</p></div>
+<div class="mc"><b>🎯 Instrumental Variables</b><p>Quarter of birth, proximity to college, draft lottery</p></div>
+<div class="mc"><b>📊 Difference-in-Differences</b><p>School construction programs (Duflo, Indonesia), policy reforms</p></div>
+<div class="mc"><b>📏 Regression Discontinuity</b><p>Admissions cutoffs, scholarship thresholds</p></div>
+<div class="mc"><b>⭐ Value-Added Models</b><p>Measuring teacher/school quality (Chetty et al.)</p></div>
+</div></div><div class="card"><div class="card-header"><span class="card-icon">💻</span> In Stata & Python</div><div class="code">* IV: Returns to education
+ivregress 2sls ln_wage (educ = near_college) ///
+  age age2 female, robust first
+
+* DiD: School construction
+reghdfe test_score treat##post, ///
+  absorb(district year) cluster(district)
+
+* RDD: Admissions cutoff
+rdrobust outcome score, c(0)</div><div class="box purple"><div class="label">Python Equivalent</div><div class="code">from linearmodels.iv import IV2SLS
+mod = IV2SLS.from_formula(
+  'ln_wage ~ 1 + age + [educ ~ near_college]',
+  data)
+res = mod.fit(cov_type='robust')</div></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Key Datasets</h3><h2>Where to Find Data</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">📂</span> Major Education Datasets</div><div class="stack">
+<div class="mc"><b>PISA</b><p>OECD. 80+ countries, 15-year-olds. Math, reading, science. Vietnam participates since 2012.</p></div>
+<div class="mc"><b>Young Lives</b><p>Oxford. 12,000 children in Ethiopia, India, Peru, Vietnam. Rich longitudinal data.</p></div>
+<div class="mc"><b>VHLSS</b><p>Vietnam Household Living Standards Survey. Education, expenditure, labor. Biennial since 2002.</p></div>
+<div class="mc"><b>World Bank Microdata</b><p>LSMS, DHS, enterprise surveys. Cross-country comparable.</p></div></div></div><div class="card"><div class="card-header"><span class="card-icon">⚠️</span> Measurement Challenges</div><ul>
+<li>📏 <strong>Years ≠ quality:</strong> A year of school in Finland ≠ a year in Mali. Test scores predict growth better than years.</li>
+<li>📉 <strong>53% of children</strong> in low/middle-income countries can't read a simple text by age 10 ("learning poverty")</li>
+<li>📊 <strong>Grade inflation:</strong> US college GPA rose from 2.52 (1950) to 3.11 (2006)</li></ul><div class="box gold"><div class="label">Pro Tip</div><p>Use <strong>administrative data</strong> (school records, tax records) when possible. Chetty's breakthroughs came from linking IRS data to school records — impossible with surveys alone.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Hot Debates</h3><h2>Current Debates in Education Economics</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🔥</span> What Economists Are Arguing About</div><ul>
+<li>🎒 <strong>School choice:</strong> Charter schools show +0.2 SD gains in lotteries (Boston), but do they drain resources from public schools?</li>
+<li>💸 <strong>Student debt:</strong> US $1.77 trillion. Is income-contingent repayment (Australia model) the answer?</li>
+<li>🏫 <strong>Affirmative action:</strong> US Supreme Court banned race-conscious admissions (2023). What alternatives work?</li>
+<li>📱 <strong>Phone bans:</strong> Growing evidence that smartphones in classrooms reduce learning. Norway, France ban them.</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🔮</span> Open Questions</div><ul>
+<li>Should we teach AI literacy or AI-proof skills?</li>
+<li>Is the college premium sustainable, or is credential inflation an arms race?</li>
+<li>How do we measure skills that matter (creativity, grit, collaboration)?</li></ul><div class="box gold"><div class="label">VEO/IEO Tips</div><p>Education questions in competitions often test: (1) spotting selection bias, (2) proposing a credible natural experiment, (3) knowing key results (returns ~8%, early childhood ROI highest). Practice: <em>"What would be a valid instrument for X?"</em></p></div></div></div>
+</div>
+
+<div class="slide" data-topic="01 · Education">
+<div class="topic-bar"><div class="topic-num" style="color:#D4604A">01</div>
+<div class="topic-label"><h3 style="color:#D4604A">Summary</h3><h2>Topic 1 Summary: Economics of Education</h2></div></div>
+<div class="content-full"><div class="sum">
+<div class="sum-col"><h3 style="color:#D4604A">Key Findings</h3><ul>
+<li>Causal returns to schooling: ~7-12% per year</li>
+<li>Early childhood has the highest social ROI</li>
+<li>Teacher quality → $320K lifetime per classroom</li>
+<li>The marginal student benefits most from access expansion</li>
+<li>Learning ≠ enrollment — quality matters more</li></ul></div>
+<div class="sum-col"><h3 style="color:#D4604A">Methods to Know</h3><ul>
+<li><strong>IV:</strong> QOB, proximity to college</li>
+<li><strong>RCT:</strong> STAR, deworming, cash transfers</li>
+<li><strong>DiD:</strong> School construction, policy reforms</li>
+<li><strong>RDD:</strong> Admissions cutoffs</li>
+<li><strong>VAM:</strong> Teacher value-added</li></ul></div>
+<div class="sum-col"><h3 style="color:#D4604A">Policy Takeaways</h3><ul>
+<li>Invest early (preschool > university on the margin)</li>
+<li>Focus on learning, not just inputs</li>
+<li>Adaptive tech can personalize at scale</li>
+<li>Income-contingent loans > standard debt</li>
+<li>AI complements good teaching, doesn't replace it</li></ul></div></div><div class="box gold"><div class="label">One-Sentence Summary</div><p style='font-size:1.1rem'><strong>The economics of education is fundamentally about separating cause from correlation — and the methods developed to do this now define the entire discipline.</strong></p></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Nobel Prize</h3><h2>Nobel 2018: What's the Right Price for Destroying the Planet?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> William Nordhaus</div><p><strong>Nordhaus</strong> won for building the first model that links the economy to the climate. His <strong>DICE model</strong> asks: if burning fossil fuels causes future damage, what tax should we charge today?</p><div class="story"><p>Climate change is the biggest market failure in human history. The atmosphere is a free dumping ground — nobody pays for the damage. Nordhaus figured out how to calculate the bill.</p><div class="attr">— The externality problem</div></div></div><div class="card"><div class="card-header"><span class="card-icon">💰</span> The Carbon Tax Debate</div><div class="stats"><div class="stat"><b>$50</b><span>Nordhaus optimal tax (2020$)</span></div><div class="stat"><b>$185</b><span>US EPA estimate (2023)</span></div><div class="stat"><b>$80-400</b><span>range in the literature</span></div></div><p><strong>Why the huge range?</strong> It all comes down to one number: the <strong>discount rate</strong> — how much we value the future.</p><div class="box gold"><div class="label">The Ethical Core</div><p>Nordhaus (1.5% discount rate): follow what markets tell us people actually value. <strong>Stern</strong> (0.1%): future generations matter equally — we have a moral obligation to act aggressively. A seemingly technical parameter drives <em>trillion-dollar</em> policy differences.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Carbon Pricing 101</h3><h2>Carbon Tax vs. Cap-and-Trade: The Two Big Tools</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">💰</span> Option A: Carbon Tax</div><p>Put a <strong>price on each ton of CO₂</strong>. Companies decide how much to reduce emissions based on the cost.</p>
+<div class="vs"><div class="vs-item"><b>✅ Pros</b><p>Price certainty, simple, raises revenue</p></div>
+<div class="vs-item"><b>❌ Cons</b><p>Emissions uncertain — what if firms just pay and pollute?</p></div></div>
+<p><strong>Examples:</strong> Sweden ($130/tCO₂ — world's highest), British Columbia ($65 CAD)</p></div><div class="card"><div class="card-header"><span class="card-icon">🔄</span> Option B: Cap-and-Trade (ETS)</div><p>Set a <strong>cap on total emissions</strong>. Issue permits. Companies trade them.</p>
+<div class="vs"><div class="vs-item"><b>✅ Pros</b><p>Emissions certainty, creates a market, permits can be auctioned</p></div>
+<div class="vs-item"><b>❌ Cons</b><p>Price volatile — can crash to zero (EU Phase I) or spike unpredictably</p></div></div>
+<p><strong>Examples:</strong> EU ETS (€65-90/tCO₂), China ETS (~$10/tCO₂)</p><div class="box purple"><div class="label">Weitzman's Rule (1974)</div><p>Use a <strong>tax</strong> when damage is predictable. Use a <strong>cap</strong> when there are dangerous thresholds (tipping points). For climate: tipping points argue for quantity controls.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">EU ETS</h3><h2>The EU Emissions Trading System: A Cautionary Tale</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">📉</span> Phase I: How Free Permits Crashed the Market</div><p><strong>2005-07:</strong> EU gave away permits for free based on firms' self-reported emissions. Firms inflated their baselines → too many permits → supply > demand → <strong>price crashed to €0 in 2007</strong>.</p>
+<p><strong>Lesson:</strong> Free allocation based on self-reporting = recipe for gaming.</p><div class="story"><p>Companies literally made money from a system designed to make pollution costly. It took the EU 15 years to fix this.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">📈</span> Phase III-IV: How It Got Fixed</div><ul>
+<li><strong>Centralized allocation</strong> replaced self-reporting</li>
+<li><strong>Auctioning</strong> introduced (~57% of permits sold)</li>
+<li><strong>Market Stability Reserve</strong> absorbs surplus permits</li>
+<li>Price rose from €5 → €65-100 by 2023</li></ul><div class="stats"><div class="stat"><b>-10%</b><span>emissions reduction vs. counterfactual</span></div><div class="stat"><b>+10%</b><span>clean patenting by regulated firms</span></div><div class="stat"><b>€65-90</b><span>current carbon price (2024)</span></div></div><div class="box teal"><div class="label">Vietnam Lesson</div><p>Vietnam's ETS pilot (2025-28) uses 100% free allocation — exactly like EU Phase I. Must build robust monitoring before transitioning to auctioning.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Vietnam ETS</h3><h2>Vietnam's Emissions Trading System: Decree 119/2025</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🇻🇳</span> The Architecture</div><p><strong>Pilot Phase (2025-2028):</strong></p>
+<ul><li>Sectors: power, steel, cement</li>
+<li>All permits free (grandfathered)</li>
+<li>Government auction revenue: <strong>effectively zero</strong></li>
+<li>Focus: building MRV capacity (Monitoring, Reporting, Verification)</li></ul>
+<p><strong>Full Operation (post-2029):</strong> Gradual auctioning, expanded coverage, potential linking with regional markets.</p></div><div class="card"><div class="card-header"><span class="card-icon">🔑</span> Key Design Questions</div><div class="question"><div class="q">If all permits are free, does the ETS actually reduce emissions?</div></div><p><strong>Yes, but less effectively.</strong> Free allocation still creates a market — firms that reduce cheaply can sell permits to those facing higher costs. But without auctioning, the government misses revenue that could fund green investment.</p><div class="stats"><div class="stat"><b>~300 Mt</b><span>CO₂ covered annually</span></div><div class="stat"><b>$0</b><span>auction revenue (pilot)</span></div><div class="stat"><b>$1-3B</b><span>potential if fully auctioned</span></div></div><div class="box gold"><div class="label">CBAM Connection</div><p>EU's Carbon Border Adjustment Mechanism charges importers. If Vietnam's ETS is credible, Vietnamese steel exporters <em>avoid</em> CBAM costs. <strong>This is the strongest incentive for Vietnam to price carbon seriously.</strong></p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Green Innovation</h3><h2>Can We Innovate Our Way Out of Climate Change?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">💡</span> Directed Technical Change</div><p><strong>Acemoglu et al. (2012):</strong> Innovation can be redirected from fossil fuels to clean energy — but it requires <em>both</em> a carbon tax AND R&D subsidies. Neither alone is sufficient.</p>
+<p><strong>Why?</strong> Path dependence — past fossil fuel innovation makes future fossil innovation cheaper. Breaking the path requires a push from both sides.</p><div class="stats"><div class="stat"><b>+10%</b><span>clean patents from EU ETS</span></div><div class="stat"><b>2×</b><span>faster growth of clean vs. dirty innovation since 2005</span></div><div class="stat"><b>$370B</b><span>US IRA clean energy subsidies (2022)</span></div></div></div><div class="card"><div class="card-header"><span class="card-icon">🌿</span> Is Green Growth Possible?</div><ul>
+<li>✅ <strong>Optimists:</strong> Solar is now cheaper than coal in most markets. EV costs fell 90% in a decade. Decoupling is happening.</li>
+<li>⚠️ <strong>Skeptics:</strong> Rebound effects — efficiency gains get eaten by increased consumption. Absolute decoupling not yet achieved globally.</li>
+<li>🇻🇳 <strong>Vietnam opportunity:</strong> World's #3 solar PV exporter. Green hydrogen potential. VinFast EVs. R&D tax credits + FDI in clean tech could position Vietnam as a green manufacturing hub.</li></ul><div class="box teal"><div class="label">Key Insight</div><p>Carbon pricing incentivizes <em>incremental</em> improvements. R&D subsidies enable <em>radical</em> breakthroughs. Climate policy needs both carrots and sticks.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Air Pollution</h3><h2>The Silent Killer: Air Pollution & Health</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏭</span> Stunning Natural Experiments</div><ul>
+<li>🇨🇳 <strong>Ebenstein et al. (2017):</strong> China's Huai River heating policy → free coal heating north of the river → PM10 is 55% higher → life expectancy is <strong>3.1 years shorter</strong> in the north</li>
+<li>🇺🇸 <strong>Currie & Walker (2011):</strong> E-ZPass electronic tolling reduced vehicle idling near toll plazas → premature births fell 10.8% within 2km</li>
+<li>🌡️ <strong>Burke et al. (2015):</strong> Unmitigated warming could reduce global GDP by 23% by 2100</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🇻🇳</span> Vietnam: A Personal Issue</div><p>Hanoi regularly ranks in the world's <strong>top 5 most polluted capitals</strong>. PM2.5 averages 35-45 μg/m³ — <em>7-9× the WHO guideline</em>.</p><div class="stats"><div class="stat"><b>5-7%</b><span>of GDP: economic cost of air pollution in Vietnam</span></div><div class="stat"><b>7-9×</b><span>above WHO safe level (Hanoi PM2.5)</span></div><div class="stat"><b>3.1 yrs</b><span>life expectancy lost (China Huai River study)</span></div></div><div class="box gold"><div class="label">Why This Matters for Economics</div><p>Environmental regulation has real costs (Greenstone: $75B in US manufacturing). But the <strong>health benefits are enormous</strong> and often underestimated. Benefit-cost analysis consistently shows pollution regulation is worth it.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Behavioral & Nudges</h3><h2>Green Nudges: Small Pushes, Big Effects</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🧠</span> Nudges That Work</div><ul>
+<li>💡 <strong>Opower home energy reports:</strong> "Your neighbors use less electricity than you" → 2% reduction. Scaled to 6M+ households. Equivalent to an 11-20% energy price increase!</li>
+<li>🏨 <strong>Hotel towel reuse:</strong> "75% of guests reuse towels" beats "save the planet" (+26% vs +16%). Social norms > moral appeals.</li>
+<li>🍔 <strong>Smart green nudging (von Zahn et al. 2025):</strong> AI-powered food delivery nudges → -10% carbon per order with minimal satisfaction loss</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">⚡</span> The Rebound Problem</div><p>When you buy a fuel-efficient car, you might drive <em>more</em>. When your house is well-insulated, you might crank the heating.</p>
+<p><strong>Gillingham et al. (2016):</strong> Rebound effect is ~10-30% for vehicles. Not catastrophic, but real.</p><div class="box purple"><div class="label">Bottom Line</div><p>Nudges are <strong>cost-effective complements</strong> to carbon pricing. They work for small daily decisions. But for deep decarbonization (closing coal plants, redesigning cities), you need prices and regulation.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Climate Finance</h3><h2>Carbon Markets, Green Bonds & Stranded Assets</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">💹</span> Climate Finance</div><ul>
+<li>💚 <strong>Green bonds:</strong> $500B+ issued in 2023. But "greenwashing" concerns — are companies really going green?</li>
+<li>📈 <strong>Carbon premium:</strong> Bolton & Kacperczyk (2021) — high-emission stocks earn 1-2% annual premium. Markets are partially pricing climate risk.</li>
+<li>🏦 <strong>Central bank stress tests:</strong> ECB, Bank of England, MAS now test banks for climate risk</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🔥</span> Stranded Assets</div><p>If the 2°C target is met, <strong>80% of fossil fuel reserves cannot be burned</strong>. This implies massive write-downs for oil, gas, and coal companies.</p><div class="stats"><div class="stat"><b>$2.5T</b><span>financial assets at risk at 2.5°C</span></div><div class="stat"><b>80%</b><span>of reserves that become stranded</span></div><div class="stat"><b>$30-40B/yr</b><span>Vietnam's climate finance gap</span></div></div><div class="box teal"><div class="label">Vietnam</div><p>Vietnam needs $30-40B/year for climate adaptation. Current climate finance: ~$5B. First sovereign green bond planned for 2025-26. The gap is enormous.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Hot Debates</h3><h2>Current Debates in Environmental Economics</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🔥</span> What's Contested</div><ul>
+<li>🌡️ <strong>Damage function:</strong> Nordhaus says damages are smooth and moderate. Critics say tipping points (ice sheet collapse, permafrost methane) could make them catastrophic.</li>
+<li>🧲 <strong>Carbon removal:</strong> Direct air capture costs $250-600/ton. Needed if we overshoot 1.5°C. But does the promise of future removal reduce urgency to cut now?</li>
+<li>🌍 <strong>Degrowth vs. green growth:</strong> Can GDP keep growing while emissions fall? Optimists point to renewables; skeptics say absolute decoupling hasn't happened globally.</li>
+<li>⚖️ <strong>Loss & Damage:</strong> Who pays for climate impacts in poor countries? COP28 pledged $700M (needed: $400B/year).</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🎯</span> VEO/IEO Tips</div><p>Environmental economics questions often test:</p>
+<ul><li>Understanding externalities and Pigouvian taxation</li>
+<li>The discount rate debate (Nordhaus vs. Stern)</li>
+<li>Tax vs. cap-and-trade trade-offs</li>
+<li>Empirical evidence on carbon pricing effectiveness</li></ul><div class="box gold"><div class="label">Cross-Topic Alert</div><p>CBAM connects environment (Topic 2) with trade (Topic 8). The discount rate debate connects economics with ethics. These cross-cutting questions are competition favorites.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Methods</h3><h2>Empirical Methods in Environmental Economics</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🔧</span> How We Study Environment + Economy</div><div class="stack">
+<div class="mc"><b>📏 RDD</b><p>EPA regulation thresholds — counties just above vs. below pollution limits (Greenstone 2002)</p></div>
+<div class="mc"><b>📊 DiD</b><p>ETS introduction, pollution regulation changes (SO₂ trading program)</p></div>
+<div class="mc"><b>🎯 IV</b><p>Wind direction for pollution exposure (Deryugina 2019), thermal inversions</p></div>
+<div class="mc"><b>🧩 Synthetic Control</b><p>Country-level carbon pricing evaluation, Brexit environmental effects</p></div>
+<div class="mc"><b>⚙️ IAMs</b><p>DICE, FUND, PAGE — Integrated Assessment Models linking economy + climate</p></div></div></div><div class="card"><div class="card-header"><span class="card-icon">📐</span> Example: Greenstone (2002)</div><p><strong>Question:</strong> Does the Clean Air Act hurt the economy?</p>
+<p><strong>Method:</strong> RDD at EPA non-attainment threshold. Counties just above the pollution limit face stricter rules.</p><div class="stats"><div class="stat"><b>$75B</b><span>manufacturing output lost</span></div><div class="stat"><b>-590K</b><span>jobs in non-attainment counties</span></div></div><p>But follow-up work showed <strong>infant mortality fell significantly</strong> in those same counties. The health benefits may well exceed the economic costs.</p></div></div>
+</div>
+
+<div class="slide" data-topic="02 · Environment">
+<div class="topic-bar"><div class="topic-num" style="color:#3A8F5C">02</div>
+<div class="topic-label"><h3 style="color:#3A8F5C">Summary</h3><h2>Topic 2 Summary: Environmental Economics</h2></div></div>
+<div class="content-full"><div class="sum">
+<div class="sum-col"><h3 style="color:#3A8F5C">Key Findings</h3><ul>
+<li>Optimal carbon tax: $50-400/tCO₂ (depends on discount rate)</li>
+<li>EU ETS reduced emissions ~10%</li>
+<li>Air pollution costs 3+ years life expectancy (China)</li>
+<li>Green innovation is path-dependent</li>
+<li>Nudges complement but don't replace pricing</li></ul></div>
+<div class="sum-col"><h3 style="color:#3A8F5C">Methods to Know</h3><ul>
+<li><strong>IAMs:</strong> DICE model for social cost of carbon</li>
+<li><strong>RDD:</strong> EPA non-attainment cutoffs</li>
+<li><strong>DiD:</strong> ETS introduction effects</li>
+<li><strong>IV:</strong> Wind direction for pollution</li>
+<li><strong>Synthetic control:</strong> Carbon pricing evaluation</li></ul></div>
+<div class="sum-col"><h3 style="color:#3A8F5C">Policy Takeaways</h3><ul>
+<li>Price carbon + subsidize R&D (both needed)</li>
+<li>Free allocation eases transition but weakens incentives</li>
+<li>CBAM makes climate policy = trade policy</li>
+<li>Discount rate is an ethical choice, not just technical</li>
+<li>Vietnam ETS is partly a response to CBAM</li></ul></div></div><div class="box gold"><div class="label">One Sentence</div><p style='font-size:1.1rem'><strong>Nordhaus showed us how to calculate the cost of climate change — the remaining question is whether we can afford the discount rate we implicitly choose.</strong></p></div></div>
+</div>
+
+<div class="slide" data-topic="03 · Gender">
+<div class="topic-bar"><div class="topic-num" style="color:#C4577A">03</div>
+<div class="topic-label"><h3 style="color:#C4577A">Nobel Prize</h3><h2>Nobel 2023: Why Do Women Still Earn Less?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> Claudia Goldin</div><p>The first woman to win the Economics Nobel solo. Goldin spent 40 years analyzing <strong>200 years of US data</strong> on women in the workforce.</p>
+<p>Her surprising conclusion: the remaining gender pay gap is <strong>not mainly about discrimination</strong>. It's about how the modern economy rewards very long, inflexible hours.</p><div class="stats"><div class="stat"><b>84¢</b><span>women earn per $1 men earn (US)</span></div><div class="stat"><b>~73%</b><span>female LFP (Vietnam)</span></div><div class="stat"><b>132 yrs</b><span>to close global gender gap (WEF)</span></div></div></div><div class="card"><div class="card-header"><span class="card-icon">📉</span> The U-Shaped Curve</div><p>Female labor force participation followed a U-shape over 200 years:</p>
+<ul><li><strong>1800s (farm era):</strong> Women worked alongside men — high participation</li>
+<li><strong>1850-1920 (factories):</strong> Physical work, stigma for married women — participation dropped</li>
+<li><strong>1950s-today (services):</strong> Education rose, the Pill arrived, norms changed — participation climbed back</li></ul><div class="box teal"><div class="label">Vietnam</div><p>Vietnam's ~73% female LFP is among the world's highest. But women are concentrated in agriculture and low-wage manufacturing. The <em>quality</em> gap matters more than the <em>quantity</em> gap.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="03 · Gender">
+<div class="topic-bar"><div class="topic-num" style="color:#C4577A">03</div>
+<div class="topic-label"><h3 style="color:#C4577A">The Pill</h3><h2>The Pill Changed Everything — Here's How</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">💊</span> Goldin & Katz (2002)</div><p>The contraceptive pill (approved 1960) gave women reliable control over <em>when</em> to have children for the first time. This enabled <strong>career investment</strong> — women could delay childbirth to finish education and establish careers.</p><div class="stats"><div class="stat"><b>+2.1 yrs</b><span>delay in first birth</span></div><div class="stat"><b>+30%</b><span>women entering law, medicine, MBA</span></div><div class="stat"><b>+8%</b><span>higher wages at age 40 (Bailey 2006)</span></div></div></div><div class="card"><div class="card-header"><span class="card-icon">🔑</span> Why Timing Is Everything</div><p>Before the Pill, women expected short careers → chose "flexible" jobs (teaching, nursing). After the Pill, career horizons lengthened → women entered "greedy" careers (law, finance, medicine).</p><div class="story"><p>It's not just about having fewer children. It's about the option value of controlling <em>when</em>. Today's parallel: IVF and egg freezing extend the fertility window further.</p></div><div class="box gold"><div class="label">Bigger Lesson</div><p>Technology can reshape labor markets by changing <em>expectations</em> about career horizons. This is a theme that connects to AI's impact on work (Topic 7).</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="03 · Gender">
+<div class="topic-bar"><div class="topic-num" style="color:#C4577A">03</div>
+<div class="topic-label"><h3 style="color:#C4577A">Greedy Jobs</h3><h2>The 'Greedy Jobs' Problem: Why Finance Has a Bigger Gap Than Pharmacy</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">💼</span> Goldin (2014)</div><p><strong>"Greedy" occupations</strong> disproportionately reward long, unpredictable hours. Working 80 hours in finance pays more than 2× working 40. In pharmacy? Almost exactly 2×.</p><div class="stats"><div class="stat"><b>~0%</b><span>gender gap in pharmacy</span></div><div class="stat"><b>~40%</b><span>gender gap in finance (age 45)</span></div></div><div class="question"><div class="q">If the gender gap is about job design, not discrimination, what's the solution?</div></div></div><div class="card"><div class="card-header"><span class="card-icon">🔑</span> Redesign Work, Not Women</div><p>Goldin's answer: make workers more <strong>substitutable</strong>. When any pharmacist can replace any other, there's no premium for being the one who's always there.</p>
+<ul><li><strong>COVID natural experiment:</strong> Firms that adopted remote work saw gender gap narrow in promotions</li>
+<li><strong>But:</strong> "Flexibility stigma" — workers who use flex arrangements get penalized in evaluations</li></ul><div class="box gold"><div class="label">The Radical Implication</div><p>Equal pay laws won't close the last chapter of the gender gap. What's needed: redesigning jobs so that flexibility isn't punished. This is about organizational design, not legislation.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="03 · Gender">
+<div class="topic-bar"><div class="topic-num" style="color:#C4577A">03</div>
+<div class="topic-label"><h3 style="color:#C4577A">Child Penalty</h3><h2>The Child Penalty: Motherhood Costs Women 20% of Their Earnings</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">👶</span> Kleven, Landais & Søgaard (2019)</div><p>Track men and women's earnings before and after their first child. In Denmark:</p><div class="stats"><div class="stat"><b>-20%</b><span>long-run earnings drop for mothers</span></div><div class="stat"><b>~0%</b><span>drop for fathers</span></div><div class="stat"><b>80%</b><span>of the gender gap explained by children</span></div></div><p>The penalty operates through: some mothers exit work, some reduce hours, some switch to lower-paying flexible jobs.</p></div><div class="card"><div class="card-header"><span class="card-icon">🌍</span> Replicated in 134 Countries</div><ul>
+<li>🇩🇰 Nordic countries: ~20-25% penalty (despite great family policies!)</li>
+<li>🇩🇪 Germany/Austria: ~50-60% (half-day school forces mothers home)</li>
+<li>🇯🇵 Japan/Korea: ~60-70% (very strong traditional norms)</li>
+<li>🇺🇸 US/UK: ~30-40%</li></ul><div class="box teal"><div class="label">Vietnam Research Gap</div><p>No comparable child penalty study exists for Vietnam. VHLSS panel data could support one. Hypothesis: the <em>extensive margin</em> penalty (leaving work) may be low, but the <em>wage rate</em> penalty (switching to lower-paid jobs) could be high.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="03 · Gender">
+<div class="topic-bar"><div class="topic-num" style="color:#C4577A">03</div>
+<div class="topic-label"><h3 style="color:#C4577A">Policy Experiments</h3><h2>What Policies Help? Parental Leave, Quotas, Childcare</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">👨‍👧</span> Parental Leave Design</div><ul>
+<li>🇸🇪 <strong>Sweden "daddy months":</strong> Reserved leave for fathers → male uptake jumped from 0.5% to 25%</li>
+<li>🇩🇪 <strong>Germany reform (2007):</strong> Shorter but more generous leave → mothers returned faster → earnings recovered</li>
+<li>⚠️ <strong>Very long leave (2-3 years) hurts:</strong> Skill depreciation, career derailment</li></ul><div class="box purple"><div class="label">Optimal Design</div><p>6-12 months of moderate leave + &lsquo;use-it-or-lose-it&rsquo; father quotas. Short enough to avoid skill depreciation, generous enough to support families.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">🏛️</span> Quotas & Representation</div><ul>
+<li>🇮🇳 <strong>India village councils:</strong> Random gender quotas → female leaders invest more in water and roads (Chattopadhyay & Duflo 2004)</li>
+<li>🇳🇴 <strong>Norway board quotas:</strong> 40% female boards mandated. But no trickle-down to women below board level (Bertrand et al. 2019)</li>
+<li>🎯 <strong>Blind auditions:</strong> Goldin & Rouse (2000) — orchestras added screens → women's hiring probability ↑50%</li></ul><div class="box gold"><div class="label">Takeaway</div><p>Quotas increase representation but don't automatically change workplace culture. Blind evaluation reduces bias. Parental leave design matters as much as generosity.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="03 · Gender">
+<div class="topic-bar"><div class="topic-num" style="color:#C4577A">03</div>
+<div class="topic-label"><h3 style="color:#C4577A">Norms & Culture</h3><h2>Gender Norms Travel Across Generations and Borders</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🌐</span> Culture Matters</div><ul>
+<li><strong>Fernández & Fogli (2009):</strong> Second-generation immigrant women in the US have LFP rates correlated with their parents' country of origin. Culture persists.</li>
+<li><strong>Jensen & Oster (2009):</strong> Cable TV in rural India → exposure to urban lifestyles → female autonomy increased, girls stayed in school longer</li>
+<li><strong>Beaman et al. (2012):</strong> Exposure to female leaders changed parental aspirations for daughters — gender gap in aspirations fell 25%</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🇻🇳</span> Vietnam Gender Norms</div><p>Vietnam has relatively egalitarian norms (women's role in independence wars, socialist ideology). But:</p>
+<ul><li>👩‍🍳 Double burden: women work AND do 80% of housework</li>
+<li>👦 Son preference persists (sex ratio at birth: 112:100, 2022)</li>
+<li>💼 Women underrepresented in management and National Assembly (~30%)</li></ul><div class="box gold"><div class="label">Key Insight</div><p>Norms are powerful but not permanent. Media, role models, institutional design, and policy can shift them — but it takes sustained effort over decades.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="03 · Gender">
+<div class="topic-bar"><div class="topic-num" style="color:#C4577A">03</div>
+<div class="topic-label"><h3 style="color:#C4577A">Methods & Summary</h3><h2>Gender Economics: Methods & Key Takeaways</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🔧</span> Methods to Know</div><div class="stack">
+<div class="mc"><b>📊 Event Study</b><p>Child penalty — track earnings around first birth (Kleven)</p></div>
+<div class="mc"><b>📬 Audit Studies</b><p>Send identical CVs with male/female names (Moss-Racusin)</p></div>
+<div class="mc"><b>📐 Blinder-Oaxaca</b><p>Decompose wage gap into explained vs. unexplained parts</p></div>
+<div class="mc"><b>📏 RDD</b><p>Gender quotas, close elections (Brogaard et al. 2024)</p></div></div></div><div class="card"><div class="card-header"><span class="card-icon">🎯</span> VEO/IEO Key Points</div><ul>
+<li>The gender gap is mostly about <strong>job design</strong>, not overt discrimination</li>
+<li>The <strong>child penalty</strong> explains 80% of the remaining gap</li>
+<li>Even the best family policies (Nordic) don't eliminate the gap</li>
+<li>Remote work is a natural experiment — early results are promising</li>
+<li>Vietnam: high LFP but quality gap and double burden persist</li></ul><div class="box gold"><div class="label">One Sentence</div><p><strong>Goldin showed that the last chapter of the gender gap is about how we organize work — not about women's choices or men's prejudice.</strong></p></div></div></div>
+</div>
+
+<div class="slide" data-topic="04 · Development">
+<div class="topic-bar"><div class="topic-num" style="color:#3B7DD8">04</div>
+<div class="topic-label"><h3 style="color:#3B7DD8">Nobel Prize</h3><h2>Nobel 2019: Can We Actually Measure What Works Against Poverty?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> Banerjee, Duflo & Kremer</div><p>They won for "their experimental approach to alleviating global poverty." Instead of asking <em>"what causes economic growth?"</em>, they asked <em>"does this specific program help these specific people?"</em></p><div class="story"><p>The old approach: run a regression of GDP growth on 50 variables and hope something is significant. The new approach: randomly assign a program, measure the impact, and scale what works.</p><div class="attr">— The paradigm shift</div></div></div><div class="card"><div class="card-header"><span class="card-icon">🧪</span> Why RCTs Were Revolutionary</div><p>A Randomized Controlled Trial (RCT) is simple: randomly assign people to a program or a control group. Any difference in outcomes is the causal effect.</p>
+<p><strong>J-PAL</strong> (founded 2003, MIT) has run 1,000+ RCTs in 80+ countries, informing policies reaching 600M+ people.</p><div class="box purple"><div class="label">What changed</div><p>Before: 'more aid = more growth' (maybe). After: 'this $3.50 deworming pill in Kenya increased school attendance by 25%' (definitely).</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="04 · Development">
+<div class="topic-bar"><div class="topic-num" style="color:#3B7DD8">04</div>
+<div class="topic-label"><h3 style="color:#3B7DD8">Landmark Studies</h3><h2>Three Studies That Changed Development Economics</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🪱</span> Deworming in Kenya ($3.50/student)</div><p><strong>Kremer & Miguel (2004):</strong> School-based deworming → attendance ↑25%. Cost: $3.50/student/year. 10-year follow-up: earnings ↑13%.</p>
+<p><strong>But:</strong> Replication controversy — some found weaker effects. The "Worm Wars" taught us: always replicate, always share data.</p><div class="box coral"><div class="label">Lesson</div><p>Even famous results can be fragile. Context matters — worm prevalence varies. Short-run ≠ long-run effects.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">📦</span> The Graduation Approach</div><p><strong>Banerjee et al. (2015):</strong> For the ultra-poor, bundled intervention: asset + training + coaching + savings + health support. Tested in 6 countries.</p><div class="stats"><div class="stat"><b>+38%</b><span>consumption at year 3</span></div><div class="stat"><b>+96%</b><span>asset increase</span></div><div class="stat"><b>Lasting</b><span>effects persist after program ends</span></div></div><p><strong>Why bundling works:</strong> The ultra-poor face multiple constraints at once. Cash alone doesn't work if skills are missing. Training alone doesn't work if assets are missing. The "big push" breaks all barriers simultaneously.</p></div></div>
+</div>
+
+<div class="slide" data-topic="04 · Development">
+<div class="topic-bar"><div class="topic-num" style="color:#3B7DD8">04</div>
+<div class="topic-label"><h3 style="color:#3B7DD8">Cash Transfers</h3><h2>Just Give People Money? Yes, It Actually Works</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">💵</span> The Evidence</div><ul>
+<li><strong>GiveDirectly (Kenya):</strong> $1,000 cash → consumption ↑27%, assets ↑58%, hunger ↓42%</li>
+<li><strong>No increase in alcohol/tobacco</strong> — the "temptation goods" myth is debunked across 19 studies</li>
+<li><strong>Mexico PROGRESA:</strong> Cash conditional on school attendance → girls' enrollment ↑9.3%</li></ul><div class="question"><div class="q">Should cash be conditional (attend school) or unconditional (no strings)?</div></div></div><div class="card"><div class="card-header"><span class="card-icon">🆚</span> CCT vs. UCT</div><div class="vs">
+<div class="vs-item"><b>Conditional (CCT)</b><p>Higher enrollment, lower dropout. Works when the goal is specific behavior change.</p></div>
+<div class="vs-item"><b>Unconditional (UCT)</b><p>Lower teen pregnancy, more flexibility. Respects recipient autonomy.</p></div></div><div class="box teal"><div class="label">Vietnam Context</div><p>Vietnam reduced poverty from 58% (1993) to 5% (2020) — extraordinary. But: 20+ fragmented programs with overlapping targeting. Opportunity: consolidation into a unified digital cash transfer system.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="04 · Development">
+<div class="topic-bar"><div class="topic-num" style="color:#3B7DD8">04</div>
+<div class="topic-label"><h3 style="color:#3B7DD8">RCT Critique</h3><h2>The RCT Debate: Powerful But Not Enough</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">⚔️</span> The Critics</div><ul>
+<li><strong>Deaton (2010):</strong> RCTs tell you <em>whether</em> but not <em>why</em>. External validity is the Achilles' heel — deworming in Kenya ≠ deworming in India.</li>
+<li><strong>Rodrik (2008):</strong> You can't answer "should Vietnam pursue export-led growth?" with an RCT. Big structural questions need different tools.</li>
+<li><strong>Pritchett & Sandefur (2015):</strong> Effect sizes from RCTs often don't replicate across countries.</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🤝</span> The Resolution: Use Everything</div><div class="stack">
+<div class="mc"><b>🎲 RCTs for...</b><p>Testing specific interventions (deworming, cash, teacher training)</p></div>
+<div class="mc"><b>📊 DiD/IV/RDD for...</b><p>Evaluating policies that can't be randomized (trade reform, minimum wage)</p></div>
+<div class="mc"><b>⚙️ Structural models for...</b><p>"What if Vietnam raised tariffs 10%?" — prediction outside sample</p></div>
+<div class="mc"><b>📈 Descriptive work for...</b><p>Establishing facts. Sometimes the most valuable contribution is simply measuring reality well.</p></div></div></div></div>
+</div>
+
+<div class="slide" data-topic="04 · Development">
+<div class="topic-bar"><div class="topic-num" style="color:#3B7DD8">04</div>
+<div class="topic-label"><h3 style="color:#3B7DD8">Institutions</h3><h2>Do Institutions Cause Wealth? Or Does Wealth Cause Institutions?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏛️</span> AJR (2001): The Famous IV</div><p><strong>Acemoglu, Johnson & Robinson:</strong> European settlers in colonies with low mortality (US, Australia) built inclusive institutions. In high-mortality places (Congo, Nigeria), they built extractive institutions. These institutions persist and explain today's income differences.</p><div class="stats"><div class="stat"><b>12×</b><span>income difference explained by institutions</span></div></div><div class="story"><p>Where European settlers could survive, they built democracies. Where they died of malaria, they built extraction machines. The ghosts of 17th-century microbes haunt today's GDP.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">🗺️</span> Counterarguments</div><ul>
+<li><strong>Geography (Sachs):</strong> Tropical disease and bad soil directly hurt productivity</li>
+<li><strong>Culture (Landes):</strong> Values, trust, and social capital matter</li>
+<li><strong>State capacity (Besley & Persson):</strong> It's not just the rules but the ability to implement them</li></ul><div class="box teal"><div class="label">Vietnam's Story</div><p>Doi Moi (1986): from central planning to market economy. Gradual reform (like China) rather than shock therapy (like Russia). The role of the state in guiding development remains central — and controversial.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="04 · Development">
+<div class="topic-bar"><div class="topic-num" style="color:#3B7DD8">04</div>
+<div class="topic-label"><h3 style="color:#3B7DD8">Structural Change</h3><h2>The Middle-Income Trap: Will Vietnam Get Stuck?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏗️</span> The Challenge</div><p><strong>Eichengreen et al. (2012):</strong> Growth slowdowns are most likely at $10,000-16,000 GDP/capita. Vietnam ($4,300) is approaching this zone.</p>
+<p><strong>Rodrik (2016):</strong> "Premature deindustrialization" — developing countries losing manufacturing jobs before getting rich. Services can't absorb labor the same way.</p></div><div class="card"><div class="card-header"><span class="card-icon">🇻🇳</span> Vietnam's Growth Model</div><ul>
+<li>📱 <strong>Samsung = ~25% of exports.</strong> Concentration risk is real.</li>
+<li>🏭 <strong>Domestic content in electronics: only 5-15%.</strong> Vietnam assembles, doesn't design.</li>
+<li>👷 <strong>35% of labor force still in agriculture</strong> producing 12% of GDP</li>
+<li>🎯 <strong>WB Vietnam 2035:</strong> human capital quality, domestic tech capability, institutional modernization</li></ul><div class="box gold"><div class="label">Key Question</div><p>Can Vietnam move from assembly hub to innovation economy before the FDI-led model runs out of steam?</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="04 · Development">
+<div class="topic-bar"><div class="topic-num" style="color:#3B7DD8">04</div>
+<div class="topic-label"><h3 style="color:#3B7DD8">Microfinance</h3><h2>Microfinance: The Promise That Didn't Deliver</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">💳</span> The Story</div><p><strong>Muhammad Yunus (Nobel Peace 2006)</strong> and Grameen Bank promised that small loans could lift millions out of poverty. <strong>6 rigorous RCTs later:</strong></p><div class="stats"><div class="stat"><b>+15-20%</b><span>business investment</span></div><div class="stat"><b>~0</b><span>income improvement</span></div><div class="stat"><b>~0</b><span>women's empowerment</span></div></div></div><div class="card"><div class="card-header"><span class="card-icon">😔</span> Why It Fell Short</div><ul>
+<li>Most micro-enterprises are subsistence, not scalable</li>
+<li>Interest rates of 20-40% are hard to beat with a small shop</li>
+<li>Credit alone without markets, skills, or infrastructure has limited impact</li></ul><div class="box purple"><div class="label">What Works Instead</div><p><strong>Mobile money (M-Pesa):</strong> Lifted 2% of Kenyan households out of poverty. <strong>Savings accounts:</strong> ↑66% health investment. <strong>Insurance:</strong> Improves risk-taking. The poor need financial services — but <em>savings and insurance</em> may matter more than <em>credit</em>.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="04 · Development">
+<div class="topic-bar"><div class="topic-num" style="color:#3B7DD8">04</div>
+<div class="topic-label"><h3 style="color:#3B7DD8">Summary</h3><h2>Topic 4 Summary: Development Economics</h2></div></div>
+<div class="content-full"><div class="sum">
+<div class="sum-col"><h3 style="color:#3B7DD8">Key Findings</h3><ul>
+<li>RCTs: deworming, CCTs, Graduation approach work</li>
+<li>Microfinance does NOT transform lives</li>
+<li>Cash transfers work and aren't wasted</li>
+<li>Institutions cause wealth (AJR 2001)</li>
+<li>Context matters — always replicate</li></ul></div>
+<div class="sum-col"><h3 style="color:#3B7DD8">Methods</h3><ul>
+<li><strong>RCT:</strong> Deworming, cash, microfinance</li>
+<li><strong>IV:</strong> Settler mortality for institutions</li>
+<li><strong>DiD:</strong> Trade liberalization, reforms</li>
+<li><strong>Structural:</strong> Growth models, CGE</li></ul></div>
+<div class="sum-col"><h3 style="color:#3B7DD8">Policy Lessons</h3><ul>
+<li>Bundle interventions for ultra-poor</li>
+<li>Consolidate fragmented programs</li>
+<li>Vietnam: transition from assembly to innovation</li>
+<li>Domestic firm capability is the binding constraint</li></ul></div></div><div class="box gold"><div class="label">One Sentence</div><p style='font-size:1.1rem'><strong>The RCT revolution proved that 'what works' questions are answerable — but the hardest development questions remain beyond any single method.</strong></p></div></div>
+</div>
+
+<div class="slide" data-topic="05 · Health">
+<div class="topic-bar"><div class="topic-num" style="color:#C44A4A">05</div>
+<div class="topic-label"><h3 style="color:#C44A4A">Nobel Prize</h3><h2>Nobel 2015: Angus Deaton — How Do We Even Measure Wellbeing?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> Deaton's Three Big Ideas</div><ul>
+<li><strong>Demand estimation:</strong> How do people allocate spending across goods? The "AIDS" model (1980) — used in every tax reform simulation.</li>
+<li><strong>Poverty measurement:</strong> Household surveys are essential but deeply flawed. Better measurement = better policy.</li>
+<li><strong>Preston Curve:</strong> GDP correlates with life expectancy but flattens above ~$10K. Above that, health gains come from technology and institutions, not just income.</li></ul><div class="story"><p>Case & Deaton (2015) discovered that mortality among middle-aged white Americans was <em>rising</em> — driven by opioids, alcohol, and suicide. They called them 'deaths of despair.' This was invisible in aggregate statistics.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">💊</span> The Big Question: Does Insurance = Health?</div><p>Two landmark experiments tested this:</p>
+<div class="vs"><div class="vs-item"><b>RAND HIE (1971-86)</b><p>Free care ↑ usage 30% but ~0 health improvement for average person. Big effects only for low-income + chronic sick.</p></div>
+<div class="vs-item"><b>Oregon Lottery (2008)</b><p>Medicaid ↑ ER visits (!), ↓ depression (-30%), ↓ financial hardship. But ~0 physical health improvement in 2 years.</p></div></div><div class="box gold"><div class="label">Surprise</div><p>Insurance protects finances and mental health, but physical health effects take longer to appear. This challenges the assumption that coverage = health.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="05 · Health">
+<div class="topic-bar"><div class="topic-num" style="color:#C44A4A">05</div>
+<div class="topic-label"><h3 style="color:#C44A4A">COVID & Behavior</h3><h2>COVID-19, Behavioral Health & Sin Taxes</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🦠</span> COVID Lessons</div><ul>
+<li><strong>Chetty et al. (2020):</strong> Real-time credit card data showed high-income consumers reduced spending <em>voluntarily</em> (fear), not just from lockdowns</li>
+<li><strong>Lockdowns are regressive:</strong> Low-income workers can't work from home (Kaplan et al. 2020)</li>
+<li><strong>Vaccine nudges work:</strong> SMS + community ambassadors → +25% vaccination in India</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🍬</span> Sin Taxes: Pricing Bad Habits</div><ul>
+<li>🇲🇽 <strong>Mexico soda tax:</strong> -7.6% sugary drink purchases. Effect larger for low-income households.</li>
+<li>🚬 <strong>Tobacco:</strong> 10% price increase → 4% fewer smokers. Most cost-effective public health intervention.</li>
+<li>🏥 <strong>Organ donation defaults:</strong> Opt-out countries: ~85% donors. Opt-in: ~15%. The default is enormously powerful.</li></ul><div class="box teal"><div class="label">Vietnam</div><p>UHC coverage: ~93%, but out-of-pocket spending is still ~40%. Catastrophic health costs affect 2-3% of households. Priority: strengthen primary care and reduce OOP.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="05 · Health">
+<div class="topic-bar"><div class="topic-num" style="color:#C44A4A">05</div>
+<div class="topic-label"><h3 style="color:#C44A4A">Pharma & Mental Health</h3><h2>Innovation vs. Access & The Mental Health Gap</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">💊</span> The Patent Trade-Off</div><p>Patents create monopoly pricing → high prices → innovation incentives. But high prices → reduced access. Solutions:</p>
+<ul><li><strong>Compulsory licensing:</strong> India produced cancer drug at 3% of original price</li>
+<li><strong>Advance Market Commitments:</strong> Kremer → guaranteed market → 150M children vaccinated for pneumonia</li>
+<li><strong>Prize models:</strong> Pay for R&D, make drugs generic from day one</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🧠</span> Mental Health: The Hidden Crisis</div><div class="stats"><div class="stat"><b>$16T</b><span>global cost by 2030 (WEF)</span></div><div class="stat"><b>-15-20%</b><span>workplace productivity loss from depression</span></div><div class="stat"><b>0.2</b><span>psychiatrists per 100K in SE Asia (vs. 15 in Europe)</span></div></div><p><strong>Good news:</strong> Lay-counselor-delivered CBT in India → 65% depression remission at $66/patient. Cash transfers reduce cortisol levels (biological stress marker). Scalable solutions exist.</p><div class="box gold"><div class="label">VEO/IEO Tip</div><p>Health economics questions test: (1) moral hazard in insurance, (2) externalities in vaccination/pollution, (3) behavioral economics of prevention, (4) innovation-access trade-off in pharma.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="05 · Health">
+<div class="topic-bar"><div class="topic-num" style="color:#C44A4A">05</div>
+<div class="topic-label"><h3 style="color:#C44A4A">Summary</h3><h2>Topic 5 Summary: Health Economics</h2></div></div>
+<div class="content-full"><div class="sum">
+<div class="sum-col"><h3 style="color:#C44A4A">Key Findings</h3><ul><li>Insurance protects finances > physical health</li><li>COVID widened every existing gap</li><li>Sin taxes work (tobacco, soda)</li><li>Mental health is massively under-invested</li></ul></div>
+<div class="sum-col"><h3 style="color:#C44A4A">Methods</h3><ul><li><strong>RCT:</strong> RAND, Oregon Medicaid</li><li><strong>Natural experiments:</strong> COVID</li><li><strong>Demand estimation:</strong> AIDS model</li><li><strong>Behavioral:</strong> Nudges, defaults</li></ul></div>
+<div class="sum-col"><h3 style="color:#C44A4A">Policy</h3><ul><li>UHC: coverage isn't enough — reduce OOP</li><li>Primary care > hospital-centric models</li><li>Nudges complement pricing</li><li>Vietnam: 93% coverage but 40% OOP</li></ul></div></div></div>
+</div>
+
+<div class="slide" data-topic="06 · IO">
+<div class="topic-bar"><div class="topic-num" style="color:#CC7A2F">06</div>
+<div class="topic-label"><h3 style="color:#CC7A2F">Nobel Prize</h3><h2>Nobel 2014: Jean Tirole — There's No One-Size-Fits-All Regulation</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> Tirole's Key Insight</div><p>Markets are complex. What looks like predatory pricing in a normal market might be <em>efficient</em> in a platform market. <strong>Optimal regulation depends on context.</strong></p>
+<p><strong>Two-sided markets:</strong> Uber, Google, Amazon serve two groups. Charging one side below cost (Google Search is free) can be welfare-enhancing, not predatory.</p><div class="story"><p>Google pays Apple $26 billion/year to be the default search engine. Is this an entry barrier or efficient investment? Tirole's framework says: it depends on whether it harms consumers.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">📊</span> The Rise of Market Power</div><div class="stats"><div class="stat"><b>21%→61%</b><span>US markups rose (1980-2016)</span></div><div class="stat"><b>41%</b><span>of US market cap = VC-backed companies</span></div><div class="stat"><b>6</b><span>designated 'gatekeepers' under EU DMA</span></div></div><p><strong>De Loecker et al. (2020):</strong> Rising market power is economy-wide, not just tech. "Superstar firms" (Autor et al.) drive the labor share decline.</p><div class="box gold"><div class="label">Key Debate</div><p>'Consumer welfare standard' (prices) vs. 'structuralist' approach (market concentration). This debate defines modern antitrust — expect it in VEO/IEO.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="06 · IO">
+<div class="topic-bar"><div class="topic-num" style="color:#CC7A2F">06</div>
+<div class="topic-label"><h3 style="color:#CC7A2F">Platform Regulation</h3><h2>Big Tech Regulation: DMA, Antitrust & Killer Acquisitions</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">📱</span> EU Digital Markets Act (2024)</div><ul>
+<li>🏷️ <strong>Gatekeepers:</strong> Apple, Google, Meta, Amazon, Microsoft, ByteDance</li>
+<li>🔓 <strong>Obligations:</strong> No self-preferencing, allow sideloading, data portability, messaging interoperability</li>
+<li>💰 <strong>Fines:</strong> Up to 10-20% of global revenue</li></ul><div class="box coral"><div class="label">US v. Google (2024)</div><p>Found Google monopolized search through default agreements. Remedy TBD — could require divesting Chrome or Android.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">🔪</span> Killer Acquisitions</div><p><strong>Cunningham et al. (2021, JPE):</strong> Pharma firms buy startups specifically to <em>kill</em> competing drugs. ~6.4% of pharma acquisitions are "killers."</p><div class="box teal"><div class="label">ASEAN Context</div><ul><li>🚗 Grab-Uber merger (2018): near-monopoly in SE Asia ride-hailing</li>
+<li>🛒 Shopee + Lazada: 70%+ of SE Asia e-commerce</li>
+<li>🇻🇳 Vietnam Competition Law 2018: introduced merger control but enforcement capacity is limited</li></ul></div></div></div>
+</div>
+
+<div class="slide" data-topic="06 · IO">
+<div class="topic-bar"><div class="topic-num" style="color:#CC7A2F">06</div>
+<div class="topic-label"><h3 style="color:#CC7A2F">Competition & Innovation</h3><h2>Does Competition Help or Hurt Innovation?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">📈</span> The Inverted-U</div><p><strong>Aghion et al. (2005):</strong> The relationship is <em>inverted-U shaped</em>:</p>
+<ul><li>Too little competition → monopoly complacency (why innovate?)</li>
+<li>Medium competition → firms innovate to "escape" rivals → maximum innovation</li>
+<li>Too much competition → margins too thin to fund R&D</li></ul><div class="story"><p>Some market power is good for innovation (Schumpeter was right). But monopoly is bad (antitrust authorities are also right). The optimal point is in between.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">🔧</span> BLP: How Regulators Analyze Mergers</div><p><strong>Berry, Levinsohn & Pakes (1995):</strong> Structural demand estimation for differentiated products. Used in every major merger review (FTC/DOJ/EC).</p>
+<p><strong>Steps:</strong> Estimate demand → simulate post-merger prices → predict consumer harm → approve/block.</p><div class="box gold"><div class="label">VEO/IEO Tips</div><p>IO questions test: (1) two-sided market logic, (2) consumer welfare vs. structuralist debate, (3) competition-innovation trade-off, (4) 'should we break up Big Tech?'</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="06 · IO">
+<div class="topic-bar"><div class="topic-num" style="color:#CC7A2F">06</div>
+<div class="topic-label"><h3 style="color:#CC7A2F">Summary</h3><h2>Topic 6 Summary: Industrial Organization</h2></div></div>
+<div class="content-full"><div class="sum">
+<div class="sum-col"><h3 style="color:#CC7A2F">Findings</h3><ul><li>Two-sided markets need new antitrust tools</li><li>Markups rose to 61% — market power is widespread</li><li>Killer acquisitions suppress innovation</li><li>Competition-innovation: inverted-U</li></ul></div>
+<div class="sum-col"><h3 style="color:#CC7A2F">Methods</h3><ul><li><strong>BLP:</strong> Demand estimation</li><li><strong>Merger simulation:</strong> Price prediction</li><li><strong>Event study:</strong> Antitrust actions</li></ul></div>
+<div class="sum-col"><h3 style="color:#CC7A2F">Policy</h3><ul><li>DMA is the new regulatory frontier</li><li>No one-size-fits-all (Tirole's message)</li><li>ASEAN needs stronger competition enforcement</li></ul></div></div></div>
+</div>
+
+<div class="slide" data-topic="07 · Innovation">
+<div class="topic-bar"><div class="topic-num" style="color:#2A8FAF">07</div>
+<div class="topic-label"><h3 style="color:#2A8FAF">Nobel Prize</h3><h2>Nobel 2018: Paul Romer — Ideas Are the Engine of Growth</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> The Romer Model</div><p><strong>Before Romer:</strong> Technology falls from the sky (Solow). Growth eventually stops.<br>
+<strong>After Romer (1990):</strong> Ideas are <em>non-rival</em> (my use doesn't reduce yours) and respond to incentives. R&D investment drives <em>permanent</em> growth.</p><div class="story"><p>A recipe is non-rival — sharing it doesn't reduce its value. In fact, the more people who use it, the more valuable it becomes. Ideas work the same way. This is why subsidizing research has lasting effects.</p><div class="attr">— Why ideas are special</div></div></div><div class="card"><div class="card-header"><span class="card-icon">💡</span> Key Implications</div><ul>
+<li>More researchers → more ideas → faster growth (scale effect)</li>
+<li>R&D subsidies have <strong>permanent</strong> growth effects (vs. capital subsidies which are temporary)</li>
+<li>Patent protection encourages innovation but limits diffusion — need balance</li></ul><div class="stats"><div class="stat"><b>18×</b><span>more researchers needed to sustain Moore's Law than in 1970s</span></div><div class="stat"><b>$52B</b><span>US CHIPS Act semiconductor subsidies</span></div><div class="stat"><b>$370B</b><span>US IRA clean energy subsidies</span></div></div></div></div>
+</div>
+
+<div class="slide" data-topic="07 · Innovation">
+<div class="topic-bar"><div class="topic-num" style="color:#2A8FAF">07</div>
+<div class="topic-label"><h3 style="color:#2A8FAF">AI Economics</h3><h2>AI: Productivity Revolution or 'So-So Automation'?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🤖</span> The Evidence So Far</div><ul>
+<li>👨‍💻 <strong>GitHub Copilot:</strong> 55% faster coding. Gains concentrated among junior developers.</li>
+<li>✍️ <strong>ChatGPT for writing:</strong> 37% faster, higher quality. Largest gains for lower-skill workers.</li>
+<li>🏢 <strong>BCG consultants + GPT-4:</strong> +40% on AI-suitable tasks. But <strong>-23% on tasks requiring judgment</strong> — "falling asleep at the wheel."</li></ul><div class="question"><div class="q">Is AI more like electricity (transforms everything) or like ATMs (replaces cashiers, that's it)?</div></div></div><div class="card"><div class="card-header"><span class="card-icon">⚠️</span> Acemoglu's Warning</div><p><strong>"So-so automation":</strong> AI might replace workers without dramatically increasing productivity. Self-checkout didn't make grocery shopping much better — it just eliminated cashiers.</p><div class="box gold"><div class="label">The Optimist View</div><p><strong>Korinek & Suh (2024):</strong> If AI reaches AGI, GDP could grow 5-14×. But the distribution depends entirely on policy. Without intervention, AI could be the greatest inequality amplifier in history.</p></div><div class="box teal"><div class="label">Vietnam & AI</div><p>VinAI, FPT AI Center. Young, tech-savvy population. But: if AI automates assembly (Vietnam's advantage), the FDI-led model faces disruption. Invest in AI education, not just assembly workers.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="07 · Innovation">
+<div class="topic-bar"><div class="topic-num" style="color:#2A8FAF">07</div>
+<div class="topic-label"><h3 style="color:#2A8FAF">Startups & Jobs</h3><h2>Startups, Not Small Businesses, Drive Job Creation</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🚀</span> The Evidence</div><ul>
+<li><strong>Haltiwanger et al. (2013):</strong> Young firms (age 0-5), not small firms, drive net job creation. Policy targeting "small business" is misguided.</li>
+<li><strong>VC impact:</strong> VC-backed companies = 41% of US market cap, 62% of R&D spending</li>
+<li><strong>Government VC mostly fails:</strong> Political allocation, poor deal flow. Exception: Israel's Yozma program — government invested alongside private VCs → catalyzed the entire tech ecosystem.</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">📜</span> Patent System Problems</div><ul>
+<li><strong>Patent trolls:</strong> Cost US firms $29B/year (Cohen et al. 2019)</li>
+<li><strong>Ideas getting harder to find:</strong> Bloom et al. (2020) — research productivity is declining across every field</li>
+<li><strong>CHIPS Act + IRA:</strong> US industrial policy revival after 40 years of laissez-faire. Will it work?</li></ul><div class="box teal"><div class="label">Vietnam Startups</div><p>~3,800 startups. MoMo ($2B), VNPay, VNG. VC funding: $500M (2023). Challenge: small domestic market. Opportunity: ASEAN digital economy = $600B by 2030.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="07 · Innovation">
+<div class="topic-bar"><div class="topic-num" style="color:#2A8FAF">07</div>
+<div class="topic-label"><h3 style="color:#2A8FAF">Summary</h3><h2>Topic 7 Summary: Innovation & Technology</h2></div></div>
+<div class="content-full"><div class="sum">
+<div class="sum-col"><h3 style="color:#2A8FAF">Findings</h3><ul><li>Ideas (non-rival) drive long-run growth</li><li>AI: 15-55% task-level productivity gains</li><li>"So-so automation" risk is real</li><li>Research productivity is declining</li></ul></div>
+<div class="sum-col"><h3 style="color:#2A8FAF">Methods</h3><ul><li>Growth accounting (Solow residual)</li><li>RCT for AI tools (Noy & Zhang)</li><li>Patent analysis</li><li>Task-based models (Acemoglu)</li></ul></div>
+<div class="sum-col"><h3 style="color:#2A8FAF">Policy</h3><ul><li>R&D subsidies > capital subsidies</li><li>AI policy: innovation + labor transitions</li><li>Patent reform needed (trolls, killers)</li><li>Vietnam: AI education, not just assembly</li></ul></div></div></div>
+</div>
+
+<div class="slide" data-topic="08 · Trade">
+<div class="topic-bar"><div class="topic-num" style="color:#7B5EA7">08</div>
+<div class="topic-label"><h3 style="color:#7B5EA7">Nobel Prize</h3><h2>Nobel 2008: Paul Krugman — Why Do France and Germany Trade Cars With Each Other?</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> The Puzzle</div><p>Classical trade theory says countries trade because they're <em>different</em> (France exports wine, Germany exports machines). But most trade is between <em>similar</em> countries trading <em>similar</em> goods.</p>
+<p><strong>Krugman's answer:</strong> Economies of scale + consumer love of variety. Even identical countries gain from trade because each can specialize in fewer varieties and trade for the rest.</p><div class="story"><p>You buy a BMW, your neighbor buys a Peugeot. Both are cars. But variety makes everyone happier — and each factory is bigger and more efficient because it serves the whole continent.</p></div></div><div class="card"><div class="card-header"><span class="card-icon">📈</span> From Krugman to Melitz</div><p><strong>Melitz (2003):</strong> Not all firms export — only the most productive ones. Trade liberalization doesn't help everyone equally:</p>
+<ul><li>🏆 <strong>Most productive firms:</strong> Export, grow, hire more</li>
+<li>🏠 <strong>Medium firms:</strong> Stay domestic</li>
+<li>💀 <strong>Least productive:</strong> Can't compete with imports → exit</li></ul><div class="box gold"><div class="label">Key Insight</div><p>Trade creates aggregate gains through reallocation — resources flow from less to more productive firms. But the losers are real people, not just statistics.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="08 · Trade">
+<div class="topic-bar"><div class="topic-num" style="color:#7B5EA7">08</div>
+<div class="topic-label"><h3 style="color:#7B5EA7">China Shock</h3><h2>The China Shock: When Trade Theory Met Reality</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🇨🇳</span> Autor, Dorn & Hanson (2013)</div><p>When China joined the WTO (2001), its exports surged. US regions exposed to Chinese competition:</p><div class="stats"><div class="stat"><b>2.4M</b><span>manufacturing jobs lost</span></div><div class="stat"><b>$46K</b><span>lifetime earnings loss per worker</span></div><div class="stat"><b>↑</b><span>disability claims, lower marriage rates</span></div></div><p><strong>Adjustment was painfully slow.</strong> Workers didn't move to less-affected areas. The promise of "trade helps everyone in the long run" rang hollow.</p></div><div class="card"><div class="card-header"><span class="card-icon">⚡</span> Political Consequences</div><ul>
+<li><strong>Autor et al. (2020):</strong> China-shock-exposed districts → more polarized politics, higher Trump vote</li>
+<li><strong>Fajgelbaum et al. (2020):</strong> US-China tariffs fully passed to US consumers. Welfare loss: $51B/year. The "cure" was worse than the "disease."</li></ul><div class="box teal"><div class="label">Vietnam's Position</div><p>Vietnam is on the <em>winning side</em> of trade realignment (friendshoring from China). FDI surged 32% in 2023. But: Samsung = 25% of exports (concentration risk). If AI automates assembly, Vietnam's advantage erodes.</p></div><div class="box gold"><div class="label">Key Lesson</div><p>Trade theory assumed smooth adjustment. The China Shock proved that <strong>adjustment costs are large, concentrated, and politically explosive</strong>.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="08 · Trade">
+<div class="topic-bar"><div class="topic-num" style="color:#7B5EA7">08</div>
+<div class="topic-label"><h3 style="color:#7B5EA7">Geopolitics</h3><h2>Trade in the Age of Geopolitical Fragmentation</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">⚔️</span> The New Trade Order</div><ul>
+<li>🤝 <strong>Friendshoring:</strong> Supply chains toward allies. Vietnam, Mexico, India benefit.</li>
+<li>💻 <strong>US-China tech war:</strong> CHIPS Act, semiconductor export controls</li>
+<li>🇷🇺 <strong>Russia sanctions:</strong> -5% GDP for Russia, but energy crisis for EU</li>
+<li>🌐 <strong>RCEP (2022):</strong> World's largest FTA (30% of global GDP). Vietnam is a member.</li></ul></div><div class="card"><div class="card-header"><span class="card-icon">🇻🇳</span> Vietnam's Trade Position</div><div class="stats"><div class="stat"><b>~200%</b><span>trade/GDP ratio</span></div><div class="stat"><b>5-15%</b><span>domestic content in electronics</span></div><div class="stat"><b>60+</b><span>markets with preferential access via FTAs</span></div></div><ul><li>CPTPP + EVFTA → access to EU + Pacific, but requires building domestic supply chains (rules of origin)</li>
+<li>Samsung dependency: if Samsung diversifies to India, macro impact is severe</li></ul><div class="box purple"><div class="label">Gravity Model</div><p>The workhorse of trade empirics: bilateral trade ∝ GDP, inversely ∝ distance. R² > 0.7 — one of the most successful models in economics. Use PPML for zeros.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="08 · Trade">
+<div class="topic-bar"><div class="topic-num" style="color:#7B5EA7">08</div>
+<div class="topic-label"><h3 style="color:#7B5EA7">Summary</h3><h2>Topic 8 Summary: International Trade</h2></div></div>
+<div class="content-full"><div class="sum">
+<div class="sum-col"><h3 style="color:#7B5EA7">Findings</h3><ul><li>Trade creates aggregate gains but concentrated losses</li><li>Only productive firms export (Melitz)</li><li>China Shock: 2.4M US jobs lost</li><li>Vietnam is a friendshoring beneficiary</li></ul></div>
+<div class="sum-col"><h3 style="color:#7B5EA7">Methods</h3><ul><li>Gravity model (PPML)</li><li>Shift-share IV (Bartik)</li><li>DiD for trade liberalization</li><li>Firm-level analysis</li></ul></div>
+<div class="sum-col"><h3 style="color:#7B5EA7">Policy</h3><ul><li>Trade adjustment assistance needed</li><li>Vietnam: diversify beyond Samsung</li><li>CBAM = climate meets trade</li><li>FTA utilization requires active support</li></ul></div></div></div>
+</div>
+
+<div class="slide" data-topic="09 · Causal Inf.">
+<div class="topic-bar"><div class="topic-num" style="color:#1A9E85">09</div>
+<div class="topic-label"><h3 style="color:#1A9E85">Nobel Prize</h3><h2>Nobel 2021: The Single Most Important Question in Economics</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🏅</span> The Credibility Revolution</div><p>The 2021 Nobel cemented a 30-year shift: economists must now <strong>show their identification strategy</strong> — explain exactly why we should believe a causal claim.</p><div class="question"><div class="q">What is the counterfactual? — This is the question that defines modern empirical economics.</div></div><div class="story"><p>Before: run a regression and hope the coefficient means something. After: find a natural experiment and prove the comparison is credible.</p><div class="attr">— The paradigm shift</div></div></div><div class="card"><div class="card-header"><span class="card-icon">📐</span> The Rubin Framework</div><p>Each person has two potential outcomes: what happens <em>with</em> treatment and what happens <em>without</em>. We can only ever observe one. The entire field is about constructing credible comparisons to estimate the missing counterfactual.</p><div class="box gold"><div class="label">LATE</div><p><strong>Imbens & Angrist (1994):</strong> IV estimates the effect for <em>compliers</em> — those whose behavior changes because of the instrument. This is narrower than the overall average but has a credible causal interpretation.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="09 · Causal Inf.">
+<div class="topic-bar"><div class="topic-num" style="color:#1A9E85">09</div>
+<div class="topic-label"><h3 style="color:#1A9E85">The Big Five</h3><h2>The Five Methods Every Economist Must Know</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">🎲</span> Method Map</div><div class="stack">
+<div class="mc"><b>1. RCT</b><p>Random assignment. Gold standard. But expensive, often infeasible, and context-specific.</p></div>
+<div class="mc"><b>2. Instrumental Variables (IV)</b><p>Find an external "nudge" that affects treatment but not outcomes directly. Quarter of birth, proximity to college.</p></div>
+<div class="mc"><b>3. Difference-in-Differences (DiD)</b><p>Compare treated vs. control, before vs. after. Assumes parallel trends. NJ minimum wage (Card & Krueger).</p></div></div></div><div class="card"><div class="card-header"><span class="card-icon">📏</span> Methods 4-5</div><div class="stack">
+<div class="mc"><b>4. Regression Discontinuity (RDD)</b><p>Exploit arbitrary cutoffs (admissions scores, age thresholds). Very credible but very local.</p></div>
+<div class="mc"><b>5. Synthetic Control</b><p>Build a "fake" counterfactual from weighted comparison units. Great for case studies (one treated country/state).</p></div></div><div class="box purple"><div class="label">When to Use What</div><p>RCT → test specific interventions. DiD → policy changes. IV → endogenous variables with external instruments. RDD → threshold-based policies. Synthetic control → single-unit case studies.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="09 · Causal Inf.">
+<div class="topic-bar"><div class="topic-num" style="color:#1A9E85">09</div>
+<div class="topic-label"><h3 style="color:#1A9E85">DiD Revolution</h3><h2>The Staggered DiD Problem: Why Classic Methods Were Wrong</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">📊</span> The Problem</div><p>When different units adopt a policy at different times, the classic "two-way fixed effects" regression can give <strong>wrong answers</strong> — even wrong <em>signs</em>.</p>
+<p><strong>Goodman-Bacon (2021):</strong> TWFE is a weighted average of all 2×2 comparisons. Problem: already-treated units serve as "controls" for later-treated units → biased.</p><div class="question"><div class="q">If your treated group is contaminating your control group, your estimate could be completely misleading.</div></div></div><div class="card"><div class="card-header"><span class="card-icon">🔧</span> The New Estimators</div><ul>
+<li><strong>Callaway & Sant'Anna (2021):</strong> Compute effects for each cohort separately, then aggregate cleanly</li>
+<li><strong>Sun & Abraham (2021):</strong> Interaction-weighted estimator for event studies</li>
+<li><strong>Causal forests (Athey & Imbens):</strong> Machine learning for heterogeneous effects — who benefits most?</li></ul><div class="box gold"><div class="label">Why This Matters</div><p>If you're writing an empirical paper using DiD with staggered treatment, you <strong>must</strong> use modern estimators. Reviewers will reject papers using basic TWFE.</p></div><div class="code">* Modern staggered DiD in Stata
+csdid outcome, ivar(id) tvar(year) gvar(first_treat)
+csdid_plot, group(.) title("Event Study")</div></div></div>
+</div>
+
+<div class="slide" data-topic="09 · Causal Inf.">
+<div class="topic-bar"><div class="topic-num" style="color:#1A9E85">09</div>
+<div class="topic-label"><h3 style="color:#1A9E85">Best Practices</h3><h2>How to Not Fool Yourself (or Your Audience)</h2></div></div>
+<div class="content-grid"><div class="card"><div class="card-header"><span class="card-icon">✅</span> Checklist</div><ol>
+<li>State the causal question clearly</li>
+<li>Identify the source of quasi-random variation</li>
+<li>Check assumptions: parallel trends, exclusion restriction, no manipulation</li>
+<li>Show event study plots <em>before</em> DiD estimates</li>
+<li>Report first-stage F-stat for IV (> 10)</li>
+<li>Cluster standard errors at the treatment level</li>
+<li>Pre-register when possible</li></ol></div><div class="card"><div class="card-header"><span class="card-icon">⚠️</span> Common Traps</div><ul>
+<li>🎣 <strong>p-hacking:</strong> Suspicious bunching of t-stats just above 1.96 in journals. Pre-registration is the antidote.</li>
+<li>📏 <strong>Pre-trends with low power:</strong> Failing to reject parallel trends ≠ parallel trends hold (Roth 2022)</li>
+<li>🏆 <strong>Winner's curse:</strong> Published effects are exaggerated by factor of 2× (Ioannidis 2017)</li>
+<li>🌍 <strong>External validity:</strong> Every method is <em>local</em>. LATE is for compliers; RDD is at the cutoff; RCTs are for that context.</li></ul><div class="box gold"><div class="label">The Master Tip</div><p style='font-size:1.05rem'><strong>The single most important question in empirical economics: 'Compared to what?'</strong> If you can answer this for any study or policy, you understand causal inference.</p></div></div></div>
+</div>
+
+<div class="slide" data-topic="09 · Causal Inf.">
+<div class="topic-bar"><div class="topic-num" style="color:#1A9E85">09</div>
+<div class="topic-label"><h3 style="color:#1A9E85">Summary</h3><h2>Topic 9 Summary: Causal Inference Methods</h2></div></div>
+<div class="content-full"><div class="sum">
+<div class="sum-col"><h3 style="color:#1A9E85">The Big Five</h3><ul>
+<li><strong>RCT:</strong> Gold standard, limited reach</li>
+<li><strong>IV:</strong> External variation, LATE for compliers</li>
+<li><strong>DiD:</strong> Before/after + treated/control</li>
+<li><strong>RDD:</strong> Cutoff = local randomization</li>
+<li><strong>SCM:</strong> Construct counterfactual</li></ul></div>
+<div class="sum-col"><h3 style="color:#1A9E85">Frontiers</h3><ul>
+<li>Staggered DiD (Callaway-Sant'Anna)</li>
+<li>Double ML for high dimensions</li>
+<li>Causal forests for heterogeneity</li>
+<li>Shift-share IV formalization</li></ul></div>
+<div class="sum-col"><h3 style="color:#1A9E85">Principles</h3><ul>
+<li>Always ask: "compared to what?"</li>
+<li>Show identification visually</li>
+<li>Report diagnostics</li>
+<li>Pre-register and share code/data</li></ul></div></div><div class="box gold"><div class="label">One Sentence</div><p style='font-size:1.1rem'><strong>Causal inference is the backbone of all empirical economics — every policy claim requires a credible answer to 'compared to what?'</strong></p></div></div>
+</div>
+
+<div class="slide slide-cover" data-topic="Closing">
+<div class="cv-over" style="color:var(--teal)">Synthesis</div>
+<div class="cv-title" style="font-size:2.4rem;max-width:800px;">
+Every Nobel topic in this deck comes back to one question:<br>
+<em style="color:var(--gold)">"What is the counterfactual?"</em>
+</div>
+<div class="cv-sub" style="max-width:660px;margin-top:18px">
+From Angrist's quarter-of-birth to Goldin's child penalty, from Nordhaus's discount rate to the China Shock — economics progresses by finding more credible ways to answer: <strong>compared to what?</strong>
+</div>
+<div class="cv-meta" style="margin-top:36px">
+<div style="margin-bottom:10px;font-size:0.92rem;color:var(--ink2)"><strong>Recommended Reading</strong></div>
+<div style="display:inline-block;text-align:left;font-size:0.82rem;line-height:2;color:var(--ink3)">
+Angrist &amp; Pischke, <em>Mostly Harmless Econometrics</em> ·
+Cunningham, <em>Causal Inference: The Mixtape</em><br>
+Banerjee &amp; Duflo, <em>Poor Economics</em> ·
+Goldin, <em>Career &amp; Family</em><br>
+Tirole, <em>Economics for the Common Good</em> ·
+Acemoglu &amp; Johnson, <em>Power and Progress</em>
+</div>
+</div>
+</div>
+</div>
+<div class="nav">
+<div class="nav-info"><span id="sc"></span> · <span class="ct" id="ct"></span></div>
+<div class="nav-controls">
+<div class="nb" onclick="toggleSB()" title="Menu (M)">☰</div>
+<div class="nb" onclick="prev()" title="← Previous">◀</div>
+<div class="nb" onclick="next()" title="→ Next">▶</div>
+</div></div>
+<script>
+const S=document.querySelectorAll('.slide'),T=S.length;let C=0;
+function go(n){S[C].classList.remove('active');C=Math.max(0,Math.min(n,T-1));S[C].classList.add('active');upd()}
+function next(){if(C<T-1)go(C+1)}function prev(){if(C>0)go(C-1)}
+function upd(){document.getElementById('sc').textContent=`${C+1} / ${T}`;document.getElementById('ct').textContent=S[C].dataset.topic;document.getElementById('progress').style.width=`${((C+1)/T)*100}%`;document.querySelectorAll('.sb-t').forEach(el=>el.classList.toggle('active',+el.dataset.i===C))}
+function toggleSB(){document.getElementById('sidebar').classList.toggle('open')}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}if(e.key==='ArrowLeft'){e.preventDefault();prev()}if(e.key==='Home'){e.preventDefault();go(0)}if(e.key==='End'){e.preventDefault();go(T-1)}if(e.key.toLowerCase()==='m')toggleSB()});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX});document.addEventListener('touchend',e=>{const d=e.changedTouches[0].screenX-tx;if(Math.abs(d)>50){d<0?next():prev()}});
+const sb=document.getElementById('sidebar');let h='<div class="sb-h">Contents</div>';
+for(let i=0;i<T;i++)h+=`<div class="sb-t" data-i="${i}" onclick="go(${i})">${i+1}. ${S[i].dataset.topic}</div>`;
+sb.innerHTML=h;upd();
+</script></body></html>

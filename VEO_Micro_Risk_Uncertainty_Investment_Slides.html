@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VEO Micro – Risk, Uncertainty & Investment Decisions</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0d0f1a;--accent:#7c3aed;--accent2:#a78bfa;--green:#10b981;--orange:#f59e0b;--red:#ef4444;--blue:#3b82f6;--teal:#14b8a6;--text:#f1f5f9;--muted:#94a3b8;--surface:#1a1d2e;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;width:100vw;}
+.deck{position:relative;width:100vw;height:100vh;}.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;flex-direction:column;justify-content:center;padding:50px 70px;opacity:0;transition:opacity .4s;overflow-y:auto;}.slide.active{display:flex;opacity:1;}
+.slide.title-slide{background:linear-gradient(135deg,#1a0a2e,#0d0f1a 50%,#0a0d1a);text-align:center;justify-content:center;align-items:center;}
+.slide.section-slide{background:linear-gradient(135deg,#7c3aed,#5b21b6);text-align:center;justify-content:center;align-items:center;}
+.slide.content-slide{background:var(--bg);}.slide.veo-slide{background:linear-gradient(135deg,#1a1008,var(--bg));border-left:6px solid var(--orange);}.slide.calc-slide{background:linear-gradient(135deg,#071410,var(--bg));border-left:6px solid var(--green);}
+h1{font-family:'DM Serif Display',serif;font-size:2.9em;line-height:1.15;margin-bottom:14px;}h2{font-family:'DM Serif Display',serif;font-size:1.95em;line-height:1.2;margin-bottom:11px;color:var(--accent);}h3{font-size:1.1em;font-weight:700;margin-bottom:6px;color:var(--green);}p{font-size:1.02em;line-height:1.58;margin-bottom:7px;color:var(--muted);}.big{font-size:1.12em;color:var(--text);}li{font-size:.96em;line-height:1.5;margin-bottom:4px;color:var(--muted);}ul,ol{padding-left:22px;}strong{color:var(--text);}
+.box{border-radius:12px;padding:13px 17px;margin:9px 0;}.box-def{background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);}.box-key{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);}.box-warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);}.box-veo{background:rgba(245,158,11,.12);border:2px solid var(--orange);}.box-purple{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);}.box-calc{background:rgba(16,185,129,.08);border:2px solid var(--green);}.box-red{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);}.box-blue{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);}
+.box-title{font-weight:700;font-size:.93em;margin-bottom:5px;}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:9px 0;}.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:9px 0;}
+table{width:100%;border-collapse:collapse;margin:9px 0;font-size:.88em;}th{background:var(--accent);color:#fff;padding:7px 10px;text-align:left;font-weight:600;}td{padding:6px 10px;border-bottom:1px solid var(--surface);color:var(--muted);}
+.nav{position:fixed;bottom:20px;right:30px;display:flex;gap:10px;z-index:100;}.nav button{background:var(--surface);color:var(--text);border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:600;transition:.2s;}.nav button:hover{background:var(--accent);}.counter{position:fixed;bottom:24px;left:30px;color:var(--muted);font-size:.95em;z-index:100;}.topic-badge{position:fixed;top:20px;left:30px;background:var(--accent);color:#fff;padding:6px 14px;border-radius:20px;font-size:.8em;font-weight:600;z-index:100;}
+.hl{color:var(--accent);font-weight:700;}.hl-g{color:var(--green);font-weight:700;}.hl-o{color:var(--orange);font-weight:700;}.hl-r{color:var(--red);font-weight:700;}
+.formula-big{font-size:1.4em;text-align:center;padding:12px;color:var(--accent2);font-weight:700;font-family:'DM Serif Display',serif;}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.8em;font-weight:600;}.tag-g{background:rgba(16,185,129,.2);color:var(--green);}.tag-r{background:rgba(239,68,68,.2);color:var(--red);}.tag-o{background:rgba(245,158,11,.2);color:var(--orange);}.tag-b{background:rgba(124,58,237,.2);color:var(--accent);}
+.subtitle{font-size:1.15em;color:var(--muted);font-weight:300;}
+.diagram{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0;flex-wrap:wrap;}.d-box{background:var(--surface);padding:10px 15px;border-radius:10px;text-align:center;font-weight:600;font-size:.83em;min-width:95px;}.d-arrow{font-size:1.3em;color:var(--accent);}.d-box.green{border:2px solid var(--green);color:var(--green);}.d-box.red{border:2px solid var(--red);color:var(--red);}.d-box.orange{border:2px solid var(--orange);color:var(--orange);}.d-box.blue{border:2px solid var(--blue);color:var(--blue);}.d-box.purple{border:2px solid var(--accent);color:var(--accent);}
+@media(max-width:900px){.slide{padding:22px 16px;}h1{font-size:1.7em;}h2{font-size:1.35em;}.grid-2,.grid-3{grid-template-columns:1fr;}}
+</style></head><body>
+<div class="topic-badge">Micro — Risk, Uncertainty & Investment</div>
+<div class="counter"><span id="cur">1</span> / <span id="tot"></span></div>
+<div class="nav"><button onclick="prev()">← Prev</button><button onclick="next()">Next →</button></div>
+<div class="deck" id="deck">
+
+<!-- S1 Title -->
+<div class="slide title-slide active">
+<p style="font-size:1em;color:var(--accent);font-weight:600;letter-spacing:3px;">VIETNAM ECONOMICS OLYMPIAD</p>
+<h1 style="font-size:3.2em;color:#fff;">Risk, Uncertainty &<br>Investment Decisions</h1>
+<p class="subtitle">Expected Value • Risk Preferences • Insurance • Present Value • NPV • Bonds • Behavioral Economics</p>
+<p style="color:var(--muted);margin-top:20px;">Instructor: Jan Nguyen</p>
+</div>
+
+<!-- S2 Objectives -->
+<div class="slide content-slide">
+<h2>🎯 Learning Objectives</h2>
+<div class="grid-3">
+<div class="box box-def"><h3 style="color:var(--accent);">Describing Risk</h3><ul><li>Probability & expected value</li><li>Variance & standard deviation</li><li>Comparing risky alternatives</li></ul></div>
+<div class="box box-key"><h3>Risk Preferences</h3><ul><li>Expected utility</li><li>Risk averse / loving / neutral</li><li>Risk premium</li><li>Reducing risk: diversification & insurance</li></ul></div>
+<div class="box box-purple"><h3 style="color:var(--accent2);">Time & Investment</h3><ul><li>Present discounted value</li><li>Bonds & perpetuities</li><li>NPV criterion</li><li>Human capital</li><li>Behavioral economics</li></ul></div>
+</div>
+</div>
+
+<!-- PART 1 -->
+<div class="slide section-slide"><p style="letter-spacing:3px;font-weight:600;opacity:.8;">PART 1</p><h1 style="color:#fff;font-size:3em;">Describing Risk</h1><p style="color:rgba(255,255,255,.8);">How do we measure and compare risky outcomes?</p></div>
+
+<!-- S4 Probability -->
+<div class="slide content-slide">
+<h2>Probability & Expected Value</h2>
+<div class="box box-def"><div class="box-title">📘 Probability</div>The <strong>likelihood</strong> that a given outcome will occur. Values between 0 (impossible) and 1 (certain). All probabilities must sum to 1.</div>
+<div class="box box-key" style="margin-top:12px;"><div class="box-title">📘 Expected Value (EV)</div>
+$$E(X) = Pr_1 \cdot X_1 + Pr_2 \cdot X_2 + \ldots + Pr_n \cdot X_n$$
+The <strong>probability-weighted average</strong> of all possible payoffs. It measures the "central tendency" — what you'd get on average if you repeated the gamble many times.</div>
+<div class="box box-calc" style="margin-top:10px;"><div class="box-title">📊 Example</div>
+A stock has a 1/4 chance of reaching $40 and a 3/4 chance of falling to $20:<br>
+$E(X) = (0.25)(40) + (0.75)(20) = 10 + 15 = $ <strong class="hl-g">$25</strong></div>
+</div>
+
+<!-- S5 Variability -->
+<div class="slide content-slide">
+<h2>Variability: How Spread Out Are Outcomes?</h2>
+<div class="box box-def">Two gambles can have the <strong>same expected value</strong> but very different <strong>riskiness</strong>. We need a measure of spread.</div>
+<table style="margin-top:12px;">
+<tr><th></th><th>Outcome 1</th><th>Prob</th><th>Outcome 2</th><th>Prob</th><th>EV</th></tr>
+<tr><td><strong>Job 1 (Commission)</strong></td><td>$2,000</td><td>0.5</td><td>$1,000</td><td>0.5</td><td>$1,500</td></tr>
+<tr><td><strong>Job 2 (Fixed Salary)</strong></td><td>$1,510</td><td>0.99</td><td>$510</td><td>0.01</td><td>$1,500</td></tr>
+</table>
+<p style="margin-top:10px;">Both jobs pay $1,500 on average. But Job 1 has much wider swings. Which is riskier?</p>
+<div class="box box-warn" style="margin-top:8px;">We measure risk using <strong>variance</strong> (average squared deviation from the mean) and <strong>standard deviation</strong> (square root of variance).</div>
+</div>
+
+<!-- S6 Std Dev -->
+<div class="slide calc-slide">
+<h2 style="color:var(--green);">📊 Computing Standard Deviation</h2>
+<div class="box box-key"><div class="box-title">📘 Formula</div>
+$$\sigma = \sqrt{\sum_{i} Pr_i \cdot (X_i - E(X))^2}$$</div>
+<table style="margin-top:10px;">
+<tr><th></th><th>Deviation²₁</th><th>Deviation²₂</th><th>Variance</th><th>Std Dev (σ)</th></tr>
+<tr><td><strong>Job 1</strong></td><td>(2000−1500)²=250,000</td><td>(1000−1500)²=250,000</td><td>.5(250k)+.5(250k)=250,000</td><td style="color:var(--red);font-weight:700;">$500</td></tr>
+<tr><td><strong>Job 2</strong></td><td>(1510−1500)²=100</td><td>(510−1500)²=980,100</td><td>.99(100)+.01(980,100)=9,900</td><td style="color:var(--green);font-weight:700;">$99.50</td></tr>
+</table>
+<div class="box box-calc" style="margin-top:10px;">Job 1: σ = $500. Job 2: σ = $99.50. Job 2 is <strong>much less risky</strong> (lower σ) even though both have the same EV of $1,500.</div>
+</div>
+
+<!-- S7 Decision Making -->
+<div class="slide content-slide">
+<h2>Decision Making Under Risk</h2>
+<p class="big">What if two options have <strong>different</strong> expected values AND different risk?</p>
+<table style="margin-top:12px;">
+<tr><th></th><th>Expected Income</th><th>Std Deviation</th></tr>
+<tr><td><strong>Job 1 (modified)</strong></td><td>$1,600</td><td>$500</td></tr>
+<tr><td><strong>Job 2</strong></td><td>$1,500</td><td>$99.50</td></tr>
+</table>
+<div class="grid-2" style="margin-top:14px;">
+<div class="box box-key"><h3>Choose Job 1 if...</h3>You're willing to accept more risk for a higher expected return. <em>Aggressive entrepreneurs</em> might prefer this.</div>
+<div class="box box-red"><h3 style="color:var(--red);">Choose Job 2 if...</h3>You prefer certainty and are uncomfortable with large income swings. <em>Conservative people</em> prefer this.</div>
+</div>
+<div class="box box-purple" style="margin-top:8px;">Your choice depends on your <strong>preferences toward risk</strong> — which brings us to the next section.</div>
+</div>
+
+<!-- PART 2 -->
+<div class="slide section-slide"><p style="letter-spacing:3px;font-weight:600;opacity:.8;">PART 2</p><h1 style="color:#fff;font-size:3em;">Preferences Toward Risk</h1><p style="color:rgba(255,255,255,.8);">Are you risk averse, risk loving, or risk neutral?</p></div>
+
+<!-- S9 Expected Utility -->
+<div class="slide content-slide">
+<h2>Expected Utility</h2>
+<div class="box box-def"><div class="box-title">📘 Key Insight</div>People don't maximise expected <strong>money</strong> — they maximise expected <strong>utility</strong>. Because utility is concave (diminishing marginal utility of income), a guaranteed $20,000 may give MORE utility than a 50-50 gamble between $10,000 and $30,000.</div>
+<div class="box box-key" style="margin-top:12px;"><div class="box-title">📘 Expected Utility Formula</div>
+$$E(u) = Pr_1 \cdot u(X_1) + Pr_2 \cdot u(X_2) + \ldots + Pr_n \cdot u(X_n)$$</div>
+<div class="box box-calc" style="margin-top:10px;"><div class="box-title">📊 Example</div>
+Income = $15,000 currently (u = 13.5). New risky job: 50% chance of $10,000 (u=10) or $30,000 (u=18).<br>
+$E(u) = 0.5(10) + 0.5(18) = 14 > 13.5$ → Take the risky job! (Higher expected utility)</div>
+</div>
+
+<!-- S10 Three types -->
+<div class="slide content-slide">
+<h2>Three Types of Risk Preferences</h2>
+<div class="grid-3">
+<div class="box box-def" style="text-align:center;padding:18px;">
+<div style="font-size:2em;">😰</div>
+<h3 style="color:var(--accent);">Risk Averse</h3>
+<p>Prefers a <strong>certain</strong> income to a risky one with the same EV.</p>
+<p style="margin-top:6px;">Utility function: <strong>concave</strong> (diminishing MU of income)</p>
+<p style="margin-top:4px;"><em>u(E(X)) > E(u(X))</em></p>
+<p style="margin-top:6px;">Most people are risk averse.</p>
+</div>
+<div class="box box-red" style="text-align:center;padding:18px;">
+<div style="font-size:2em;">🎰</div>
+<h3 style="color:var(--red);">Risk Loving</h3>
+<p>Prefers the <strong>gamble</strong> to a certain income with the same EV.</p>
+<p style="margin-top:6px;">Utility function: <strong>convex</strong> (increasing MU)</p>
+<p style="margin-top:4px;"><em>u(E(X)) < E(u(X))</em></p>
+<p style="margin-top:6px;">Gamblers, extreme risk-takers.</p>
+</div>
+<div class="box box-blue" style="text-align:center;padding:18px;">
+<div style="font-size:2em;">😐</div>
+<h3 style="color:var(--blue);">Risk Neutral</h3>
+<p><strong>Indifferent</strong> between gamble and certain income with the same EV.</p>
+<p style="margin-top:6px;">Utility function: <strong>linear</strong></p>
+<p style="margin-top:4px;"><em>u(E(X)) = E(u(X))</em></p>
+<p style="margin-top:6px;">Only cares about EV.</p>
+</div>
+</div>
+</div>
+
+<!-- S11 Jensen's inequality -->
+<div class="slide content-slide">
+<h2>Why Concavity → Risk Aversion</h2>
+<div class="box box-def"><div class="box-title">📘 Jensen's Inequality</div>
+If $u$ is <strong>concave</strong> (diminishing MU): $$u(E(X)) > E(u(X))$$
+The utility of the expected value exceeds the expected utility. This means a <strong>guaranteed</strong> amount gives more utility than the risky gamble with the same average.</div>
+<div class="box box-calc" style="margin-top:12px;"><div class="box-title">📊 Numerical Example</div>
+<p>Gamble: 50% chance of $10,000 (u=10) and 50% chance of $30,000 (u=18).</p>
+<p>$E(X) = 0.5(10{,}000) + 0.5(30{,}000) = \$20{,}000$</p>
+<p>$u(E(X)) = u(20{,}000) = 16$</p>
+<p>$E(u(X)) = 0.5(10) + 0.5(18) = 14$</p>
+<p>$16 > 14$ → The certain $20,000 gives higher utility → <strong>risk averse person prefers the sure thing</strong>.</p></div>
+</div>
+
+<!-- S12 Risk Premium -->
+<div class="slide content-slide">
+<h2>The Risk Premium</h2>
+<div class="box box-def"><div class="box-title">📘 Definition</div>
+The <strong>risk premium</strong> = the maximum amount a risk-averse person would pay to avoid a gamble and receive a certain outcome instead.</div>
+<div class="box box-calc" style="margin-top:14px;"><div class="box-title">📊 Example (from Pindyck/Rubinfeld)</div>
+<p>Gamble: 50% of $10,000, 50% of $30,000. EV = $20,000. Expected utility = 14.</p>
+<p>A certain income of $16,000 also gives utility = 14.</p>
+<p>Risk premium = $20,000 − $16,000 = <strong class="hl-o">$4,000</strong></p>
+<p>The person would accept $4,000 <em>less</em> than the EV just to avoid the uncertainty!</p></div>
+<div class="box box-warn" style="margin-top:10px;"><strong>Higher risk aversion → larger risk premium.</strong> More concave utility → person gives up more money for certainty.</div>
+</div>
+
+<!-- S13 VEO insurance -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 VEO Application: Insurance</h2>
+<div class="box box-veo"><p style="color:var(--text);">Michael Schumacher's house is worth $50,000. Probability of burglary = 10%, losing $10,000. Should he buy insurance for $1,000?</p></div>
+<div class="box box-calc" style="margin-top:12px;">
+<h3>Analysis:</h3>
+<table><tr><th></th><th>Burglary (p=0.1)</th><th>No Burglary (p=0.9)</th><th>E(Wealth)</th><th>σ</th></tr>
+<tr><td><strong>No insurance</strong></td><td>$40,000</td><td>$50,000</td><td>$49,000</td><td>$3,000</td></tr>
+<tr><td><strong>With insurance</strong></td><td>$49,000</td><td>$49,000</td><td>$49,000</td><td><strong>$0</strong></td></tr></table>
+<p style="margin-top:8px;">Both options give the same expected wealth ($49,000). But with insurance: <strong>zero risk</strong>. A risk-averse person always prefers insurance when the premium equals the expected loss (= <strong>actuarially fair</strong>).</p>
+</div>
+</div>
+
+<!-- S14 Reducing Risk -->
+<div class="slide content-slide">
+<h2>Ways to Reduce Risk</h2>
+<div class="grid-3">
+<div class="box box-def" style="text-align:center;padding:16px;">
+<div style="font-size:2em;">🔀</div>
+<h3 style="color:var(--accent);">1. Diversification</h3>
+<p>Spread resources across activities whose outcomes are <strong>not closely correlated</strong>.</p>
+<p style="margin-top:6px;">Sell both ACs and heaters → guaranteed income regardless of weather!</p>
+</div>
+<div class="box box-key" style="text-align:center;padding:16px;">
+<div style="font-size:2em;">🛡️</div>
+<h3>2. Insurance</h3>
+<p>Pay a premium to transfer risk to an insurance company. Works because of the <strong>law of large numbers</strong>.</p>
+</div>
+<div class="box box-purple" style="text-align:center;padding:16px;">
+<div style="font-size:2em;">📊</div>
+<h3 style="color:var(--accent2);">3. Information</h3>
+<p>More info → better decisions → less risk. The <strong>value of information</strong> = E(with info) − E(without info).</p>
+</div>
+</div>
+</div>
+
+<!-- S15 Diversification example -->
+<div class="slide calc-slide">
+<h2 style="color:var(--green);">📊 Diversification: Worked Example</h2>
+<table>
+<tr><th></th><th>Hot Weather (p=0.5)</th><th>Cold Weather (p=0.5)</th></tr>
+<tr><td><strong>AC sales only</strong></td><td>$30,000</td><td>$12,000</td></tr>
+<tr><td><strong>Heater sales only</strong></td><td>$12,000</td><td>$30,000</td></tr>
+<tr><td><strong>50/50 both (diversified)</strong></td><td>$15,000 + $6,000 = $21,000</td><td>$6,000 + $15,000 = $21,000</td></tr>
+</table>
+<div class="box box-key" style="margin-top:12px;">
+<p>Without diversification: EV = $21,000 but income varies ($12K or $30K).</p>
+<p>With diversification: Income = <strong>$21,000 for certain</strong>. Risk completely eliminated!</p>
+<p style="margin-top:6px;">This works because AC and heater sales are <strong>negatively correlated</strong> — when one goes up, the other goes down.</p>
+</div>
+<div class="box box-purple" style="margin-top:8px;"><strong>Stock market application:</strong> Mutual funds diversify across many stocks → reduces risk without reducing expected return.</div>
+</div>
+
+<!-- S16 Value of Information -->
+<div class="slide calc-slide">
+<h2 style="color:var(--green);">📊 The Value of Information</h2>
+<div class="box box-def"><strong>Value of complete information</strong> = Expected payoff with perfect info − Expected payoff under uncertainty</div>
+<table style="margin-top:12px;">
+<tr><th></th><th>Sales = 50 (p=0.5)</th><th>Sales = 100 (p=0.5)</th><th>E(Profit)</th></tr>
+<tr><td>Buy 50 suits</td><td>$5,000</td><td>$5,000</td><td>$5,000</td></tr>
+<tr><td>Buy 100 suits</td><td>$1,500</td><td>$12,000</td><td>$6,750</td></tr>
+</table>
+<div class="box box-calc" style="margin-top:10px;">
+<p>Best without info: buy 100 suits → E = $6,750</p>
+<p>With perfect info: if sales=50→buy 50→$5,000; if sales=100→buy 100→$12,000</p>
+<p>E(with info) = 0.5(5,000) + 0.5(12,000) = $8,500</p>
+<p><strong>Value of information = $8,500 − $6,750 = $1,750</strong></p>
+</div>
+</div>
+
+<!-- PART 3 -->
+<div class="slide section-slide"><p style="letter-spacing:3px;font-weight:600;opacity:.8;">PART 3</p><h1 style="color:#fff;font-size:3em;">The Time Value<br>of Money</h1><p style="color:rgba(255,255,255,.8);">A dollar today is worth more than a dollar tomorrow</p></div>
+
+<!-- S18 PDV -->
+<div class="slide content-slide">
+<h2>Present Discounted Value (PDV)</h2>
+<div class="box box-def"><div class="box-title">📘 Core Idea</div>
+Money received <strong>in the future</strong> is worth <strong>less</strong> than money today — because money today can be invested to earn interest.</div>
+<div class="box box-key" style="text-align:center;padding:20px;margin-top:14px;">
+<p class="formula-big" style="font-size:1.7em;">$PDV = \dfrac{\$1}{(1+R)^n}$</p>
+<p style="color:var(--muted);">$R$ = interest rate, $n$ = years from now</p>
+</div>
+<div class="box box-calc" style="margin-top:10px;"><div class="box-title">📊 Example</div>
+<p>$1 received 10 years from now at R = 5%:</p>
+<p>$PDV = 1/(1.05)^{10} = 1/1.629 = $ <strong class="hl-g">$0.614</strong></p>
+<p>$1 in 10 years is only worth 61 cents today!</p></div>
+</div>
+
+<!-- S19 PDV table -->
+<div class="slide content-slide">
+<h2>PDV of $1 at Different Rates & Times</h2>
+<table>
+<tr><th>Interest Rate</th><th>1 Year</th><th>5 Years</th><th>10 Years</th><th>20 Years</th><th>30 Years</th></tr>
+<tr><td>1%</td><td>$0.990</td><td>$0.951</td><td>$0.905</td><td>$0.820</td><td>$0.742</td></tr>
+<tr><td>3%</td><td>$0.971</td><td>$0.863</td><td>$0.744</td><td>$0.554</td><td>$0.412</td></tr>
+<tr><td>5%</td><td>$0.952</td><td>$0.784</td><td>$0.614</td><td>$0.377</td><td>$0.231</td></tr>
+<tr><td>10%</td><td>$0.909</td><td>$0.621</td><td>$0.386</td><td>$0.149</td><td>$0.057</td></tr>
+<tr><td>15%</td><td>$0.870</td><td>$0.497</td><td>$0.247</td><td>$0.061</td><td>$0.015</td></tr>
+<tr><td>20%</td><td>$0.833</td><td>$0.402</td><td>$0.162</td><td>$0.026</td><td>$0.004</td></tr>
+</table>
+<div class="box box-warn" style="margin-top:10px;">
+<strong>Two key patterns:</strong> (1) Higher interest rates → lower PDV (future money worth less). (2) Longer time → lower PDV (more discounting).
+At 10%, $1 in 30 years is worth only <strong>5.7 cents</strong> today!
+</div>
+</div>
+
+<!-- S20 Discount factor -->
+<div class="slide content-slide">
+<h2>The Discount Factor δ</h2>
+<div class="box box-key" style="text-align:center;padding:20px;">
+<p class="formula-big" style="font-size:1.7em;">$\delta = \dfrac{1}{1+R}$ where $0 < \delta < 1$</p>
+</div>
+<p style="margin-top:14px;">The discount factor makes calculations cleaner. Instead of $\frac{1}{(1+R)^n}$, we write $\delta^n$.</p>
+<div class="box box-calc" style="margin-top:12px;"><div class="box-title">📘 Useful Summation Formulas</div>
+<table style="font-size:.9em;">
+<tr><td>$\sum_{t=0}^{\infty} \delta^t = \frac{1}{1-\delta}$</td><td>Infinite series starting now</td></tr>
+<tr><td>$\sum_{t=1}^{\infty} \delta^t = \frac{\delta}{1-\delta} = \frac{1}{R}$</td><td>Infinite series starting next period</td></tr>
+<tr><td>$\sum_{t=1}^{y} \delta^t = \frac{\delta - \delta^{y+1}}{1-\delta}$</td><td>Finite series (y periods)</td></tr>
+</table>
+</div>
+</div>
+
+<!-- S21 Payment Streams -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 PDV of Payment Streams</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">Which do you prefer?</p>
+<table><tr><th></th><th>Today</th><th>Year 1</th><th>Year 2</th><th>Total</th></tr>
+<tr><td><strong>Stream A</strong></td><td>$100</td><td>$100</td><td>$0</td><td>$200</td></tr>
+<tr><td><strong>Stream B</strong></td><td>$20</td><td>$100</td><td>$100</td><td>$220</td></tr></table>
+</div>
+<div class="box box-calc" style="margin-top:12px;">
+<table><tr><th>Rate</th><th>PDV(A)</th><th>PDV(B)</th><th>Winner</th></tr>
+<tr><td>5%</td><td>$195.24</td><td>$205.94</td><td style="color:var(--green);font-weight:700;">B</td></tr>
+<tr><td>10%</td><td>$190.91</td><td>$193.55</td><td style="color:var(--green);font-weight:700;">B</td></tr>
+<tr><td>15%</td><td>$186.96</td><td>$182.57</td><td style="color:var(--orange);font-weight:700;">A</td></tr>
+<tr><td>20%</td><td>$183.33</td><td>$172.78</td><td style="color:var(--orange);font-weight:700;">A</td></tr></table>
+<p style="margin-top:8px;">At low rates: B wins (more total money). At high rates: A wins (money comes sooner).</p>
+</div>
+</div>
+
+<!-- S22 Bonds -->
+<div class="slide content-slide">
+<h2>The Value of a Bond</h2>
+<div class="box box-def"><div class="box-title">📘 Bond</div>A contract where a borrower pays the lender (bondholder) a stream of money: annual <strong>coupon payments</strong> plus the <strong>principal</strong> (face value) at maturity.</div>
+<div class="box box-key" style="margin-top:12px;">
+<div class="box-title">📘 Bond PDV Formula</div>
+<p>A bond pays coupon $C$ each year for $T$ years, then repays principal $F$:</p>
+$$PDV = \sum_{t=1}^{T} \frac{C}{(1+R)^t} + \frac{F}{(1+R)^T}$$
+</div>
+<div class="box box-calc" style="margin-top:10px;"><div class="box-title">📊 Example</div>
+10-year bond, coupon = $100/year, principal = $1,000. At R=5%: PDV ≈ $1,386. At R=15%: PDV ≈ $749.<br>
+<strong>Higher interest rates → lower bond prices.</strong></div>
+</div>
+
+<!-- S23 Perpetuity -->
+<div class="slide content-slide">
+<h2>Perpetuities</h2>
+<div class="box box-def"><div class="box-title">📘 Perpetuity</div>A bond that pays a <strong>fixed amount forever</strong>. No maturity date.</div>
+<div class="box box-key" style="text-align:center;padding:20px;margin-top:14px;">
+<p class="formula-big" style="font-size:1.6em;">$PDV = \dfrac{C}{R}$</p>
+<p style="color:var(--muted);">C = annual payment, R = interest rate</p>
+</div>
+<div class="box box-calc" style="margin-top:12px;">
+<p>A perpetuity paying $100/year:</p>
+<ul><li>At R = 5%: PDV = 100/0.05 = <strong>$2,000</strong></li>
+<li>At R = 10%: PDV = 100/0.10 = <strong>$1,000</strong></li>
+<li>At R = 20%: PDV = 100/0.20 = <strong>$500</strong></li></ul>
+</div>
+<div class="box box-purple" style="margin-top:8px;"><div class="box-title">📘 Effective Yield</div>
+If a perpetuity paying $100/year sells for $1,000, the interest rate (effective yield) is: $R = C/P = 100/1000 = 10\%$</div>
+</div>
+
+<!-- S24 VEO Bond -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Bond Valuation</h2>
+<div class="box box-veo"><p style="color:var(--text);">A government bond pays $50/year for 5 years, then returns the $1,000 face value. Interest rate = 8%. What is it worth today?</p></div>
+<div class="box box-calc" style="margin-top:14px;">
+<h3>Solution:</h3>
+<p>$PDV = \frac{50}{1.08} + \frac{50}{1.08^2} + \frac{50}{1.08^3} + \frac{50}{1.08^4} + \frac{50}{1.08^5} + \frac{1000}{1.08^5}$</p>
+<p>$= 46.30 + 42.87 + 39.69 + 36.75 + 34.03 + 680.58$</p>
+<p>$= $ <strong class="hl-g">$880.22</strong></p>
+<p style="margin-top:6px;">The bond trades below face value ($1,000) because the coupon rate (5%) is less than the market rate (8%).</p>
+</div>
+</div>
+
+<!-- PART 4 -->
+<div class="slide section-slide"><p style="letter-spacing:3px;font-weight:600;opacity:.8;">PART 4</p><h1 style="color:#fff;font-size:3em;">Investment Decisions<br>& NPV</h1></div>
+
+<!-- S26 NPV -->
+<div class="slide content-slide">
+<h2>Net Present Value (NPV)</h2>
+<div class="box box-def"><div class="box-title">📘 NPV Criterion</div>
+Invest if and only if the <strong>present value of future cash flows exceeds the cost</strong>.</div>
+<div class="box box-key" style="text-align:center;padding:20px;margin-top:14px;">
+<p class="formula-big" style="font-size:1.5em;">$NPV = -C + \sum_{t=1}^{T} \frac{\pi_t}{(1+R)^t}$</p>
+<p style="color:var(--muted);">C = initial cost, $\pi_t$ = profit in year t, R = discount rate</p>
+</div>
+<div class="grid-2" style="margin-top:12px;">
+<div class="box box-key" style="text-align:center;"><h3>NPV > 0</h3><p style="font-size:1.1em;">✅ <strong>INVEST</strong></p><p>Project creates value</p></div>
+<div class="box box-red" style="text-align:center;"><h3 style="color:var(--red);">NPV < 0</h3><p style="font-size:1.1em;">❌ <strong>DON'T INVEST</strong></p><p>Project destroys value</p></div>
+</div>
+</div>
+
+<!-- S27 NPV Example -->
+<div class="slide calc-slide">
+<h2 style="color:var(--green);">📊 NPV: Electric Motor Factory</h2>
+<div class="box box-calc">
+<p>Cost: $10 million today. Annual profit: $960,000 for 20 years. Scrap value: $1 million at year 20.</p>
+$$NPV = -10{,}000{,}000 + \sum_{t=1}^{20} \frac{960{,}000}{(1+R)^t} + \frac{1{,}000{,}000}{(1+R)^{20}}$$
+</div>
+<table style="margin-top:12px;">
+<tr><th>Discount Rate R</th><th>NPV</th><th>Decision</th></tr>
+<tr><td>3%</td><td style="color:var(--green);">+$4.72M</td><td><span class="tag tag-g">INVEST ✓</span></td></tr>
+<tr><td>5%</td><td style="color:var(--green);">+$2.41M</td><td><span class="tag tag-g">INVEST ✓</span></td></tr>
+<tr><td>7.5% (R*)</td><td style="color:var(--orange);">≈ $0</td><td><span class="tag tag-o">BREAK-EVEN</span></td></tr>
+<tr><td>10%</td><td style="color:var(--red);">−$1.56M</td><td><span class="tag tag-r">DON'T INVEST ✗</span></td></tr>
+<tr><td>15%</td><td style="color:var(--red);">−$3.93M</td><td><span class="tag tag-r">DON'T INVEST ✗</span></td></tr>
+</table>
+<div class="box box-warn" style="margin-top:8px;"><strong>R* = 7.5%</strong> is the <strong>Internal Rate of Return (IRR)</strong> — the discount rate where NPV = 0. Invest if your opportunity cost < IRR.</div>
+</div>
+
+<!-- S28 Real vs Nominal -->
+<div class="slide content-slide">
+<h2>Real vs Nominal Discount Rates</h2>
+<div class="box box-def">
+<p>If future cash flows are in <strong>real</strong> terms (adjusted for inflation), use the <strong>real</strong> discount rate.</p>
+$$R_{real} \approx R_{nominal} - \pi$$
+<p>$\pi$ = expected inflation rate</p></div>
+<div class="box box-calc" style="margin-top:14px;"><div class="box-title">📊 Example</div>
+<p>Nominal interest rate on government bonds = 9%. Expected inflation = 5%.</p>
+<p>Real rate = 9% − 5% = <strong>4%</strong></p>
+<p>Use 4% to discount the motor factory's real cash flows. At 4%, NPV is clearly positive → <strong>invest!</strong></p>
+</div>
+<div class="box box-warn" style="margin-top:10px;"><strong>Common VEO mistake:</strong> Using nominal rates to discount real cash flows (or vice versa). Always match: real with real, nominal with nominal.</div>
+</div>
+
+<!-- S29 Adjustments for Risk -->
+<div class="slide content-slide">
+<h2>Adjusting NPV for Risk</h2>
+<div class="grid-2">
+<div class="box box-def"><h3 style="color:var(--accent);">Diversifiable Risk</h3>
+<p>Can be eliminated by investing in many projects or holding many stocks.</p>
+<p style="margin-top:6px;">No risk premium needed. Use the <strong>risk-free rate</strong>.</p></div>
+<div class="box box-red"><h3 style="color:var(--red);">Non-diversifiable Risk</h3>
+<p>Cannot be eliminated — tied to overall economy.</p>
+<p style="margin-top:6px;">Requires a <strong>risk premium</strong>. Use a higher discount rate.</p></div>
+</div>
+<div class="box box-key" style="margin-top:12px;"><div class="box-title">📘 CAPM (Capital Asset Pricing Model)</div>
+$$r_i = r_f + \beta_i (r_m - r_f)$$
+<ul><li>$r_f$ = risk-free rate</li><li>$r_m$ = expected market return</li><li>$\beta_i$ = asset beta (sensitivity to market)</li><li>$(r_m - r_f)$ = market risk premium</li></ul>
+</div>
+</div>
+
+<!-- S30 CAPM example -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: CAPM & Discount Rate</h2>
+<div class="box box-veo"><p style="color:var(--text);">A firm's investment has β = 1.5. Risk-free rate = 4%. Market risk premium = 8%. What discount rate should the firm use?</p></div>
+<div class="box box-calc" style="margin-top:14px;">
+<p>$r_i = r_f + \beta(r_m - r_f) = 4\% + 1.5 \times 8\% = 4\% + 12\% = $ <strong class="hl-g">16%</strong></p>
+<p>This is the <strong>risk-adjusted discount rate</strong>. Use it in the NPV formula. A riskier project (higher β) requires a higher rate → harder to justify (lower NPV).</p>
+</div>
+<div class="box box-purple" style="margin-top:10px;"><div class="box-title">📘 Interpretation of β</div>
+<ul><li>$\beta = 1$: Project moves with the market (average risk)</li>
+<li>$\beta > 1$: More volatile than market (riskier → higher required return)</li>
+<li>$\beta < 1$: Less volatile (safer → lower required return)</li>
+<li>$\beta = 0$: Uncorrelated with market → use risk-free rate</li></ul></div>
+</div>
+
+<!-- S31 Consumer Investment -->
+<div class="slide content-slide">
+<h2>Investment Decisions by Consumers</h2>
+<div class="box box-def">Consumers face investment decisions too — buying durable goods (cars, appliances) involves comparing <strong>upfront cost</strong> vs <strong>future benefits</strong>.</div>
+<div class="box box-calc" style="margin-top:14px;"><div class="box-title">📊 Buying a Car</div>
+$$NPV = -\text{Price} + \sum_{t=1}^{T} \frac{S - E}{(1+R)^t} + \frac{\text{Resale}}{(1+R)^T}$$
+<p>$S$ = value of driving service per year, $E$ = operating expenses per year.</p>
+<p>Buy if NPV > 0. A high discount rate makes future benefits less valuable → less likely to buy an expensive car.</p></div>
+<div class="box box-key" style="margin-top:10px;"><div class="box-title">📊 Choosing an Appliance</div>
+<p>Cheap AC: low price, high operating cost. Expensive AC: high price, low operating cost.</p>
+<p>Compare $PDV = C_i + OC_i \times \sum_{t=1}^{8}\delta^t$ for each. Low discount rate → efficient (expensive) AC wins.</p></div>
+</div>
+
+<!-- S32 Human Capital -->
+<div class="slide content-slide">
+<h2>Investment in Human Capital</h2>
+<div class="box box-def"><div class="box-title">📘 Human Capital</div>
+Knowledge, skills, and experience that make a person more productive → earn higher income over a lifetime. Education is an <strong>investment</strong>!</div>
+<div class="box box-calc" style="margin-top:14px;"><div class="box-title">📊 NPV of a College Degree</div>
+<p>Cost: $40,000/year × 4 years. Benefit: $20,000/year extra salary for 20 years after graduation.</p>
+$$NPV = -\sum_{t=0}^{3}\frac{40{,}000}{(1+R)^t} + \sum_{t=4}^{23}\frac{20{,}000}{(1+R)^t}$$
+<p>At R = 5%: NPV ≈ <strong class="hl-g">$66,000</strong> → College is a very good investment!</p>
+<p>At R = 15%: NPV turns negative → Not worth it at very high discount rates.</p></div>
+</div>
+
+<!-- S33 VEO Practice NPV -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: NPV Calculation</h2>
+<div class="box box-veo"><p style="color:var(--text);">A Vietnamese coffee farm costs 500 million VND to set up. It generates 80 million VND/year for 10 years, then the land is sold for 200 million VND. Discount rate = 8%. Should the farmer invest?</p></div>
+<div class="box box-calc" style="margin-top:14px;">
+<h3>Solution:</h3>
+<p>$NPV = -500 + 80 \times \frac{\delta - \delta^{11}}{1-\delta} + 200 \times \delta^{10}$ where $\delta = 1/1.08$</p>
+<p>$= -500 + 80 \times 6.710 + 200 \times 0.4632$</p>
+<p>$= -500 + 536.8 + 92.6 = $ <strong class="hl-g">+129.4 million VND</strong></p>
+<p>NPV > 0 → <strong>Invest!</strong></p>
+</div>
+</div>
+
+<!-- PART 5 -->
+<div class="slide section-slide"><p style="letter-spacing:3px;font-weight:600;opacity:.8;">PART 5</p><h1 style="color:#fff;font-size:3em;">Behavioral Economics</h1><p style="color:rgba(255,255,255,.8);">When people don't behave "rationally"</p></div>
+
+<!-- S35 Behavioral -->
+<div class="slide content-slide">
+<h2>Behavioral Economics: Key Concepts</h2>
+<p>Standard theory assumes rational utility maximisation. But real people show systematic biases:</p>
+<table style="margin-top:12px;">
+<tr><th>Concept</th><th>Description</th><th>Example</th></tr>
+<tr><td><strong>Endowment effect</strong></td><td>Value items more when you own them</td><td>Homeowners set asking price too high</td></tr>
+<tr><td><strong>Loss aversion</strong></td><td>Losses hurt more than equivalent gains feel good</td><td>People hold losing stocks too long</td></tr>
+<tr><td><strong>Framing</strong></td><td>Decisions depend on how choices are presented</td><td>"10% fat" vs "90% fat-free"</td></tr>
+<tr><td><strong>Anchoring</strong></td><td>Rely too heavily on initial information</td><td>First price seen affects willingness to pay</td></tr>
+<tr><td><strong>Law of small numbers</strong></td><td>Overstate probabilities from small samples</td><td>"Stock rose 3 years → will keep rising"</td></tr>
+</table>
+</div>
+
+<!-- S36 Bubbles -->
+<div class="slide content-slide">
+<h2>Bubbles & Informational Cascades</h2>
+<div class="box box-def"><div class="box-title">📘 Bubble</div>
+A price increase driven NOT by fundamentals, but by the belief that <strong>prices will keep rising</strong>.</div>
+<div class="grid-2" style="margin-top:12px;">
+<div class="box box-warn"><h3 style="color:var(--orange);">Internet Bubble (2000)</h3><p>Investors paid extreme prices for dot-com companies with no profits. NASDAQ fell 78% from peak.</p></div>
+<div class="box box-red"><h3 style="color:var(--red);">US Housing Bubble (2008)</h3><p>Housing prices soared as people believed "prices only go up." Banks lent recklessly. Prices fell 28%+ → Great Recession.</p></div>
+</div>
+<div class="box box-purple" style="margin-top:10px;"><div class="box-title">📘 Informational Cascade</div>
+People follow others' actions rather than their own information. If early investors buy → later investors assume it's good → more buying → bubble. Rational individually, but fragile collectively.</div>
+</div>
+
+<!-- S37 Deterring Crime -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 VEO Application: Deterring Crime</h2>
+<div class="box box-veo"><p style="color:var(--text);">A city wants to deter speeding. It can: (a) fine $5 and catch every violator, or (b) fine $50 and catch 1 in 10, or (c) fine $500 and catch 1 in 100. Which is most efficient?</p></div>
+<div class="box box-calc" style="margin-top:12px;">
+<p>Expected fine in all cases = <strong>$5</strong>:</p>
+<ul><li>(a) $5 × 1.0 = $5</li><li>(b) $50 × 0.1 = $5</li><li>(c) $500 × 0.01 = $5</li></ul>
+<p style="margin-top:8px;">All have the same expected penalty. But (c) has the <strong>lowest enforcement cost</strong> — catching 1 in 100 is much cheaper than catching every violator.</p>
+<p style="margin-top:6px;">This works especially well if drivers are <strong>risk averse</strong> — they fear the large fine more than a risk-neutral calculation would suggest.</p>
+</div>
+</div>
+
+<!-- S38 VEO Insurance -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 VEO 2021: Insurance & Expected Utility</h2>
+<div class="box box-veo"><p style="color:var(--text);">Michael Schumacher earns $100,000. He faces a 25% risk of injury → income drops to $10,000. Utility function: $u(I) = \sqrt{I}$.</p>
+<p style="color:var(--text);margin-top:6px;">(a) Expected income? (b) Expected utility? (c) Should he buy insurance at premium $20,000?</p></div>
+<div class="box box-calc" style="margin-top:12px;">
+<p>(a) $E(I) = 0.75(100{,}000) + 0.25(10{,}000) = $ <strong>$77,500</strong></p>
+<p>(b) $E(u) = 0.75\sqrt{100{,}000} + 0.25\sqrt{10{,}000} = 0.75(316.23) + 0.25(100) = 237.17 + 25 = $ <strong>262.17</strong></p>
+<p>(c) With insurance: certain income = $100,000 − $20,000 = $80,000. $u(80{,}000) = \sqrt{80{,}000} = $ <strong>282.84</strong></p>
+<p>282.84 > 262.17 → <strong class="hl-g">Buy insurance!</strong> (certain utility > expected utility of gamble)</p>
+</div>
+</div>
+
+<!-- S39 Practice: Risk Premium -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Computing Risk Premium</h2>
+<div class="box box-veo"><p style="color:var(--text);">Using the Schumacher example above: What is the risk premium? (i.e., how much would he pay above the actuarially fair premium?)</p></div>
+<div class="box box-calc" style="margin-top:14px;">
+<p><strong>Actuarially fair premium</strong> = expected loss = 0.25 × $90,000 = <strong>$22,500</strong></p>
+<p>With fair insurance: certain income = $100,000 − $22,500 = $77,500. $u = \sqrt{77{,}500} = 278.39$</p>
+<p>This is still > 262.17 (no insurance) → would buy even at the fair premium.</p>
+<p style="margin-top:8px;">Find the <strong>certainty equivalent</strong>: solve $\sqrt{CE} = 262.17$</p>
+<p>$CE = (262.17)^2 = $ <strong>$68,733</strong></p>
+<p>Risk premium = E(I) − CE = $77,500 − $68,733 = <strong class="hl-o">$8,767</strong></p>
+<p>He'd accept $8,767 less than the EV just for certainty.</p>
+</div>
+</div>
+
+<!-- S40 Exhaustible Resources -->
+<div class="slide content-slide">
+<h2>Bonus: Depletable Resources & Time</h2>
+<div class="box box-def"><div class="box-title">📘 The Hotelling Rule</div>
+For exhaustible resources (oil, gas, minerals), the price minus extraction cost must <strong>rise at the rate of interest</strong>:
+$$\frac{(P_{t+1} - c) - (P_t - c)}{P_t - c} = R$$</div>
+<div class="grid-2" style="margin-top:14px;">
+<div class="box box-key"><h3>Intuition</h3><p>Keeping oil in the ground is like an investment. If $P-c$ rises slower than R, it's better to extract now and invest the money. If it rises faster, wait.</p><p style="margin-top:6px;">In equilibrium: indifferent between extracting now or later.</p></div>
+<div class="box box-warn"><h3 style="color:var(--orange);">Monopolist</h3><p>A monopolist depletes the resource <strong>more slowly</strong> than a competitive industry. MR − c rises at rate R, but since MR < P, the price rises slower than R.</p><p style="margin-top:6px;">Monopolists are more "conservationist"!</p></div>
+</div>
+</div>
+
+<!-- S41 Common Mistakes -->
+<div class="slide content-slide">
+<h2>⚠️ Common Exam Mistakes</h2>
+<div class="grid-2">
+<div class="box box-red"><div class="box-title" style="color:var(--red);">❌ Don't</div>
+<ul><li>Confuse expected value with expected utility</li>
+<li>Forget to square deviations when computing variance</li>
+<li>Mix up nominal and real discount rates</li>
+<li>Use IRR instead of NPV for comparing projects of different sizes</li>
+<li>Say "risk averse = avoids all risk" (they just need compensation)</li>
+<li>Forget that bond prices move <em>inversely</em> with interest rates</li></ul></div>
+<div class="box box-key"><div class="box-title">✅ Do</div>
+<ul><li>Always state whether computing EV or E(u)</li>
+<li>Show the utility function shape (concave = risk averse)</li>
+<li>Use real rates for real cash flows</li>
+<li>Add risk premium to discount rate for risky projects</li>
+<li>Remember: diversification reduces risk WITHOUT reducing expected return</li>
+<li>Connect to Vietnam context in VEO answers</li></ul></div>
+</div>
+</div>
+
+<!-- S42 Key Terms -->
+<div class="slide content-slide">
+<h2>📝 Key Terms</h2>
+<div class="grid-3">
+<div class="box box-def"><h3 style="color:var(--accent);">Risk & Uncertainty</h3><ul><li>Probability</li><li>Expected value</li><li>Variance & std dev</li><li>Expected utility</li><li>Risk averse/loving/neutral</li><li>Risk premium</li><li>Certainty equivalent</li></ul></div>
+<div class="box box-key"><h3>Reducing Risk</h3><ul><li>Diversification</li><li>Negative/positive correlation</li><li>Insurance</li><li>Actuarially fair</li><li>Law of large numbers</li><li>Value of information</li><li>Mutual fund</li></ul></div>
+<div class="box box-purple"><h3 style="color:var(--accent2);">Time & Investment</h3><ul><li>PDV, discount factor δ</li><li>Bond, perpetuity</li><li>Effective yield</li><li>NPV, IRR</li><li>CAPM, beta</li><li>Human capital</li><li>Hotelling rule</li></ul></div>
+</div>
+</div>
+
+<!-- S43 Formula Sheet -->
+<div class="slide content-slide">
+<h2>📋 Formula Cheat Sheet (1/2)</h2>
+<table>
+<tr><th>Formula</th><th>Name</th></tr>
+<tr><td>$E(X) = \sum Pr_i \cdot X_i$</td><td>Expected value</td></tr>
+<tr><td>$\sigma = \sqrt{\sum Pr_i(X_i - E(X))^2}$</td><td>Standard deviation</td></tr>
+<tr><td>$E(u) = \sum Pr_i \cdot u(X_i)$</td><td>Expected utility</td></tr>
+<tr><td>Risk Premium = $E(X)$ − CE</td><td>Risk premium</td></tr>
+<tr><td>Value of Info = $E$(with info) − $E$(without)</td><td>Value of information</td></tr>
+<tr><td>$PDV = \frac{1}{(1+R)^n}$</td><td>Present value of $1 in n years</td></tr>
+<tr><td>$\delta = \frac{1}{1+R}$</td><td>Discount factor</td></tr>
+</table>
+</div>
+
+<!-- S44 Formula Sheet 2 -->
+<div class="slide content-slide">
+<h2>📋 Formula Cheat Sheet (2/2)</h2>
+<table>
+<tr><th>Formula</th><th>Name</th></tr>
+<tr><td>$PDV_{perpetuity} = C/R$</td><td>Perpetuity value</td></tr>
+<tr><td>$\sum_{t=1}^{T}\delta^t = \frac{\delta - \delta^{T+1}}{1-\delta}$</td><td>Finite annuity factor</td></tr>
+<tr><td>$NPV = -C + \sum \frac{\pi_t}{(1+R)^t}$</td><td>Net present value</td></tr>
+<tr><td>$R_{real} \approx R_{nominal} - \pi$</td><td>Real vs nominal rates</td></tr>
+<tr><td>$r_i = r_f + \beta(r_m - r_f)$</td><td>CAPM</td></tr>
+<tr><td>$(P_{t+1}-c)/(P_t-c) = 1+R$</td><td>Hotelling rule</td></tr>
+</table>
+</div>
+
+<!-- S45 Quiz 1 -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🧠 Review Quiz (1/2)</h2>
+<table><tr><th>#</th><th>Question</th><th>Answer</th></tr>
+<tr><td>1</td><td>Risk averse person's utility function shape?</td><td>Concave (diminishing MU)</td></tr>
+<tr><td>2</td><td>If E(X) = $50k and CE = $45k, risk premium?</td><td>$5,000</td></tr>
+<tr><td>3</td><td>Diversification works best when assets are?</td><td>Negatively correlated</td></tr>
+<tr><td>4</td><td>PDV of $1 in 10 years at 10%?</td><td>$0.386</td></tr>
+<tr><td>5</td><td>Perpetuity pays $200/yr, R=4%. Value?</td><td>$200/0.04 = $5,000</td></tr>
+</table></div>
+
+<!-- S46 Quiz 2 -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🧠 Review Quiz (2/2)</h2>
+<table><tr><th>#</th><th>Question</th><th>Answer</th></tr>
+<tr><td>6</td><td>NPV > 0 means?</td><td>Project creates value → invest</td></tr>
+<tr><td>7</td><td>Interest rates rise → bond prices?</td><td>Fall (inverse relationship)</td></tr>
+<tr><td>8</td><td>β = 2 means?</td><td>Asset is twice as volatile as market</td></tr>
+<tr><td>9</td><td>Endowment effect?</td><td>Overvalue what you own</td></tr>
+<tr><td>10</td><td>Hotelling rule: P−c rises at what rate?</td><td>The interest rate R</td></tr>
+</table></div>
+
+<!-- S47 Homework -->
+<div class="slide content-slide">
+<h2>📚 Study Resources</h2>
+<div class="grid-2">
+<div class="box box-def"><h3 style="color:var(--accent);">Read</h3><ul><li>Pindyck/Rubinfeld Ch. 5 (Uncertainty & Consumer Behavior)</li><li>Pindyck/Rubinfeld Ch. 15 (Investment, Time & Capital Markets)</li><li>Mankiw Ch. 27 (Finance) for macro perspective</li></ul></div>
+<div class="box box-key"><h3>Practice</h3><ul><li>Compute EV, variance, σ for 3 different gambles</li><li>Draw concave/convex/linear utility functions</li><li>PDV calculations at 5 different interest rates</li><li>NPV for 3 investment projects</li><li>VEO 2021 insurance/expected utility questions</li></ul></div>
+</div>
+</div>
+
+<!-- S48 Thank you -->
+<div class="slide title-slide">
+<p style="font-size:1em;color:var(--accent);font-weight:600;letter-spacing:3px;">END OF SLIDES</p>
+<h1 style="font-size:3em;color:#fff;">Thank You! 🎓</h1>
+<p class="subtitle">Risk, Uncertainty & Investment Decisions</p>
+<p style="color:var(--muted);margin-top:20px;">Good luck at VEO/IEO! 🏆</p>
+</div>
+
+</div>
+<script>let current=0;const slides=document.querySelectorAll('.slide'),total=slides.length;document.getElementById('tot').textContent=total;function show(n){slides.forEach(s=>s.classList.remove('active'));slides[n].classList.add('active');document.getElementById('cur').textContent=n+1;}function next(){if(current<total-1){current++;show(current);}}function prev(){if(current>0){current--;show(current);}}document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}if(e.key==='ArrowLeft')prev();});let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(dx<-50)next();if(dx>50)prev();});</script>
+</body></html>

@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEO/IEO Microeconomics Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b1120;--surface:#131b2e;--card:#1a2540;
+  --accent:#4f8cff;--accent2:#7c5cfc;--accent3:#00d4aa;
+  --warm:#ff6b6b;--gold:#fbbf24;
+  --text:#e2e8f0;--muted:#8899b4;--dim:#475569;
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-body:'Source Sans 3','Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font-body)}
+.deck{position:relative;width:100%;height:100%}
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  padding:40px 56px 76px;opacity:0;pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  transform:translateX(40px);overflow-y:auto;
+}
+.slide.active{opacity:1;pointer-events:auto;transform:translateX(0)}
+.slide.exit{opacity:0;transform:translateX(-40px)}
+.slide::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse 60% 50% at 80% 20%,rgba(79,140,255,.07),transparent),
+    radial-gradient(ellipse 50% 60% at 20% 80%,rgba(124,92,252,.06),transparent);
+}
+.slide>*{position:relative;z-index:1}
+.slide.topic-divider{justify-content:center;align-items:center;text-align:center}
+.slide.topic-divider::before{
+  background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(79,140,255,.12),transparent),
+    radial-gradient(ellipse 40% 40% at 30% 70%,rgba(124,92,252,.1),transparent);
+}
+.topic-number{font-family:var(--font-mono);font-size:14px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;opacity:.8}
+.topic-title{font-family:var(--font-display);font-size:clamp(34px,5vw,54px);line-height:1.2;color:#fff;margin-bottom:16px}
+.topic-sub{font-size:17px;color:var(--muted);max-width:600px;line-height:1.6}
+.slide-header{margin-bottom:18px}
+.slide-label{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);margin-bottom:6px}
+.slide-title{font-family:var(--font-display);font-size:clamp(22px,3vw,32px);color:#fff;line-height:1.25}
+.content{flex:1;display:flex;flex-direction:column;gap:14px}
+.content.two-col{flex-direction:row;gap:28px}
+.content.two-col>.col{flex:1;display:flex;flex-direction:column;gap:14px}
+.concept-box{background:var(--card);border-radius:12px;padding:16px 20px;border-left:3px solid var(--accent)}
+.concept-box.green{border-left-color:var(--accent3)}
+.concept-box.purple{border-left-color:var(--accent2)}
+.concept-box.red{border-left-color:var(--warm)}
+.concept-box.gold{border-left-color:var(--gold)}
+.concept-box h3{font-family:var(--font-display);font-size:17px;color:#fff;margin-bottom:6px}
+.concept-box p,.concept-box li{font-size:14.5px;line-height:1.6;color:var(--text)}
+.concept-box ul{padding-left:18px}
+.concept-box li{margin-bottom:3px}
+.concept-box .formula{
+  font-family:var(--font-mono);font-size:14px;color:var(--gold);
+  background:rgba(251,191,36,.08);padding:6px 12px;border-radius:6px;
+  margin-top:6px;display:inline-block;
+}
+.example{
+  background:linear-gradient(135deg,rgba(0,212,170,.06),rgba(79,140,255,.06));
+  border:1px solid rgba(0,212,170,.15);border-radius:10px;padding:14px 18px;
+}
+.example::before{content:'🌏 Real-Life Example';display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent3);margin-bottom:6px}
+.example p{font-size:13.5px;line-height:1.55;color:var(--text)}
+.key-point{display:flex;align-items:flex-start;gap:12px;padding:8px 0}
+.key-point .icon{flex-shrink:0;width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(79,140,255,.12)}
+.key-point .icon.green{background:rgba(0,212,170,.12)}
+.key-point .icon.purple{background:rgba(124,92,252,.12)}
+.key-point .icon.red{background:rgba(255,107,107,.12)}
+.key-point .text h4{font-size:14px;color:#fff;margin-bottom:2px}
+.key-point .text p{font-size:13px;color:var(--muted);line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 12px;background:var(--card);color:var(--accent);font-family:var(--font-mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid rgba(79,140,255,.2)}
+td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text)}
+tr:hover td{background:rgba(79,140,255,.03)}
+.vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.vs-grid.three{grid-template-columns:1fr 1fr 1fr}
+.vs-grid.four{grid-template-columns:1fr 1fr 1fr 1fr}
+
+/* ── Graph container ── */
+.graph-wrap{
+  display:flex;justify-content:center;align-items:center;
+  background:rgba(19,27,46,.6);border:1px solid rgba(79,140,255,.1);
+  border-radius:12px;padding:12px;min-height:200px;
+}
+.graph-wrap svg{max-width:100%;height:auto}
+.graph-wrap.small{min-height:160px;padding:8px}
+
+.diagram{display:flex;align-items:center;justify-content:center;gap:12px;padding:12px;flex-wrap:wrap}
+.diagram .arrow{color:var(--accent);font-size:22px;font-weight:700}
+.diagram .box{background:var(--card);border:1px solid rgba(79,140,255,.2);padding:8px 16px;border-radius:8px;font-size:13px;color:#fff;text-align:center;min-width:90px}
+.diagram .box.highlight{border-color:var(--accent3);background:rgba(0,212,170,.08)}
+
+.highlight-text{color:var(--accent);font-weight:600}
+.highlight-green{color:var(--accent3);font-weight:600}
+.highlight-gold{color:var(--gold);font-weight:600}
+.highlight-red{color:var(--warm);font-weight:600}
+.small-note{font-size:12px;color:var(--muted);margin-top:6px;font-style:italic}
+
+/* ── Nav ── */
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:10px 28px;background:linear-gradient(to top,rgba(11,17,32,.95),rgba(11,17,32,.7));backdrop-filter:blur(12px)}
+.nav button{background:var(--card);border:1px solid rgba(255,255,255,.08);color:#fff;padding:7px 18px;border-radius:8px;cursor:pointer;font-family:var(--font-body);font-size:13px;transition:all .2s}
+.nav button:hover{background:var(--accent);border-color:var(--accent)}
+.nav button:disabled{opacity:.3;cursor:default;background:var(--card);border-color:rgba(255,255,255,.04)}
+.progress{display:flex;align-items:center;gap:10px}
+.progress-bar{width:200px;height:4px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .3s}
+.slide-count{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.kbd-hint{position:fixed;top:12px;right:20px;z-index:99;font-family:var(--font-mono);font-size:10px;color:var(--dim);opacity:.5}
+@media(max-width:768px){
+  .slide{padding:24px 20px 72px}
+  .content.two-col{flex-direction:column}
+  .vs-grid,.vs-grid.three,.vs-grid.four{grid-template-columns:1fr}
+  .nav{padding:8px 14px}
+  .progress-bar{width:80px}
+}
+</style>
+</head>
+<body>
+<div class="kbd-hint">← → to navigate</div>
+<div class="deck" id="deck">
+
+<!-- ══════ SLIDE 1: TITLE ══════ -->
+<div class="slide topic-divider active" data-topic="0">
+  <div class="topic-number">VEO / IEO Revision 2026</div>
+  <div class="topic-title">Microeconomics</div>
+  <div class="topic-sub">A complete revision guide — from scarcity and markets to game theory and market failures. With graphs and real-world examples throughout.</div>
+</div>
+
+<!-- ══════ TOPIC 1: INTRODUCTION ══════ -->
+<div class="slide topic-divider" data-topic="1">
+  <div class="topic-number">Topic 01</div>
+  <div class="topic-title">Introduction to Economics</div>
+  <div class="topic-sub">Scarcity, choice, opportunity cost, economic systems, and the tools economists use.</div>
+</div>
+
+<div class="slide" data-topic="1">
+  <div class="slide-header"><div class="slide-label">Topic 1</div><div class="slide-title">The Economic Problem</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>The Fundamental Problem</h3>
+        <p><span class="highlight-red">Unlimited wants</span> vs. <span class="highlight-text">Limited resources</span></p>
+        <p>Economics studies how society manages <strong>scarce resources</strong> to fulfil wants — pursuing maximum satisfaction.</p>
+      </div>
+      <div class="concept-box green">
+        <h3>Scarcity & Choice</h3>
+        <p>We cannot have it all → we must choose → every choice has an <strong>opportunity cost</strong> (the next best alternative forgone).</p>
+      </div>
+      <div class="example"><p><strong>Vietnam:</strong> Building a new metro line in HCMC means fewer funds for rural hospitals — the hospital is the opportunity cost.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="ppf" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4f8cff" stop-opacity=".2"/><stop offset="100%" stop-color="#4f8cff" stop-opacity=".02"/></linearGradient></defs>
+          <!-- Axes -->
+          <line x1="50" y1="20" x2="50" y2="220" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="50" y1="220" x2="300" y2="220" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="24" y="120" fill="#8899b4" font-size="12" font-family="Source Sans 3" transform="rotate(-90,24,120)" text-anchor="middle">Healthcare</text>
+          <text x="175" y="248" fill="#8899b4" font-size="12" font-family="Source Sans 3" text-anchor="middle">Metro Infrastructure</text>
+          <!-- PPF curve -->
+          <path d="M60,40 Q120,42 180,80 Q240,130 270,210" fill="none" stroke="#4f8cff" stroke-width="2.5"/>
+          <path d="M60,40 Q120,42 180,80 Q240,130 270,210 L50,220 L50,40 Z" fill="url(#ppf)"/>
+          <!-- Points -->
+          <circle cx="140" cy="68" r="5" fill="#00d4aa"/>
+          <text x="148" y="62" fill="#00d4aa" font-size="11" font-family="Source Sans 3" font-weight="600">A (efficient)</text>
+          <circle cx="200" cy="100" r="5" fill="#fbbf24"/>
+          <text x="208" y="95" fill="#fbbf24" font-size="11" font-family="Source Sans 3" font-weight="600">B (efficient)</text>
+          <circle cx="130" cy="150" r="5" fill="#ff6b6b"/>
+          <text x="138" y="148" fill="#ff6b6b" font-size="11" font-family="Source Sans 3" font-weight="600">C (inefficient)</text>
+          <!-- Arrow showing trade-off -->
+          <path d="M145,75 Q170,80 195,95" fill="none" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+          <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#fbbf24"/></marker></defs>
+          <text x="160" y="20" fill="#4f8cff" font-size="13" font-family="DM Serif Display" text-anchor="middle">Production Possibilities Frontier</text>
+          <text x="175" y="180" fill="#475569" font-size="10" font-family="Source Sans 3" font-style="italic">A→B: opportunity cost of more metro</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-topic="1">
+  <div class="slide-header"><div class="slide-label">Topic 1</div><div class="slide-title">Three Questions & Economic Systems</div></div>
+  <div class="content">
+    <div class="vs-grid three">
+      <div class="concept-box"><h3>What to produce?</h3><p>Which goods with limited resources?</p></div>
+      <div class="concept-box green"><h3>How to produce?</h3><p>What technology/method?</p></div>
+      <div class="concept-box purple"><h3>For whom?</h3><p>How to distribute output?</p></div>
+    </div>
+    <div class="vs-grid three">
+      <div class="concept-box gold"><h3>Market Economy</h3><p>Private ownership, price signals. <em>e.g. Singapore</em></p></div>
+      <div class="concept-box red"><h3>Command Economy</h3><p>State ownership, central plan. <em>e.g. North Korea</em></p></div>
+      <div class="concept-box"><h3>Mixed Economy</h3><p>Market + government. <em>e.g. Vietnam</em></p></div>
+    </div>
+    <div class="concept-box">
+      <h3>Micro vs. Macro</h3>
+      <p><span class="highlight-text">Microeconomics</span> = individual units (consumers, firms, markets). <span class="highlight-green">Macroeconomics</span> = aggregate economy (GDP, inflation, unemployment).</p>
+    </div>
+    <div class="example"><p><strong>Vietnam's Doi Moi (1986):</strong> Shifted from command to mixed economy — market forces now answer "what" and "how", government guides "for whom" through social programs.</p></div>
+  </div>
+</div>
+
+<!-- ══════ TOPIC 2: MARKET ANALYSIS ══════ -->
+<div class="slide topic-divider" data-topic="2">
+  <div class="topic-number">Topic 02</div>
+  <div class="topic-title">Market Analysis</div>
+  <div class="topic-sub">Demand, supply, equilibrium, price controls, and elasticity.</div>
+</div>
+
+<!-- DEMAND -->
+<div class="slide" data-topic="2">
+  <div class="slide-header"><div class="slide-label">Topic 2 · Demand</div><div class="slide-title">Demand & Law of Demand</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>What is Demand?</h3>
+        <p>The amount consumers are <em>willing and able</em> to purchase at each price.</p>
+      </div>
+      <div class="concept-box gold">
+        <h3>Law of Demand</h3>
+        <p>Ceteris paribus: Price ↑ → Q<sub>D</sub> ↓. The demand curve slopes <strong>downward</strong>.</p>
+      </div>
+      <div class="concept-box purple">
+        <h3>Key Distinction</h3>
+        <p><strong>Movement along</strong> = price changes Q<sub>D</sub>.<br><strong>Shift of curve</strong> = non-price factor changes demand.</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 320 250" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="15" x2="50" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="50" y1="210" x2="300" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="25" y="115" fill="#8899b4" font-size="13" font-family="Source Sans 3" transform="rotate(-90,25,115)" text-anchor="middle">Price (P)</text>
+          <text x="175" y="238" fill="#8899b4" font-size="13" font-family="Source Sans 3" text-anchor="middle">Quantity (Q)</text>
+          <!-- Demand curve -->
+          <line x1="70" y1="30" x2="280" y2="195" stroke="#4f8cff" stroke-width="2.5"/>
+          <text x="275" y="188" fill="#4f8cff" font-size="14" font-family="DM Serif Display">D</text>
+          <!-- Movement along -->
+          <circle cx="120" cy="65" r="5" fill="#fbbf24"/>
+          <text x="128" y="58" fill="#fbbf24" font-size="11" font-family="Source Sans 3">P₁ high</text>
+          <circle cx="220" cy="145" r="5" fill="#fbbf24"/>
+          <text x="228" y="140" fill="#fbbf24" font-size="11" font-family="Source Sans 3">P₂ low</text>
+          <path d="M125,72 Q170,110 215,140" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <text x="180" y="95" fill="#fbbf24" font-size="10" font-family="Source Sans 3">Movement along</text>
+          <!-- Dashed lines -->
+          <line x1="50" y1="65" x2="120" y2="65" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="120" y1="65" x2="120" y2="210" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="50" y1="145" x2="220" y2="145" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="220" y1="145" x2="220" y2="210" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="118" y="224" fill="#475569" font-size="10" font-family="Source Sans 3" text-anchor="middle">Q₁</text>
+          <text x="220" y="224" fill="#475569" font-size="10" font-family="Source Sans 3" text-anchor="middle">Q₂</text>
+        </svg>
+      </div>
+      <div class="example"><p>Grab raises peak-hour prices in Hanoi → fewer rides booked (movement along). A new MRT line opens → demand for Grab falls at every price (shift left).</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- DEMAND SHIFT -->
+<div class="slide" data-topic="2">
+  <div class="slide-header"><div class="slide-label">Topic 2 · Demand</div><div class="slide-title">Demand Shifters & Shift Diagram</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="key-point"><div class="icon">💰</div><div class="text"><h4>Consumer Income</h4><p><strong>Normal good:</strong> income↑ → D↑<br><strong>Inferior good:</strong> income↑ → D↓</p></div></div>
+      <div class="key-point"><div class="icon green">🔄</div><div class="text"><h4>Related Goods</h4><p><strong>Substitutes:</strong> Pᵧ↑ → Dₓ↑<br><strong>Complements:</strong> Pᵧ↑ → Dₓ↓</p></div></div>
+      <div class="key-point"><div class="icon purple">❤️</div><div class="text"><h4>Tastes & Preferences</h4><p>Trends, ads, health concerns</p></div></div>
+      <div class="key-point"><div class="icon red">📈</div><div class="text"><h4>Expectations, # Buyers</h4><p>Future price expectations, market size</p></div></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="15" x2="50" y2="200" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="50" y1="200" x2="300" y2="200" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="25" y="110" fill="#8899b4" font-size="12" font-family="Source Sans 3" transform="rotate(-90,25,110)" text-anchor="middle">Price</text>
+          <text x="175" y="225" fill="#8899b4" font-size="12" font-family="Source Sans 3" text-anchor="middle">Quantity</text>
+          <!-- Original D -->
+          <line x1="90" y1="30" x2="250" y2="185" stroke="#4f8cff" stroke-width="2"/>
+          <text x="252" y="180" fill="#4f8cff" font-size="13" font-family="DM Serif Display">D₁</text>
+          <!-- Shift right D2 -->
+          <line x1="130" y1="30" x2="285" y2="175" stroke="#00d4aa" stroke-width="2"/>
+          <text x="287" y="170" fill="#00d4aa" font-size="13" font-family="DM Serif Display">D₂</text>
+          <!-- Shift left D3 -->
+          <line x1="60" y1="40" x2="200" y2="185" stroke="#ff6b6b" stroke-width="2"/>
+          <text x="202" y="180" fill="#ff6b6b" font-size="13" font-family="DM Serif Display">D₃</text>
+          <!-- Arrows -->
+          <path d="M185,100 L215,95" fill="none" stroke="#00d4aa" stroke-width="2" marker-end="url(#ag)"/>
+          <path d="M155,110 L130,115" fill="none" stroke="#ff6b6b" stroke-width="2" marker-end="url(#ar)"/>
+          <defs>
+            <marker id="ag" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#00d4aa"/></marker>
+            <marker id="ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#ff6b6b"/></marker>
+          </defs>
+          <text x="220" y="82" fill="#00d4aa" font-size="11" font-family="Source Sans 3">Increase</text>
+          <text x="82" y="128" fill="#ff6b6b" font-size="11" font-family="Source Sans 3">Decrease</text>
+        </svg>
+      </div>
+      <div class="example"><p><strong>Normal vs Inferior:</strong> As Vietnam's middle class grows, demand for branded coffee (normal) rises while instant noodles as staple (inferior) falls.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUPPLY -->
+<div class="slide" data-topic="2">
+  <div class="slide-header"><div class="slide-label">Topic 2 · Supply</div><div class="slide-title">Supply & The Law of Supply</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box green">
+        <h3>Law of Supply</h3>
+        <p>Ceteris paribus: Price ↑ → Q<sub>S</sub> ↑. <strong>Positive relationship</strong>. Supply curve slopes <strong>upward</strong>.</p>
+      </div>
+      <div class="concept-box purple">
+        <h3>Supply Shifters</h3>
+        <p>Input prices · Technology · Taxes & subsidies · Prices of other goods · Expectations · Number of sellers · Weather</p>
+      </div>
+      <div class="example"><p><strong>Vietnam coffee:</strong> A drought in Central Highlands reduces arabica yields → supply shifts left → world coffee prices rise. Vietnam is the 2nd-largest coffee exporter.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="15" x2="50" y2="200" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="50" y1="200" x2="300" y2="200" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="25" y="110" fill="#8899b4" font-size="12" font-family="Source Sans 3" transform="rotate(-90,25,110)" text-anchor="middle">Price</text>
+          <text x="175" y="225" fill="#8899b4" font-size="12" font-family="Source Sans 3" text-anchor="middle">Quantity</text>
+          <!-- S1 original -->
+          <line x1="80" y1="190" x2="270" y2="30" stroke="#00d4aa" stroke-width="2.5"/>
+          <text x="272" y="28" fill="#00d4aa" font-size="13" font-family="DM Serif Display">S₁</text>
+          <!-- S2 shift right -->
+          <line x1="120" y1="190" x2="290" y2="50" stroke="#4f8cff" stroke-width="2" stroke-dasharray="6,3"/>
+          <text x="292" y="48" fill="#4f8cff" font-size="13" font-family="DM Serif Display">S₂</text>
+          <!-- S3 shift left -->
+          <line x1="60" y1="170" x2="220" y2="30" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="6,3"/>
+          <text x="222" y="28" fill="#ff6b6b" font-size="13" font-family="DM Serif Display">S₃</text>
+          <!-- Arrows -->
+          <path d="M195,90 L220,95" fill="none" stroke="#4f8cff" stroke-width="2" marker-end="url(#asb)"/>
+          <path d="M155,100 L135,95" fill="none" stroke="#ff6b6b" stroke-width="2" marker-end="url(#asr)"/>
+          <defs>
+            <marker id="asb" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#4f8cff"/></marker>
+            <marker id="asr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#ff6b6b"/></marker>
+          </defs>
+          <text x="230" y="84" fill="#4f8cff" font-size="11">S increase</text>
+          <text x="85" y="85" fill="#ff6b6b" font-size="11">S decrease</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EQUILIBRIUM -->
+<div class="slide" data-topic="2">
+  <div class="slide-header"><div class="slide-label">Topic 2 · Equilibrium</div><div class="slide-title">Market Equilibrium</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>Where D Meets S</h3>
+        <p>Equilibrium: Q<sub>D</sub> = Q<sub>S</sub> → determines <span class="highlight-text">P*</span> and <span class="highlight-green">Q*</span>.</p>
+      </div>
+      <div class="concept-box gold">
+        <h3>Practice Problem</h3>
+        <p>Q<sub>D</sub> = 120 − 2P &nbsp; Q<sub>S</sub> = 20 + 3P</p>
+        <div class="formula">120−2P = 20+3P → P*=20, Q*=80</div>
+      </div>
+      <div class="concept-box purple">
+        <h3>Surplus & Shortage</h3>
+        <p>If P > P* → surplus (Q<sub>S</sub> > Q<sub>D</sub>) → price falls<br>If P < P* → shortage (Q<sub>D</sub> > Q<sub>S</sub>) → price rises</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="15" x2="50" y2="220" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="50" y1="220" x2="300" y2="220" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="25" y="120" fill="#8899b4" font-size="12" font-family="Source Sans 3" transform="rotate(-90,25,120)" text-anchor="middle">Price</text>
+          <text x="175" y="248" fill="#8899b4" font-size="12" font-family="Source Sans 3" text-anchor="middle">Quantity</text>
+          <!-- D curve -->
+          <line x1="70" y1="30" x2="280" y2="200" stroke="#4f8cff" stroke-width="2.5"/>
+          <text x="282" y="198" fill="#4f8cff" font-size="14" font-family="DM Serif Display">D</text>
+          <!-- S curve -->
+          <line x1="70" y1="200" x2="280" y2="30" stroke="#00d4aa" stroke-width="2.5"/>
+          <text x="282" y="28" fill="#00d4aa" font-size="14" font-family="DM Serif Display">S</text>
+          <!-- Equilibrium point -->
+          <circle cx="175" cy="115" r="6" fill="#fbbf24" stroke="#0b1120" stroke-width="2"/>
+          <!-- Dashed lines to axes -->
+          <line x1="50" y1="115" x2="175" y2="115" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="175" y1="115" x2="175" y2="220" stroke="#fbbf24" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="38" y="118" fill="#fbbf24" font-size="12" font-family="Source Sans 3" text-anchor="end">P*</text>
+          <text x="175" y="236" fill="#fbbf24" font-size="12" font-family="Source Sans 3" text-anchor="middle">Q*</text>
+          <!-- Surplus zone -->
+          <text x="180" y="70" fill="#ff6b6b" font-size="10" font-family="Source Sans 3">← Surplus →</text>
+          <line x1="50" y1="75" x2="135" y2="75" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+          <!-- Shortage zone -->
+          <text x="180" y="165" fill="#7c5cfc" font-size="10" font-family="Source Sans 3">← Shortage →</text>
+          <line x1="50" y1="155" x2="118" y2="155" stroke="#7c5cfc" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="180" y="102" fill="#fbbf24" font-size="12" font-family="DM Serif Display">Equilibrium</text>
+        </svg>
+      </div>
+      <div class="example"><p><strong>Post-COVID Vietnam:</strong> Rising tourism demand (D→) + limited hotel supply → resort prices in Da Nang surged.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SHIFTS SUMMARY TABLE -->
+<div class="slide" data-topic="2">
+  <div class="slide-header"><div class="slide-label">Topic 2 · Equilibrium</div><div class="slide-title">Shifts in D and S — Summary</div></div>
+  <div class="content">
+    <table>
+      <thead><tr><th>Change</th><th>Price</th><th>Quantity</th></tr></thead>
+      <tbody>
+        <tr><td>D↑, S unchanged</td><td class="highlight-red">P ↑</td><td class="highlight-green">Q ↑</td></tr>
+        <tr><td>D↓, S unchanged</td><td class="highlight-green">P ↓</td><td class="highlight-red">Q ↓</td></tr>
+        <tr><td>S↑, D unchanged</td><td class="highlight-green">P ↓</td><td class="highlight-green">Q ↑</td></tr>
+        <tr><td>S↓, D unchanged</td><td class="highlight-red">P ↑</td><td class="highlight-red">Q ↓</td></tr>
+        <tr><td>D↑ and S↑</td><td>Ambiguous</td><td class="highlight-green">Q ↑</td></tr>
+        <tr><td>D↑ and S↓</td><td class="highlight-red">P ↑</td><td>Ambiguous</td></tr>
+        <tr><td>D↓ and S↑</td><td class="highlight-green">P ↓</td><td>Ambiguous</td></tr>
+        <tr><td>D↓ and S↓</td><td>Ambiguous</td><td class="highlight-red">Q ↓</td></tr>
+      </tbody>
+    </table>
+    <div class="example"><p><strong>Exam tip:</strong> When both curves shift, one effect (P or Q) is always <em>ambiguous</em> — state this clearly. It depends on which shift is larger.</p></div>
+  </div>
+</div>
+
+<!-- PRICE CONTROLS -->
+<div class="slide" data-topic="2">
+  <div class="slide-header"><div class="slide-label">Topic 2 · Gov't</div><div class="slide-title">Price Ceiling & Price Floor</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <text x="150" y="14" fill="#ff6b6b" font-size="12" font-family="DM Serif Display" text-anchor="middle">Price Ceiling → Shortage</text>
+          <line x1="45" y1="20" x2="45" y2="190" stroke="#8899b4" stroke-width="1.2"/>
+          <line x1="45" y1="190" x2="280" y2="190" stroke="#8899b4" stroke-width="1.2"/>
+          <text x="20" y="105" fill="#8899b4" font-size="10" font-family="Source Sans 3" transform="rotate(-90,20,105)" text-anchor="middle">P</text>
+          <text x="160" y="208" fill="#8899b4" font-size="10" font-family="Source Sans 3" text-anchor="middle">Q</text>
+          <line x1="60" y1="30" x2="260" y2="175" stroke="#4f8cff" stroke-width="2"/>
+          <text x="262" y="172" fill="#4f8cff" font-size="11" font-family="DM Serif Display">D</text>
+          <line x1="60" y1="175" x2="260" y2="30" stroke="#00d4aa" stroke-width="2"/>
+          <text x="262" y="28" fill="#00d4aa" font-size="11" font-family="DM Serif Display">S</text>
+          <!-- Equilibrium -->
+          <circle cx="160" cy="103" r="4" fill="#fbbf24"/>
+          <text x="35" y="106" fill="#fbbf24" font-size="10">P*</text>
+          <!-- Ceiling line -->
+          <line x1="45" y1="135" x2="270" y2="135" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="6,4"/>
+          <text x="35" y="138" fill="#ff6b6b" font-size="10">Pₒ</text>
+          <text x="245" y="130" fill="#ff6b6b" font-size="9">Ceiling</text>
+          <!-- Shortage -->
+          <line x1="115" y1="135" x2="115" y2="190" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="205" y1="135" x2="205" y2="190" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="112" y="200" fill="#00d4aa" font-size="9" text-anchor="middle">Qs</text>
+          <text x="207" y="200" fill="#4f8cff" font-size="9" text-anchor="middle">Qd</text>
+          <path d="M120,180 L200,180" fill="none" stroke="#ff6b6b" stroke-width="1.5"/>
+          <text x="160" y="176" fill="#ff6b6b" font-size="9" text-anchor="middle">Shortage</text>
+        </svg>
+      </div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <text x="150" y="14" fill="#00d4aa" font-size="12" font-family="DM Serif Display" text-anchor="middle">Price Floor → Surplus</text>
+          <line x1="45" y1="20" x2="45" y2="190" stroke="#8899b4" stroke-width="1.2"/>
+          <line x1="45" y1="190" x2="280" y2="190" stroke="#8899b4" stroke-width="1.2"/>
+          <text x="20" y="105" fill="#8899b4" font-size="10" font-family="Source Sans 3" transform="rotate(-90,20,105)" text-anchor="middle">P</text>
+          <text x="160" y="208" fill="#8899b4" font-size="10" font-family="Source Sans 3" text-anchor="middle">Q</text>
+          <line x1="60" y1="30" x2="260" y2="175" stroke="#4f8cff" stroke-width="2"/>
+          <text x="262" y="172" fill="#4f8cff" font-size="11" font-family="DM Serif Display">D</text>
+          <line x1="60" y1="175" x2="260" y2="30" stroke="#00d4aa" stroke-width="2"/>
+          <text x="262" y="28" fill="#00d4aa" font-size="11" font-family="DM Serif Display">S</text>
+          <circle cx="160" cy="103" r="4" fill="#fbbf24"/>
+          <text x="35" y="106" fill="#fbbf24" font-size="10">P*</text>
+          <!-- Floor line -->
+          <line x1="45" y1="72" x2="270" y2="72" stroke="#00d4aa" stroke-width="2" stroke-dasharray="6,4"/>
+          <text x="35" y="75" fill="#00d4aa" font-size="10">Pf</text>
+          <text x="250" y="66" fill="#00d4aa" font-size="9">Floor</text>
+          <!-- Surplus -->
+          <line x1="110" y1="72" x2="110" y2="190" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="210" y1="72" x2="210" y2="190" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="108" y="200" fill="#4f8cff" font-size="9" text-anchor="middle">Qd</text>
+          <text x="212" y="200" fill="#00d4aa" font-size="9" text-anchor="middle">Qs</text>
+          <path d="M115,180 L205,180" fill="none" stroke="#7c5cfc" stroke-width="1.5"/>
+          <text x="160" y="176" fill="#7c5cfc" font-size="9" text-anchor="middle">Surplus</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="example"><p><strong>Ceiling:</strong> Vietnam's rent controls → housing shortages. <strong>Floor:</strong> Minimum wage (Vietnam's regional wages) → possible unemployment if set above equilibrium.</p></div>
+</div>
+
+<!-- ELASTICITY PED -->
+<div class="slide" data-topic="2">
+  <div class="slide-header"><div class="slide-label">Topic 2 · Elasticity</div><div class="slide-title">Price Elasticity of Demand (PED)</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>Definition</h3>
+        <div class="formula">E<sub>P</sub> = %ΔQ<sub>D</sub> / %ΔP</div>
+        <p style="margin-top:6px">Midpoint: [(Q₂−Q₁)/avg Q] ÷ [(P₂−P₁)/avg P]</p>
+      </div>
+      <div class="concept-box gold">
+        <h3>Elasticity & Total Revenue</h3>
+        <p><span class="highlight-text">Elastic (|E|>1):</span> P↑→TR↓<br>
+        <span class="highlight-red">Inelastic (|E|<1):</span> P↑→TR↑<br>
+        <span class="highlight-gold">Unit (|E|=1):</span> TR unchanged</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 340 230" xmlns="http://www.w3.org/2000/svg">
+          <text x="170" y="14" fill="#fff" font-size="12" font-family="DM Serif Display" text-anchor="middle">Five Cases of Elasticity</text>
+          <!-- Row of 5 mini-graphs -->
+          <!-- 1: Perfectly inelastic -->
+          <g transform="translate(20,25)">
+            <line x1="10" y1="5" x2="10" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="10" y1="80" x2="60" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="30" y1="10" x2="30" y2="75" stroke="#ff6b6b" stroke-width="2.5"/>
+            <text x="35" y="100" fill="#ff6b6b" font-size="8" font-family="Source Sans 3" text-anchor="middle">|E|=0</text>
+            <text x="35" y="112" fill="#muted" font-size="7" font-family="Source Sans 3" text-anchor="middle">Vertical</text>
+          </g>
+          <!-- 2: Inelastic -->
+          <g transform="translate(82,25)">
+            <line x1="10" y1="5" x2="10" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="10" y1="80" x2="60" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="18" y1="10" x2="50" y2="75" stroke="#fbbf24" stroke-width="2.5"/>
+            <text x="35" y="100" fill="#fbbf24" font-size="8" font-family="Source Sans 3" text-anchor="middle">|E|&lt;1</text>
+            <text x="35" y="112" fill="#8899b4" font-size="7" font-family="Source Sans 3" text-anchor="middle">Steep</text>
+          </g>
+          <!-- 3: Unit elastic -->
+          <g transform="translate(145,25)">
+            <line x1="10" y1="5" x2="10" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="10" y1="80" x2="60" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <path d="M15,12 Q22,40 55,72" fill="none" stroke="#7c5cfc" stroke-width="2.5"/>
+            <text x="35" y="100" fill="#7c5cfc" font-size="8" font-family="Source Sans 3" text-anchor="middle">|E|=1</text>
+            <text x="35" y="112" fill="#8899b4" font-size="7" font-family="Source Sans 3" text-anchor="middle">Hyperbola</text>
+          </g>
+          <!-- 4: Elastic -->
+          <g transform="translate(208,25)">
+            <line x1="10" y1="5" x2="10" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="10" y1="80" x2="60" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="13" y1="25" x2="55" y2="50" stroke="#00d4aa" stroke-width="2.5"/>
+            <text x="35" y="100" fill="#00d4aa" font-size="8" font-family="Source Sans 3" text-anchor="middle">|E|&gt;1</text>
+            <text x="35" y="112" fill="#8899b4" font-size="7" font-family="Source Sans 3" text-anchor="middle">Flat</text>
+          </g>
+          <!-- 5: Perfectly elastic -->
+          <g transform="translate(272,25)">
+            <line x1="10" y1="5" x2="10" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="10" y1="80" x2="60" y2="80" stroke="#8899b4" stroke-width="1"/>
+            <line x1="12" y1="40" x2="58" y2="40" stroke="#4f8cff" stroke-width="2.5"/>
+            <text x="35" y="100" fill="#4f8cff" font-size="8" font-family="Source Sans 3" text-anchor="middle">|E|=∞</text>
+            <text x="35" y="112" fill="#8899b4" font-size="7" font-family="Source Sans 3" text-anchor="middle">Horizontal</text>
+          </g>
+          <!-- Examples row -->
+          <g transform="translate(0,130)">
+            <text x="37" y="10" fill="#475569" font-size="7" font-family="Source Sans 3" text-anchor="middle">Insulin</text>
+            <text x="117" y="10" fill="#475569" font-size="7" font-family="Source Sans 3" text-anchor="middle">Rice, Salt</text>
+            <text x="180" y="10" fill="#475569" font-size="7" font-family="Source Sans 3" text-anchor="middle">Benchmark</text>
+            <text x="243" y="10" fill="#475569" font-size="7" font-family="Source Sans 3" text-anchor="middle">Vacations</text>
+            <text x="307" y="10" fill="#475569" font-size="7" font-family="Source Sans 3" text-anchor="middle">Perf. comp.</text>
+          </g>
+        </svg>
+      </div>
+      <div class="example"><p><strong>Elastic:</strong> Luxury handbags (10% P↑ → >10% Q↓). <strong>Inelastic:</strong> Gasoline (20% P↑ → small Q↓, people still drive).</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CROSS & INCOME ELASTICITY -->
+<div class="slide" data-topic="2">
+  <div class="slide-header"><div class="slide-label">Topic 2 · Elasticity</div><div class="slide-title">Cross-Price & Income Elasticity</div></div>
+  <div class="content">
+    <div class="vs-grid">
+      <div class="concept-box">
+        <h3>Cross-Price Elasticity (XED)</h3>
+        <div class="formula">E<sub>X,Y</sub> = %ΔQ<sub>X</sub> / %ΔP<sub>Y</sub></div>
+        <ul style="margin-top:6px">
+          <li><span class="highlight-green">E > 0</span> → <strong>Substitutes</strong></li>
+          <li><span class="highlight-red">E < 0</span> → <strong>Complements</strong></li>
+          <li>E = 0 → Unrelated</li>
+        </ul>
+      </div>
+      <div class="concept-box purple">
+        <h3>Income Elasticity (YED)</h3>
+        <div class="formula">E<sub>I</sub> = %ΔQ<sub>D</sub> / %ΔIncome</div>
+        <ul style="margin-top:6px">
+          <li><span class="highlight-green">E > 1</span> → Normal, <strong>luxury</strong></li>
+          <li>0 < E < 1 → Normal, <strong>necessity</strong></li>
+          <li><span class="highlight-red">E < 0</span> → <strong>Inferior good</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="concept-box" style="margin-top:4px"><h3>Price Elasticity of Supply</h3>
+      <div class="formula">E<sub>S</sub> = %ΔQ<sub>S</sub> / %ΔP</div>
+      <p style="margin-top:4px">Elastic (>1): manufacturing. Inelastic (<1): agriculture, land.</p>
+    </div>
+    <div class="example"><p><strong>XED:</strong> VinFast e-scooters & petrol scooters are substitutes (E>0). <strong>YED:</strong> As income grows, spending on travel (luxury, E>1) rises faster than on rice (necessity, 0<E<1).</p></div>
+  </div>
+</div>
+
+<!-- ══════ TOPIC 3: CONSUMER CHOICE ══════ -->
+<div class="slide topic-divider" data-topic="3">
+  <div class="topic-number">Topic 03</div>
+  <div class="topic-title">Theory of Consumer Choice</div>
+  <div class="topic-sub">Budget constraints, utility, indifference curves, optimal choice.</div>
+</div>
+
+<div class="slide" data-topic="3">
+  <div class="slide-header"><div class="slide-label">Topic 3</div><div class="slide-title">Budget Constraint & Indifference Curves</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>Budget Constraint</h3>
+        <div class="formula">P<sub>X</sub>·X + P<sub>Y</sub>·Y = I</div>
+        <p>Slope = −P<sub>X</sub>/P<sub>Y</sub>. Income↑ → parallel shift out. Price change → pivot.</p>
+      </div>
+      <div class="concept-box green">
+        <h3>Indifference Curve Properties</h3>
+        <p>① Higher = preferred ② Downward-sloping ③ Don't cross ④ Convex (diminishing MRS)</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="15" x2="50" y2="220" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="50" y1="220" x2="300" y2="220" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="25" y="120" fill="#8899b4" font-size="12" font-family="Source Sans 3" transform="rotate(-90,25,120)" text-anchor="middle">Good Y</text>
+          <text x="175" y="248" fill="#8899b4" font-size="12" font-family="Source Sans 3" text-anchor="middle">Good X</text>
+          <!-- Budget line -->
+          <line x1="60" y1="40" x2="270" y2="210" stroke="#fbbf24" stroke-width="2"/>
+          <text x="272" y="205" fill="#fbbf24" font-size="12" font-family="DM Serif Display">BL</text>
+          <!-- Indifference curves -->
+          <path d="M70,120 Q110,140 160,160 Q220,180 275,185" fill="none" stroke="#7c5cfc" stroke-width="1.5" opacity=".5"/>
+          <text x="278" y="183" fill="#7c5cfc" font-size="10" opacity=".5">U₁</text>
+          <path d="M70,90 Q120,115 170,135 Q230,155 280,158" fill="none" stroke="#7c5cfc" stroke-width="2"/>
+          <text x="283" y="156" fill="#7c5cfc" font-size="10">U₂</text>
+          <path d="M70,55 Q130,85 185,108 Q240,125 285,128" fill="none" stroke="#7c5cfc" stroke-width="1.5" opacity=".5"/>
+          <text x="288" y="126" fill="#7c5cfc" font-size="10" opacity=".5">U₃</text>
+          <!-- Optimal point -->
+          <circle cx="155" cy="118" r="6" fill="#00d4aa" stroke="#0b1120" stroke-width="2"/>
+          <text x="163" y="110" fill="#00d4aa" font-size="11" font-family="DM Serif Display">Optimal</text>
+          <text x="163" y="122" fill="#00d4aa" font-size="9" font-family="Source Sans 3">MRS = Px/Py</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="example"><p>A student with S$500/month: the budget line shows trade-offs between food and transport. The optimal bundle is where the highest indifference curve just touches the budget line.</p></div>
+</div>
+
+<!-- UTILITY -->
+<div class="slide" data-topic="3">
+  <div class="slide-header"><div class="slide-label">Topic 3</div><div class="slide-title">Utility & Diminishing Marginal Utility</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>Utility = Satisfaction</h3>
+        <p><strong>TU:</strong> Total satisfaction from Q units.<br><strong>MU:</strong> Extra satisfaction from one more.</p>
+        <div class="formula">MU = ΔTU / ΔQ</div>
+      </div>
+      <div class="concept-box gold">
+        <h3>Law of Diminishing MU</h3>
+        <p>As Q↑, each extra unit gives <span class="highlight-red">less</span> extra satisfaction. MU declines.</p>
+      </div>
+      <div class="concept-box green">
+        <h3>Utility Maximization</h3>
+        <div class="formula">MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub></div>
+        <p>Equal marginal utility per dollar across all goods.</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+          <!-- TU graph -->
+          <text x="150" y="14" fill="#fff" font-size="11" font-family="DM Serif Display" text-anchor="middle">Total & Marginal Utility</text>
+          <line x1="45" y1="22" x2="45" y2="115" stroke="#8899b4" stroke-width="1"/>
+          <line x1="45" y1="115" x2="280" y2="115" stroke="#8899b4" stroke-width="1"/>
+          <text x="15" y="70" fill="#8899b4" font-size="9" font-family="Source Sans 3" transform="rotate(-90,15,70)" text-anchor="middle">TU</text>
+          <path d="M55,105 Q100,70 145,45 Q190,30 240,28 Q260,28 275,32" fill="none" stroke="#4f8cff" stroke-width="2.5"/>
+          <text x="278" y="30" fill="#4f8cff" font-size="10">TU</text>
+          <circle cx="240" cy="28" r="3" fill="#fbbf24"/>
+          <text x="240" y="22" fill="#fbbf24" font-size="8" text-anchor="middle">Max TU</text>
+          <!-- MU graph -->
+          <line x1="45" y1="135" x2="45" y2="240" stroke="#8899b4" stroke-width="1"/>
+          <line x1="45" y1="200" x2="280" y2="200" stroke="#8899b4" stroke-width="1"/>
+          <text x="15" y="175" fill="#8899b4" font-size="9" font-family="Source Sans 3" transform="rotate(-90,15,175)" text-anchor="middle">MU</text>
+          <text x="160" y="252" fill="#8899b4" font-size="10" font-family="Source Sans 3" text-anchor="middle">Quantity</text>
+          <path d="M55,145 L110,158 L160,172 L200,186 L240,200 L270,212" fill="none" stroke="#00d4aa" stroke-width="2.5"/>
+          <text x="273" y="215" fill="#00d4aa" font-size="10">MU</text>
+          <!-- Zero line -->
+          <line x1="240" y1="115" x2="240" y2="200" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="240" y="130" fill="#fbbf24" font-size="8" text-anchor="middle">MU=0</text>
+          <!-- Diminishing label -->
+          <text x="170" y="155" fill="#475569" font-size="9" font-style="italic">Diminishing MU ↘</text>
+        </svg>
+      </div>
+      <div class="example"><p><strong>Bubble tea:</strong> 1st cup on a hot day = enormous pleasure. 4th cup = barely enjoy it. That's diminishing MU!</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- INCOME & SUB EFFECTS -->
+<div class="slide" data-topic="3">
+  <div class="slide-header"><div class="slide-label">Topic 3</div><div class="slide-title">Income & Substitution Effects</div></div>
+  <div class="content">
+    <div class="vs-grid">
+      <div class="concept-box">
+        <h3>Substitution Effect</h3>
+        <p>Good becomes relatively cheaper → buy <strong>more</strong> of it, less of others. (Utility held constant)</p>
+      </div>
+      <div class="concept-box green">
+        <h3>Income Effect</h3>
+        <p>Price fall → <strong>real purchasing power</strong> increases → can buy more of all goods. (Relative price held constant)</p>
+      </div>
+    </div>
+    <div class="concept-box purple">
+      <h3>Normal vs Inferior</h3>
+      <p><strong>Normal:</strong> Both effects reinforce → P↓ always means Q↑.<br><strong>Inferior:</strong> Effects work against each other. Substitution effect usually dominates (Giffen goods are the rare exception).</p>
+    </div>
+    <div class="example"><p><strong>Vietnam Airlines fare discount:</strong> <em>Substitution effect</em> — fly more instead of bus. <em>Income effect</em> — money saved allows an extra trip overall.</p></div>
+  </div>
+</div>
+
+<!-- ══════ TOPIC 4: FIRM ══════ -->
+<div class="slide topic-divider" data-topic="4">
+  <div class="topic-number">Topic 04</div>
+  <div class="topic-title">Theory of the Firm</div>
+  <div class="topic-sub">Production, short-run & long-run costs, economies of scale.</div>
+</div>
+
+<div class="slide" data-topic="4">
+  <div class="slide-header"><div class="slide-label">Topic 4</div><div class="slide-title">Production Function & Diminishing Returns</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>Key Concepts</h3>
+        <div class="formula">Q = F(K, L) &nbsp; π = TR − TC</div>
+        <p><strong>TP:</strong> Total product &nbsp; <strong>MP<sub>L</sub></strong> = ΔQ/ΔL &nbsp; <strong>AP<sub>L</sub></strong> = Q/L</p>
+      </div>
+      <div class="concept-box gold">
+        <h3>Law of Diminishing Marginal Returns</h3>
+        <p>As more labour is added to fixed capital, MP<sub>L</sub> <span class="highlight-red">eventually declines</span>.</p>
+      </div>
+      <div class="example"><p><strong>Phở restaurant:</strong> 1 kitchen + 2nd cook doubles output. By 6th cook, they're bumping into each other — MP falls.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+          <text x="150" y="14" fill="#fff" font-size="11" font-family="DM Serif Display" text-anchor="middle">TP, MP, and AP Curves</text>
+          <!-- TP graph -->
+          <line x1="45" y1="22" x2="45" y2="110" stroke="#8899b4" stroke-width="1"/>
+          <line x1="45" y1="110" x2="275" y2="110" stroke="#8899b4" stroke-width="1"/>
+          <text x="18" y="65" fill="#8899b4" font-size="9" transform="rotate(-90,18,65)" text-anchor="middle">TP</text>
+          <path d="M55,105 Q100,90 140,60 Q180,35 220,25 Q250,22 270,25" fill="none" stroke="#4f8cff" stroke-width="2.5"/>
+          <text x="273" y="23" fill="#4f8cff" font-size="10">TP</text>
+          <!-- Inflection point -->
+          <circle cx="140" cy="60" r="3" fill="#fbbf24"/>
+          <text x="140" y="54" fill="#fbbf24" font-size="8" text-anchor="middle">Inflection</text>
+          <!-- MP & AP graph -->
+          <line x1="45" y1="135" x2="45" y2="245" stroke="#8899b4" stroke-width="1"/>
+          <line x1="45" y1="210" x2="275" y2="210" stroke="#8899b4" stroke-width="1"/>
+          <text x="18" y="180" fill="#8899b4" font-size="9" transform="rotate(-90,18,180)" text-anchor="middle">MP, AP</text>
+          <text x="160" y="256" fill="#8899b4" font-size="10" text-anchor="middle">Labour (L)</text>
+          <!-- MP curve -->
+          <path d="M55,190 Q90,150 120,145 Q140,145 170,165 Q210,195 250,220" fill="none" stroke="#00d4aa" stroke-width="2"/>
+          <text x="253" y="222" fill="#00d4aa" font-size="10">MP</text>
+          <!-- AP curve -->
+          <path d="M55,200 Q100,170 140,160 Q170,158 200,165 Q240,185 260,200" fill="none" stroke="#7c5cfc" stroke-width="2"/>
+          <text x="263" y="200" fill="#7c5cfc" font-size="10">AP</text>
+          <!-- MP crosses AP at max AP -->
+          <circle cx="155" cy="158" r="3" fill="#fbbf24"/>
+          <text x="155" y="150" fill="#fbbf24" font-size="8" text-anchor="middle">MP=AP</text>
+          <!-- Diminishing returns label -->
+          <line x1="120" y1="140" x2="120" y2="110" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="180" y="138" fill="#475569" font-size="8" font-style="italic">Diminishing MP →</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COST CURVES -->
+<div class="slide" data-topic="4">
+  <div class="slide-header"><div class="slide-label">Topic 4</div><div class="slide-title">Short-Run Cost Curves</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>Cost Structure</h3>
+        <div class="formula">TC = TFC + TVC</div>
+        <p>AFC=TFC/Q &nbsp; AVC=TVC/Q &nbsp; ATC=TC/Q</p>
+        <div class="formula">MC = ΔTC / ΔQ</div>
+      </div>
+      <div class="concept-box red">
+        <h3>Key Rule</h3>
+        <p>MC intersects ATC and AVC at their <strong>minimum points</strong>.<br>MC < ATC → ATC falling<br>MC > ATC → ATC rising</p>
+      </div>
+      <div class="concept-box purple">
+        <h3>Cost Curve Shifters</h3>
+        <p>Input prices · Technology · Taxes & subsidies</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
+          <text x="160" y="14" fill="#fff" font-size="11" font-family="DM Serif Display" text-anchor="middle">MC, ATC, AVC, AFC</text>
+          <line x1="45" y1="20" x2="45" y2="220" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="45" y1="220" x2="300" y2="220" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="20" y="120" fill="#8899b4" font-size="11" font-family="Source Sans 3" transform="rotate(-90,20,120)" text-anchor="middle">Cost ($)</text>
+          <text x="170" y="248" fill="#8899b4" font-size="11" font-family="Source Sans 3" text-anchor="middle">Quantity (Q)</text>
+          <!-- MC curve (U-shape) -->
+          <path d="M65,170 Q90,130 110,110 Q130,95 150,90 Q175,92 200,110 Q230,145 260,195" fill="none" stroke="#ff6b6b" stroke-width="2.5"/>
+          <text x="265" y="192" fill="#ff6b6b" font-size="11" font-family="DM Serif Display">MC</text>
+          <!-- ATC curve (U-shape, wider) -->
+          <path d="M70,195 Q110,130 150,100 Q180,88 210,92 Q240,100 265,120" fill="none" stroke="#4f8cff" stroke-width="2.5"/>
+          <text x="270" y="118" fill="#4f8cff" font-size="11" font-family="DM Serif Display">ATC</text>
+          <!-- AVC curve (U-shape, lower) -->
+          <path d="M70,210 Q110,160 150,130 Q180,118 210,125 Q240,138 265,158" fill="none" stroke="#00d4aa" stroke-width="2"/>
+          <text x="270" y="156" fill="#00d4aa" font-size="11" font-family="DM Serif Display">AVC</text>
+          <!-- AFC curve (declining) -->
+          <path d="M65,60 Q100,130 140,170 Q180,195 260,210" fill="none" stroke="#7c5cfc" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="263" y="208" fill="#7c5cfc" font-size="10">AFC</text>
+          <!-- Min ATC point -->
+          <circle cx="195" cy="90" r="4" fill="#fbbf24"/>
+          <text x="195" y="82" fill="#fbbf24" font-size="9" text-anchor="middle">min ATC</text>
+          <!-- Min AVC point -->
+          <circle cx="170" cy="118" r="3" fill="#fbbf24"/>
+          <text x="170" y="112" fill="#fbbf24" font-size="8" text-anchor="middle">min AVC</text>
+        </svg>
+      </div>
+      <div class="example"><p><strong>Grab driver:</strong> Fixed = loan payment. Variable = fuel per km. AFC falls as you drive more, but MC rises in heavy traffic.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- LONG-RUN COSTS -->
+<div class="slide" data-topic="4">
+  <div class="slide-header"><div class="slide-label">Topic 4</div><div class="slide-title">Long-Run ATC & Economies of Scale</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>Long Run: All Inputs Variable</h3>
+        <p>LRATC = envelope of all short-run ATC curves.</p>
+      </div>
+      <div class="vs-grid three">
+        <div class="concept-box green"><h3>Economies</h3><p>LRATC↓ as Q↑</p></div>
+        <div class="concept-box"><h3>Constant</h3><p>LRATC flat</p></div>
+        <div class="concept-box red"><h3>Diseconomies</h3><p>LRATC↑ as Q↑</p></div>
+      </div>
+      <div class="example"><p><strong>Viettel:</strong> Spreads network costs over 80M+ subscribers — huge economies of scale. But managing such a large organization can create bureaucratic diseconomies.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+          <text x="160" y="14" fill="#fff" font-size="11" font-family="DM Serif Display" text-anchor="middle">Long-Run Average Total Cost</text>
+          <line x1="45" y1="20" x2="45" y2="200" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="45" y1="200" x2="300" y2="200" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="20" y="110" fill="#8899b4" font-size="11" transform="rotate(-90,20,110)" text-anchor="middle">LRATC</text>
+          <text x="170" y="225" fill="#8899b4" font-size="11" text-anchor="middle">Quantity</text>
+          <!-- Short-run ATC curves (dashed) -->
+          <path d="M55,160 Q80,90 110,80 Q130,78 155,100" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <path d="M95,130 Q120,65 160,55 Q185,54 220,75" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <path d="M160,100 Q190,55 225,50 Q250,52 280,80" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="110" y="74" fill="#475569" font-size="8">SRATC₁</text>
+          <text x="160" y="48" fill="#475569" font-size="8">SRATC₂</text>
+          <text x="225" y="44" fill="#475569" font-size="8">SRATC₃</text>
+          <!-- LRATC envelope -->
+          <path d="M60,150 Q100,80 145,58 Q180,48 215,48 Q250,52 285,75" fill="none" stroke="#4f8cff" stroke-width="3"/>
+          <text x="288" y="72" fill="#4f8cff" font-size="12" font-family="DM Serif Display">LRATC</text>
+          <!-- Regions -->
+          <text x="100" y="175" fill="#00d4aa" font-size="10" text-anchor="middle">Economies</text>
+          <text x="100" y="187" fill="#00d4aa" font-size="10" text-anchor="middle">of scale</text>
+          <text x="195" y="175" fill="#fbbf24" font-size="10" text-anchor="middle">Constant</text>
+          <text x="195" y="187" fill="#fbbf24" font-size="10" text-anchor="middle">returns</text>
+          <text x="270" y="175" fill="#ff6b6b" font-size="10" text-anchor="middle">Dis-</text>
+          <text x="270" y="187" fill="#ff6b6b" font-size="10" text-anchor="middle">economies</text>
+          <!-- MES -->
+          <line x1="155" y1="48" x2="155" y2="200" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="155" y="196" fill="#fbbf24" font-size="9" text-anchor="middle">MES</text>
+          <!-- Arrows -->
+          <path d="M65,165 L140,165" fill="none" stroke="#00d4aa" stroke-width="1"/>
+          <path d="M155,165 L235,165" fill="none" stroke="#fbbf24" stroke-width="1"/>
+          <path d="M240,165 L290,165" fill="none" stroke="#ff6b6b" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ TOPIC 5: MARKET STRUCTURES ══════ -->
+<div class="slide topic-divider" data-topic="5">
+  <div class="topic-number">Topic 05</div>
+  <div class="topic-title">Market Structures</div>
+  <div class="topic-sub">Perfect competition, monopoly, monopolistic competition, oligopoly.</div>
+</div>
+
+<!-- OVERVIEW TABLE -->
+<div class="slide" data-topic="5">
+  <div class="slide-header"><div class="slide-label">Topic 5</div><div class="slide-title">Spectrum of Market Structures</div></div>
+  <div class="content">
+    <table>
+      <thead><tr><th>Feature</th><th>Perfect Comp.</th><th>Monopolistic</th><th>Oligopoly</th><th>Monopoly</th></tr></thead>
+      <tbody>
+        <tr><td># Firms</td><td>Very many</td><td>Many</td><td>Few</td><td>One</td></tr>
+        <tr><td>Product</td><td>Identical</td><td>Differentiated</td><td>Identical/diff.</td><td>Unique</td></tr>
+        <tr><td>Entry</td><td>Free</td><td>Easy</td><td>Significant barriers</td><td>Blocked</td></tr>
+        <tr><td>Price power</td><td>None (taker)</td><td>Some</td><td>Considerable</td><td>Full (maker)</td></tr>
+        <tr><td>LR profit</td><td>Zero econ.</td><td>Zero econ.</td><td>Possible +</td><td>Possible +</td></tr>
+        <tr><td>Examples</td><td>Rice farming</td><td>Restaurants</td><td>Telecom, airlines</td><td>Tap water, EVN</td></tr>
+      </tbody>
+    </table>
+    <div class="diagram">
+      <div class="box">More competition ←</div>
+      <div class="box" style="background:rgba(79,140,255,.08);flex:2">Perf. Comp → Monopolistic → Oligopoly → Monopoly</div>
+      <div class="box">→ More market power</div>
+    </div>
+  </div>
+</div>
+
+<!-- PERFECT COMPETITION GRAPH -->
+<div class="slide" data-topic="5">
+  <div class="slide-header"><div class="slide-label">Topic 5</div><div class="slide-title">Perfect Competition: Profit Maximization</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box">
+        <h3>Key: P = MR = AR</h3>
+        <p>Price taker → horizontal demand at market price. Profit max: <span class="highlight-gold">P = MR = MC</span>.</p>
+      </div>
+      <div class="concept-box green">
+        <h3>Long-Run Equilibrium</h3>
+        <p>Entry/exit → P = ATC → <strong>zero economic profit</strong>. Accounting profit is still positive (covers opportunity costs).</p>
+      </div>
+      <div class="example"><p><strong>Mekong Delta rice farmers:</strong> Thousands sell identical rice. No single farmer can influence the price. If profitable, new farmers enter → profit erodes to zero.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 310 250" xmlns="http://www.w3.org/2000/svg">
+          <text x="155" y="14" fill="#fff" font-size="11" font-family="DM Serif Display" text-anchor="middle">Perfectly Competitive Firm</text>
+          <line x1="45" y1="20" x2="45" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="45" y1="210" x2="290" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="20" y="115" fill="#8899b4" font-size="10" transform="rotate(-90,20,115)" text-anchor="middle">P, Cost</text>
+          <text x="168" y="238" fill="#8899b4" font-size="10" text-anchor="middle">Quantity</text>
+          <!-- MC -->
+          <path d="M65,185 Q100,150 130,120 Q160,100 185,95 Q210,100 240,130 Q260,160 275,190" fill="none" stroke="#ff6b6b" stroke-width="2.5"/>
+          <text x="278" y="188" fill="#ff6b6b" font-size="10" font-family="DM Serif Display">MC</text>
+          <!-- ATC -->
+          <path d="M70,180 Q110,120 150,95 Q190,85 220,95 Q250,115 270,140" fill="none" stroke="#4f8cff" stroke-width="2"/>
+          <text x="273" y="138" fill="#4f8cff" font-size="10" font-family="DM Serif Display">ATC</text>
+          <!-- P = MR = D (horizontal) -->
+          <line x1="45" y1="75" x2="285" y2="75" stroke="#fbbf24" stroke-width="2"/>
+          <text x="288" y="73" fill="#fbbf24" font-size="10" font-family="DM Serif Display">P=MR=D</text>
+          <!-- Profit max point -->
+          <circle cx="223" cy="75" r="5" fill="#00d4aa" stroke="#0b1120" stroke-width="2"/>
+          <!-- Profit area -->
+          <rect x="45" y="75" width="178" height="20" fill="rgba(0,212,170,.12)" rx="2"/>
+          <text x="134" y="88" fill="#00d4aa" font-size="9" text-anchor="middle">Economic Profit</text>
+          <!-- ATC at Q* -->
+          <line x1="223" y1="75" x2="223" y2="210" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="45" y1="95" x2="223" y2="95" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="38" y="78" fill="#fbbf24" font-size="9" text-anchor="end">P*</text>
+          <text x="38" y="98" fill="#4f8cff" font-size="9" text-anchor="end">ATC</text>
+          <text x="223" y="224" fill="#fbbf24" font-size="9" text-anchor="middle">Q*</text>
+          <text x="228" y="68" fill="#00d4aa" font-size="9">MR=MC</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MONOPOLY GRAPH -->
+<div class="slide" data-topic="5">
+  <div class="slide-header"><div class="slide-label">Topic 5</div><div class="slide-title">Monopoly: Pricing & Output</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box red">
+        <h3>Key Features</h3>
+        <p>Single seller · Unique product · Blocked entry · Price maker. Faces market demand curve.</p>
+      </div>
+      <div class="concept-box">
+        <h3>Critical: P > MR</h3>
+        <p>To sell more, must lower price on <em>all</em> units → MR curve lies <strong>below</strong> demand. Profit max: MR = MC, but P > MC.</p>
+      </div>
+      <div class="example"><p><strong>EVN (Vietnam Electricity):</strong> Natural monopoly in distribution. Building a 2nd grid would be wastefully duplicative. Government regulates prices.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 310 250" xmlns="http://www.w3.org/2000/svg">
+          <text x="155" y="14" fill="#fff" font-size="11" font-family="DM Serif Display" text-anchor="middle">Monopoly Profit Maximization</text>
+          <line x1="45" y1="20" x2="45" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="45" y1="210" x2="290" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="20" y="115" fill="#8899b4" font-size="10" transform="rotate(-90,20,115)" text-anchor="middle">P, Cost</text>
+          <text x="168" y="238" fill="#8899b4" font-size="10" text-anchor="middle">Quantity</text>
+          <!-- Demand -->
+          <line x1="60" y1="30" x2="275" y2="200" stroke="#4f8cff" stroke-width="2.5"/>
+          <text x="278" y="198" fill="#4f8cff" font-size="10" font-family="DM Serif Display">D=AR</text>
+          <!-- MR (steeper, hits x-axis earlier) -->
+          <line x1="60" y1="30" x2="180" y2="200" stroke="#7c5cfc" stroke-width="2"/>
+          <text x="183" y="198" fill="#7c5cfc" font-size="10" font-family="DM Serif Display">MR</text>
+          <!-- MC -->
+          <path d="M60,190 Q90,150 120,120 Q145,105 165,100 Q190,105 220,130 Q250,165 270,195" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+          <text x="273" y="193" fill="#ff6b6b" font-size="10" font-family="DM Serif Display">MC</text>
+          <!-- ATC -->
+          <path d="M65,180 Q100,130 140,105 Q175,92 205,100 Q235,115 260,140" fill="none" stroke="#00d4aa" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="263" y="138" fill="#00d4aa" font-size="9">ATC</text>
+          <!-- MR=MC intersection -->
+          <circle cx="145" cy="113" r="4" fill="#fbbf24"/>
+          <!-- Vertical line up to demand curve -->
+          <line x1="145" y1="113" x2="145" y2="210" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="145" y1="70" x2="145" y2="113" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <!-- P on demand curve at Q* -->
+          <circle cx="145" cy="70" r="4" fill="#fbbf24"/>
+          <line x1="45" y1="70" x2="145" y2="70" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="38" y="73" fill="#fbbf24" font-size="9" text-anchor="end">Pm</text>
+          <text x="145" y="226" fill="#fbbf24" font-size="9" text-anchor="middle">Qm</text>
+          <!-- Profit area -->
+          <rect x="45" y="70" width="100" height="30" fill="rgba(0,212,170,.1)" rx="2"/>
+          <text x="95" y="89" fill="#00d4aa" font-size="9" text-anchor="middle">Profit</text>
+          <!-- ATC at Qm -->
+          <line x1="45" y1="100" x2="145" y2="100" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="38" y="103" fill="#00d4aa" font-size="8" text-anchor="end">ATC</text>
+          <!-- Labels -->
+          <text x="148" y="108" fill="#fbbf24" font-size="8">MR=MC</text>
+          <text x="200" y="55" fill="#475569" font-size="8" font-style="italic">P > MC (markup)</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICE DISCRIMINATION & MONOPOLISTIC -->
+<div class="slide" data-topic="5">
+  <div class="slide-header"><div class="slide-label">Topic 5</div><div class="slide-title">Price Discrimination & Monopolistic Competition</div></div>
+  <div class="content">
+    <div class="vs-grid">
+      <div class="concept-box gold">
+        <h3>Price Discrimination</h3>
+        <p>Charging different prices for the same product. Requires: ① Market power ② Segregable buyers ③ No resale.</p>
+      </div>
+      <div class="concept-box">
+        <h3>Monopolistic Competition</h3>
+        <p>Many sellers · Differentiated products · Easy entry/exit · Downward-sloping demand. SR: MR=MC, possible profit. <strong>LR: zero economic profit</strong> (P=ATC).</p>
+      </div>
+    </div>
+    <div class="vs-grid">
+      <div class="example"><p><strong>Vietnam Airlines:</strong> Same Hanoi–HCMC flight charges 3-4x more for last-minute business travelers vs. early-booking leisure travelers. Classic price discrimination.</p></div>
+      <div class="example"><p><strong>Hanoi's Old Quarter cafés:</strong> Hundreds of cafés, each slightly different (egg coffee, coconut coffee, aesthetic decor). Easy entry → new shops weekly. If one charges too much, customers switch.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- OLIGOPOLY & GAME THEORY -->
+<div class="slide" data-topic="5">
+  <div class="slide-header"><div class="slide-label">Topic 5</div><div class="slide-title">Oligopoly & Game Theory</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box red">
+        <h3>Oligopoly Features</h3>
+        <p>Few large firms · Mutual interdependence · Significant barriers · Possible collusion (cartels).</p>
+      </div>
+      <div class="concept-box">
+        <h3>Game Theory Concepts</h3>
+        <p><strong>Nash Equilibrium:</strong> No player can improve by changing unilaterally.<br><strong>Dominant Strategy:</strong> Best regardless of rival's choice.</p>
+      </div>
+      <div class="example"><p><strong>Vietnam telecom:</strong> Viettel, VinaPhone, MobiFone — when Viettel cuts data prices, others must respond. Classic oligopolistic interdependence.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 310 250" xmlns="http://www.w3.org/2000/svg">
+          <text x="155" y="18" fill="#fff" font-size="12" font-family="DM Serif Display" text-anchor="middle">Prisoner's Dilemma</text>
+          <!-- Grid -->
+          <rect x="140" y="60" width="75" height="35" fill="rgba(79,140,255,.08)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="215" y="60" width="75" height="35" fill="rgba(79,140,255,.08)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="140" y="95" width="75" height="55" fill="rgba(19,27,46,.6)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="215" y="95" width="75" height="55" fill="rgba(19,27,46,.6)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="140" y="150" width="75" height="55" fill="rgba(19,27,46,.6)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="215" y="150" width="75" height="55" fill="rgba(255,107,107,.08)" stroke="#ff6b6b" stroke-width="1.5" rx="4"/>
+          <!-- Headers -->
+          <text x="210" y="45" fill="#4f8cff" font-size="11" font-family="DM Serif Display" text-anchor="middle">Bob</text>
+          <text x="178" y="82" fill="#4f8cff" font-size="9" text-anchor="middle">Don't Confess</text>
+          <text x="253" y="82" fill="#4f8cff" font-size="9" text-anchor="middle">Confess</text>
+          <text x="100" y="122" fill="#00d4aa" font-size="9" text-anchor="middle">Anna:</text>
+          <text x="100" y="134" fill="#00d4aa" font-size="9" text-anchor="middle">Don't Confess</text>
+          <text x="100" y="178" fill="#00d4aa" font-size="9" text-anchor="middle">Anna:</text>
+          <text x="100" y="190" fill="#00d4aa" font-size="9" text-anchor="middle">Confess</text>
+          <!-- Payoffs -->
+          <text x="162" y="118" fill="#00d4aa" font-size="10">A: 2yr</text>
+          <text x="162" y="135" fill="#4f8cff" font-size="10">B: 2yr</text>
+          <text x="232" y="118" fill="#00d4aa" font-size="10">A: 10yr</text>
+          <text x="232" y="135" fill="#4f8cff" font-size="10">B: 6mo</text>
+          <text x="162" y="173" fill="#00d4aa" font-size="10">A: 6mo</text>
+          <text x="162" y="190" fill="#4f8cff" font-size="10">B: 10yr</text>
+          <text x="232" y="173" fill="#ff6b6b" font-size="10" font-weight="600">A: 5yr</text>
+          <text x="232" y="190" fill="#ff6b6b" font-size="10" font-weight="600">B: 5yr</text>
+          <!-- Nash label -->
+          <text x="253" y="215" fill="#ff6b6b" font-size="9" text-anchor="middle">★ Nash Equilibrium</text>
+          <text x="178" y="215" fill="#00d4aa" font-size="8" text-anchor="middle">(better collectively)</text>
+          <text x="155" y="235" fill="#475569" font-size="8" font-style="italic">Both confess — even though silence would be better for both</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUSINESS APPLICATION -->
+<div class="slide" data-topic="5">
+  <div class="slide-header"><div class="slide-label">Topic 5</div><div class="slide-title">Game Theory: Business Application</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 310 220" xmlns="http://www.w3.org/2000/svg">
+          <text x="155" y="18" fill="#fff" font-size="12" font-family="DM Serif Display" text-anchor="middle">Coca-Cola vs Pepsi</text>
+          <rect x="140" y="45" width="75" height="30" fill="rgba(79,140,255,.08)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="215" y="45" width="75" height="30" fill="rgba(79,140,255,.08)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="140" y="75" width="75" height="50" fill="rgba(255,107,107,.08)" stroke="#ff6b6b" stroke-width="1.5" rx="4"/>
+          <rect x="215" y="75" width="75" height="50" fill="rgba(19,27,46,.6)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="140" y="125" width="75" height="50" fill="rgba(19,27,46,.6)" stroke="#475569" stroke-width="1" rx="4"/>
+          <rect x="215" y="125" width="75" height="50" fill="rgba(0,212,170,.08)" stroke="#00d4aa" stroke-width="1" rx="4"/>
+          <text x="210" y="38" fill="#4f8cff" font-size="11" font-family="DM Serif Display" text-anchor="middle">Pepsi</text>
+          <text x="178" y="64" fill="#4f8cff" font-size="9" text-anchor="middle">Discount</text>
+          <text x="253" y="64" fill="#4f8cff" font-size="9" text-anchor="middle">Regular</text>
+          <text x="100" y="103" fill="#ff6b6b" font-size="9" text-anchor="middle">Coke: Discount</text>
+          <text x="100" y="153" fill="#00d4aa" font-size="9" text-anchor="middle">Coke: Regular</text>
+          <text x="155" y="96" fill="#ff6b6b" font-size="10">C: $4B</text>
+          <text x="155" y="112" fill="#4f8cff" font-size="10">P: $3B</text>
+          <text x="230" y="96" fill="#ff6b6b" font-size="10">C: $8B</text>
+          <text x="230" y="112" fill="#4f8cff" font-size="10">P: $1B</text>
+          <text x="155" y="146" fill="#ff6b6b" font-size="10">C: $2B</text>
+          <text x="155" y="162" fill="#4f8cff" font-size="10">P: $5B</text>
+          <text x="230" y="146" fill="#00d4aa" font-size="10">C: $6B</text>
+          <text x="230" y="162" fill="#00d4aa" font-size="10">P: $4B</text>
+          <text x="178" y="190" fill="#ff6b6b" font-size="9" text-anchor="middle">★ Nash Eq.</text>
+          <text x="253" y="190" fill="#00d4aa" font-size="8" text-anchor="middle">(Pareto superior)</text>
+        </svg>
+      </div>
+    </div>
+    <div class="col">
+      <div class="concept-box">
+        <h3>Analysis</h3>
+        <p>Both have <strong>dominant strategy: Discount</strong>. Nash: (Discount, Discount) = ($4B, $3B). But cooperation (Regular, Regular) = ($6B, $4B) is better for both — the classic dilemma.</p>
+      </div>
+      <div class="concept-box gold">
+        <h3>Cartels</h3>
+        <p>Firms may collude (act as monopolist). But cartels are unstable: incentive to <span class="highlight-red">cheat</span>, costly to form, new entrants.</p>
+      </div>
+      <div class="example"><p><strong>OPEC:</strong> Oil nations agree to cut production but each has incentive to produce more — cartels are notoriously unstable.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ TOPIC 6: MARKET FAILURES ══════ -->
+<div class="slide topic-divider" data-topic="6">
+  <div class="topic-number">Topic 06</div>
+  <div class="topic-title">Market Failures & Government</div>
+  <div class="topic-sub">Externalities, public goods, information asymmetries — when markets fail and how government can intervene.</div>
+</div>
+
+<!-- NEGATIVE EXTERNALITY -->
+<div class="slide" data-topic="6">
+  <div class="slide-header"><div class="slide-label">Topic 6</div><div class="slide-title">Negative Externalities</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box red">
+        <h3>Social Cost > Private Cost</h3>
+        <div class="formula">MSC = MPC + MEC</div>
+        <p>Market overproduces: Q<sub>E</sub> > Q<sub>O</sub>. Creates <span class="highlight-red">deadweight loss</span>.</p>
+      </div>
+      <div class="concept-box gold">
+        <h3>Solutions</h3>
+        <p>① Regulation ② <strong>Pigovian tax</strong> (= external cost) ③ Tradable permits (cap-and-trade)</p>
+      </div>
+      <div class="example"><p><strong>Hanoi air pollution:</strong> Factory & motorbike emissions impose health costs on residents. Vietnam's Environmental Protection Tax on plastic bags (₫50,000/kg) is a real Pigovian tax.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 310 250" xmlns="http://www.w3.org/2000/svg">
+          <text x="155" y="14" fill="#fff" font-size="11" font-family="DM Serif Display" text-anchor="middle">Negative Externality</text>
+          <line x1="45" y1="20" x2="45" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="45" y1="210" x2="290" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="20" y="115" fill="#8899b4" font-size="10" transform="rotate(-90,20,115)" text-anchor="middle">Price</text>
+          <text x="168" y="238" fill="#8899b4" font-size="10" text-anchor="middle">Quantity</text>
+          <!-- D = MPB -->
+          <line x1="60" y1="30" x2="275" y2="195" stroke="#4f8cff" stroke-width="2"/>
+          <text x="278" y="193" fill="#4f8cff" font-size="10">D=MPB</text>
+          <!-- S = MPC -->
+          <line x1="60" y1="195" x2="275" y2="40" stroke="#00d4aa" stroke-width="2"/>
+          <text x="278" y="38" fill="#00d4aa" font-size="10">S=MPC</text>
+          <!-- MSC (above MPC) -->
+          <line x1="60" y1="155" x2="240" y2="25" stroke="#ff6b6b" stroke-width="2.5"/>
+          <text x="243" y="23" fill="#ff6b6b" font-size="11" font-family="DM Serif Display">MSC</text>
+          <!-- Market equilibrium -->
+          <circle cx="168" cy="113" r="4" fill="#fbbf24"/>
+          <text x="175" y="108" fill="#fbbf24" font-size="9">E (market)</text>
+          <line x1="168" y1="113" x2="168" y2="210" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="168" y="224" fill="#fbbf24" font-size="9" text-anchor="middle">Q<tspan font-size="7" dy="2">E</tspan></text>
+          <!-- Social optimum -->
+          <circle cx="138" cy="95" r="4" fill="#00d4aa"/>
+          <text x="108" y="90" fill="#00d4aa" font-size="9">O (optimal)</text>
+          <line x1="138" y1="95" x2="138" y2="210" stroke="#00d4aa" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="138" y="224" fill="#00d4aa" font-size="9" text-anchor="middle">Q<tspan font-size="7" dy="2">O</tspan></text>
+          <!-- DWL triangle -->
+          <path d="M138,95 L168,75 L168,113 Z" fill="rgba(255,107,107,.2)" stroke="#ff6b6b" stroke-width="1"/>
+          <text x="155" y="100" fill="#ff6b6b" font-size="8" text-anchor="middle">DWL</text>
+          <!-- MEC bracket -->
+          <path d="M80,135 L80,170" fill="none" stroke="#ff6b6b" stroke-width="1.5"/>
+          <text x="68" y="155" fill="#ff6b6b" font-size="8" text-anchor="end">MEC</text>
+          <text x="200" y="185" fill="#475569" font-size="8" font-style="italic">Overproduction</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POSITIVE EXTERNALITY -->
+<div class="slide" data-topic="6">
+  <div class="slide-header"><div class="slide-label">Topic 6</div><div class="slide-title">Positive Externalities</div></div>
+  <div class="content two-col">
+    <div class="col">
+      <div class="concept-box green">
+        <h3>Social Benefit > Private Benefit</h3>
+        <div class="formula">MSB = MPB + MEB</div>
+        <p>Market underproduces: Q<sub>E</sub> < Q<sub>O</sub>. Creates <span class="highlight-red">deadweight loss</span>.</p>
+      </div>
+      <div class="concept-box gold">
+        <h3>Solutions</h3>
+        <p>① Subsidies to buyers (↑D) ② Subsidies to producers (↑S) ③ Public provision (gov't provides directly)</p>
+      </div>
+      <div class="example"><p><strong>Education in Vietnam:</strong> Student gains skills (private benefit) + society gets productive workforce (external benefit). Without subsidies, fewer would pursue higher education than is optimal.</p></div>
+    </div>
+    <div class="col">
+      <div class="graph-wrap">
+        <svg viewBox="0 0 310 250" xmlns="http://www.w3.org/2000/svg">
+          <text x="155" y="14" fill="#fff" font-size="11" font-family="DM Serif Display" text-anchor="middle">Positive Externality</text>
+          <line x1="45" y1="20" x2="45" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <line x1="45" y1="210" x2="290" y2="210" stroke="#8899b4" stroke-width="1.5"/>
+          <text x="20" y="115" fill="#8899b4" font-size="10" transform="rotate(-90,20,115)" text-anchor="middle">Price</text>
+          <text x="168" y="238" fill="#8899b4" font-size="10" text-anchor="middle">Quantity</text>
+          <!-- S = MPC -->
+          <line x1="60" y1="195" x2="275" y2="40" stroke="#00d4aa" stroke-width="2"/>
+          <text x="278" y="38" fill="#00d4aa" font-size="10">S=MPC</text>
+          <!-- D = MPB -->
+          <line x1="60" y1="40" x2="275" y2="195" stroke="#4f8cff" stroke-width="2"/>
+          <text x="278" y="193" fill="#4f8cff" font-size="10">D=MPB</text>
+          <!-- MSB (above MPB) -->
+          <line x1="100" y1="30" x2="285" y2="155" stroke="#7c5cfc" stroke-width="2.5"/>
+          <text x="288" y="153" fill="#7c5cfc" font-size="11" font-family="DM Serif Display">MSB</text>
+          <!-- Market equilibrium -->
+          <circle cx="168" cy="118" r="4" fill="#fbbf24"/>
+          <text x="150" y="130" fill="#fbbf24" font-size="9">E (market)</text>
+          <line x1="168" y1="118" x2="168" y2="210" stroke="#fbbf24" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="168" y="224" fill="#fbbf24" font-size="9" text-anchor="middle">Q<tspan font-size="7" dy="2">E</tspan></text>
+          <!-- Social optimum -->
+          <circle cx="200" cy="95" r="4" fill="#00d4aa"/>
+          <text x="208" y="88" fill="#00d4aa" font-size="9">O (optimal)</text>
+          <line x1="200" y1="95" x2="200" y2="210" stroke="#00d4aa" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="200" y="224" fill="#00d4aa" font-size="9" text-anchor="middle">Q<tspan font-size="7" dy="2">O</tspan></text>
+          <!-- DWL triangle -->
+          <path d="M168,118 L200,95 L200,128 Z" fill="rgba(124,92,252,.2)" stroke="#7c5cfc" stroke-width="1"/>
+          <text x="192" y="118" fill="#7c5cfc" font-size="8" text-anchor="middle">DWL</text>
+          <!-- MEB bracket -->
+          <text x="200" y="185" fill="#475569" font-size="8" font-style="italic">Underproduction</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PUBLIC GOODS -->
+<div class="slide" data-topic="6">
+  <div class="slide-header"><div class="slide-label">Topic 6</div><div class="slide-title">Public Goods & the Free-Rider Problem</div></div>
+  <div class="content">
+    <div class="graph-wrap" style="padding:20px">
+      <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+        <text x="250" y="18" fill="#fff" font-size="13" font-family="DM Serif Display" text-anchor="middle">Classification of Goods</text>
+        <!-- Headers -->
+        <text x="250" y="45" fill="#8899b4" font-size="11" text-anchor="middle">Excludable</text>
+        <text x="350" y="58" fill="#4f8cff" font-size="10" text-anchor="middle">Yes</text>
+        <text x="450" y="58" fill="#ff6b6b" font-size="10" text-anchor="middle">No</text>
+        <text x="230" y="90" fill="#8899b4" font-size="10" text-anchor="end">Rival</text>
+        <text x="250" y="90" fill="#4f8cff" font-size="10" text-anchor="middle">Yes</text>
+        <text x="250" y="150" fill="#ff6b6b" font-size="10" text-anchor="middle">No</text>
+        <!-- Grid -->
+        <rect x="300" y="65" width="100" height="50" fill="rgba(79,140,255,.08)" stroke="#475569" stroke-width="1" rx="6"/>
+        <rect x="400" y="65" width="100" height="50" fill="rgba(255,107,107,.08)" stroke="#475569" stroke-width="1" rx="6"/>
+        <rect x="300" y="125" width="100" height="50" fill="rgba(251,191,36,.08)" stroke="#475569" stroke-width="1" rx="6"/>
+        <rect x="400" y="125" width="100" height="50" fill="rgba(0,212,170,.08)" stroke="#00d4aa" stroke-width="1.5" rx="6"/>
+        <!-- Labels -->
+        <text x="350" y="83" fill="#4f8cff" font-size="11" font-weight="600" text-anchor="middle">PRIVATE</text>
+        <text x="350" y="97" fill="#8899b4" font-size="9" text-anchor="middle">Food, clothes</text>
+        <text x="450" y="83" fill="#ff6b6b" font-size="11" font-weight="600" text-anchor="middle">COMMON</text>
+        <text x="450" y="97" fill="#8899b4" font-size="9" text-anchor="middle">Fisheries</text>
+        <text x="350" y="143" fill="#fbbf24" font-size="11" font-weight="600" text-anchor="middle">CLUB</text>
+        <text x="350" y="157" fill="#8899b4" font-size="9" text-anchor="middle">Cable TV, toll roads</text>
+        <text x="450" y="143" fill="#00d4aa" font-size="11" font-weight="600" text-anchor="middle">PUBLIC</text>
+        <text x="450" y="157" fill="#8899b4" font-size="9" text-anchor="middle">Defense, lighthouses</text>
+        <!-- Free rider note -->
+        <text x="250" y="200" fill="#ff6b6b" font-size="10" text-anchor="middle" font-style="italic">Public goods → Free-rider problem → Market fails to provide → Government must provide</text>
+      </svg>
+    </div>
+    <div class="example"><p><strong>Vietnam's sea dyke system:</strong> Protects millions from flooding — non-rival and non-excludable. Only government can provide. <strong>Common resource:</strong> Overfishing in the South China Sea — rival but non-excludable → tragedy of the commons.</p></div>
+  </div>
+</div>
+
+<!-- INFORMATION FAILURES -->
+<div class="slide" data-topic="6">
+  <div class="slide-header"><div class="slide-label">Topic 6</div><div class="slide-title">Asymmetric Information</div></div>
+  <div class="content">
+    <div class="vs-grid">
+      <div class="concept-box purple">
+        <h3>Moral Hazard</h3>
+        <p><strong>After</strong> a contract: one party changes behavior costly to the other. <em>Hidden action.</em></p>
+        <p class="small-note">e.g. After getting insurance, taking fewer precautions</p>
+      </div>
+      <div class="concept-box red">
+        <h3>Adverse Selection</h3>
+        <p><strong>Before</strong> a transaction: informed party's hidden characteristics lead to bad outcomes. <em>Hidden information.</em></p>
+        <p class="small-note">e.g. Used car market — "Market for Lemons"</p>
+      </div>
+    </div>
+    <div class="concept-box">
+      <h3>Private Solutions (Coase Theorem)</h3>
+      <p>If property rights are well-defined and transaction costs low, private parties can negotiate efficient outcomes. Also: moral codes, charities, contracts. But often government intervention is still needed.</p>
+    </div>
+    <div class="example"><p><strong>Moral hazard:</strong> Health insurance → less careful. <strong>Adverse selection:</strong> Vietnam's used car market — sellers know defects, cautious buyers offer low prices, good cars leave market.</p></div>
+  </div>
+</div>
+
+<!-- GOV'T SOLUTIONS OVERVIEW -->
+<div class="slide" data-topic="6">
+  <div class="slide-header"><div class="slide-label">Topic 6</div><div class="slide-title">Government Solutions Summary</div></div>
+  <div class="content">
+    <div class="vs-grid three">
+      <div class="concept-box red">
+        <h3>Neg. Externalities</h3>
+        <ul>
+          <li>Pigovian tax</li>
+          <li>Regulation</li>
+          <li>Cap-and-trade</li>
+        </ul>
+      </div>
+      <div class="concept-box green">
+        <h3>Pos. Externalities</h3>
+        <ul>
+          <li>Subsidies (buyer/seller)</li>
+          <li>Public provision</li>
+        </ul>
+      </div>
+      <div class="concept-box purple">
+        <h3>Public Goods</h3>
+        <ul>
+          <li>Gov't provision</li>
+          <li>Tax-funded</li>
+        </ul>
+      </div>
+    </div>
+    <div class="concept-box gold">
+      <h3>Cap-and-Trade (Tradable Permits)</h3>
+      <p>Gov't sets pollution cap → issues permits → firms trade them. Firms that reduce cheaply sell permits; firms where reduction is expensive buy. <strong>Total cost minimized.</strong></p>
+    </div>
+    <div class="example"><p><strong>EU ETS:</strong> World's largest carbon market, ~10,000 plants. Vietnam is developing its own ETS (target 2028-29) as part of net-zero by 2050 commitment. Gov't subsidizes vaccinations (positive externality — herd immunity).</p></div>
+  </div>
+</div>
+
+<!-- ══════ EXAM STRATEGY ══════ -->
+<div class="slide topic-divider" data-topic="7">
+  <div class="topic-number">Exam Strategy</div>
+  <div class="topic-title">Formulas, Tips & Traps</div>
+  <div class="topic-sub">Everything you need to ace VEO/IEO microeconomics.</div>
+</div>
+
+<!-- FORMULA SHEET -->
+<div class="slide" data-topic="7">
+  <div class="slide-header"><div class="slide-label">Exam</div><div class="slide-title">Essential Formulas</div></div>
+  <div class="content">
+    <div class="vs-grid">
+      <div class="concept-box">
+        <h3>Market & Elasticity</h3>
+        <p class="formula" style="display:block;margin-bottom:4px">Equilibrium: Q<sub>D</sub> = Q<sub>S</sub></p>
+        <p class="formula" style="display:block;margin-bottom:4px">PED = %ΔQ<sub>D</sub> / %ΔP</p>
+        <p class="formula" style="display:block;margin-bottom:4px">XED = %ΔQ<sub>X</sub> / %ΔP<sub>Y</sub></p>
+        <p class="formula" style="display:block;margin-bottom:4px">YED = %ΔQ<sub>D</sub> / %ΔI</p>
+        <p class="formula" style="display:block">TR = P × Q</p>
+      </div>
+      <div class="concept-box green">
+        <h3>Consumer & Firm</h3>
+        <p class="formula" style="display:block;margin-bottom:4px">Budget: P<sub>X</sub>X + P<sub>Y</sub>Y = I</p>
+        <p class="formula" style="display:block;margin-bottom:4px">Optimal: MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub></p>
+        <p class="formula" style="display:block;margin-bottom:4px">π = TR − TC</p>
+        <p class="formula" style="display:block;margin-bottom:4px">MC = ΔTC / ΔQ &nbsp; ATC = TC / Q</p>
+        <p class="formula" style="display:block">Profit max: MR = MC</p>
+      </div>
+    </div>
+    <div class="concept-box gold">
+      <h3>Externalities</h3>
+      <p class="formula" style="display:block">MSC = MPC + MEC &nbsp;&nbsp; MSB = MPB + MEB &nbsp;&nbsp; Social optimum: MSC = MSB</p>
+    </div>
+  </div>
+</div>
+
+<!-- COMMON MISTAKES -->
+<div class="slide" data-topic="7">
+  <div class="slide-header"><div class="slide-label">Exam</div><div class="slide-title">Common Mistakes to Avoid</div></div>
+  <div class="content">
+    <div class="key-point"><div class="icon red">✗</div><div class="text"><h4>"Demand increased" vs. "Quantity demanded increased"</h4><p>Shift (whole curve) ≠ movement along curve. Always specify.</p></div></div>
+    <div class="key-point"><div class="icon red">✗</div><div class="text"><h4>Elastic vs Inelastic on TR</h4><p>Elastic: P↑→TR↓. Inelastic: P↑→TR↑. Draw a table if unsure.</p></div></div>
+    <div class="key-point"><div class="icon red">✗</div><div class="text"><h4>Monopoly always profits</h4><p>Wrong! If demand is weak and costs high, a monopolist can make losses.</p></div></div>
+    <div class="key-point"><div class="icon red">✗</div><div class="text"><h4>Zero profit = failing firm</h4><p>Zero economic profit means covering ALL costs including opportunity costs. Accounting profit is still positive.</p></div></div>
+    <div class="key-point"><div class="icon red">✗</div><div class="text"><h4>Ceiling→surplus / Floor→shortage</h4><p>Opposite! Ceiling (max) → shortage. Floor (min) → surplus.</p></div></div>
+  </div>
+</div>
+
+<!-- DIAGRAM TIPS -->
+<div class="slide" data-topic="7">
+  <div class="slide-header"><div class="slide-label">Exam</div><div class="slide-title">How to Ace Diagram Questions</div></div>
+  <div class="content">
+    <div class="concept-box gold">
+      <h3>5-Step Method for Market Analysis</h3>
+      <ul>
+        <li><strong>Step 1:</strong> Draw original equilibrium (D, S, P*, Q*) — label everything</li>
+        <li><strong>Step 2:</strong> Identify the shock — demand or supply factor?</li>
+        <li><strong>Step 3:</strong> Shift the correct curve in the correct direction</li>
+        <li><strong>Step 4:</strong> Find new equilibrium — label P**, Q**</li>
+        <li><strong>Step 5:</strong> State conclusion clearly</li>
+      </ul>
+    </div>
+    <div class="concept-box">
+      <h3>Externality Diagram Checklist</h3>
+      <p>① Label MPC (=S), MPB (=D), and MSC or MSB ② Show market Q<sub>E</sub> and social Q<sub>O</sub> ③ Shade deadweight loss triangle ④ State over- or under-production</p>
+    </div>
+    <div class="example"><p><strong>Pro tip:</strong> Even if your graph isn't perfect, correctly labeled axes (P on y, Q on x) and clear shift arrows earn significant marks. Always annotate!</p></div>
+  </div>
+</div>
+
+<!-- MARKET STRUCTURES CHEAT SHEET -->
+<div class="slide" data-topic="7">
+  <div class="slide-header"><div class="slide-label">Exam</div><div class="slide-title">Market Structures Cheat Sheet</div></div>
+  <div class="content">
+    <table>
+      <thead><tr><th>Feature</th><th>Perf. Comp.</th><th>Monopolistic</th><th>Oligopoly</th><th>Monopoly</th></tr></thead>
+      <tbody>
+        <tr><td>Profit max</td><td>P=MR=MC</td><td>MR=MC</td><td>MR=MC*</td><td>MR=MC</td></tr>
+        <tr><td>P vs MC</td><td>P = MC</td><td>P > MC</td><td>P > MC</td><td>P > MC</td></tr>
+        <tr><td>LR profit</td><td>Zero econ.</td><td>Zero econ.</td><td>Possible +</td><td>Possible +</td></tr>
+        <tr><td>Demand</td><td>Horizontal</td><td>Down (elastic)</td><td>Kinked</td><td>Down (=market)</td></tr>
+        <tr><td>Supply curve</td><td>MC above AVC</td><td>No</td><td>No</td><td>No</td></tr>
+        <tr><td>Efficiency</td><td>Alloc. ✓</td><td>Alloc. ✗</td><td>Alloc. ✗</td><td>Alloc. ✗</td></tr>
+      </tbody>
+    </table>
+    <p class="small-note">*Oligopoly complicated by strategic interdependence — game theory applies. Only perfect competition achieves allocative efficiency (P = MC) in the long run.</p>
+  </div>
+</div>
+
+<!-- FINAL SLIDE -->
+<div class="slide topic-divider" data-topic="7">
+  <div class="topic-number">Good Luck!</div>
+  <div class="topic-title">You've Got This 🎯</div>
+  <div class="topic-sub" style="max-width:700px">Economics is about thinking clearly about trade-offs and incentives. Practice diagrams daily, master the formulas, and connect theory to real-world examples.<br><br><span style="color:var(--accent)">6 Topics · 20+ Graphs · Unlimited Potential</span></div>
+</div>
+
+</div>
+
+<div class="nav">
+  <button id="prevBtn" onclick="navigate(-1)">← Previous</button>
+  <div class="progress">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="slide-count" id="slideCount">1 / 55</span>
+  </div>
+  <button id="nextBtn" onclick="navigate(1)">Next →</button>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide');let current=0;
+function showSlide(n){
+  slides[current].classList.remove('active');slides[current].classList.add('exit');
+  setTimeout(()=>slides.forEach(s=>s.classList.remove('exit')),400);
+  current=n;slides[current].classList.add('active');slides[current].scrollTop=0;
+  document.getElementById('prevBtn').disabled=current===0;
+  document.getElementById('nextBtn').disabled=current===slides.length-1;
+  document.getElementById('slideCount').textContent=`${current+1} / ${slides.length}`;
+  document.getElementById('progressFill').style.width=`${((current+1)/slides.length)*100}%`;
+}
+function navigate(d){const n=current+d;if(n>=0&&n<slides.length)showSlide(n)}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();navigate(1)}
+  if(e.key==='ArrowLeft'){e.preventDefault();navigate(-1)}
+});
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX});
+document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].screenX;if(Math.abs(d)>50)navigate(d>0?1:-1)});
+showSlide(0);
+</script>
+</body>
+</html>

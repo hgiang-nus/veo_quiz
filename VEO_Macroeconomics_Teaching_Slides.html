@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEO Macroeconomics – Complete Teaching Slides</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Fira+Sans:wght@400;500;600;700&family=Fira+Code&display=swap');
+:root{--bg:#faf9f6;--text:#1a1a1a;--accent:#1a5276;--green:#1e8449;--red:#b03a2e;--blue:#2471a3;--orange:#d35400;--purple:#6c3483;--teal:#117a65;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Fira Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;max-width:960px;margin:0 auto;padding:20px 30px 80px;}
+
+/* Typography */
+h1{font-family:'Source Serif 4',serif;font-size:2.2em;color:var(--accent);border-bottom:3px solid var(--accent);padding-bottom:8px;margin:40px 0 12px;}
+h2{font-family:'Source Serif 4',serif;font-size:1.6em;color:var(--accent);margin:30px 0 8px;border-left:5px solid var(--accent);padding-left:14px;}
+h3{font-size:1.2em;color:var(--green);margin:20px 0 6px;}
+h4{font-size:1.05em;color:var(--purple);margin:15px 0 4px;}
+p,li{margin-bottom:8px;}
+ul,ol{padding-left:22px;}
+.subtitle{color:#555;font-size:0.95em;margin-bottom:30px;}
+
+/* Boxes */
+.box{border-radius:8px;padding:14px 18px;margin:14px 0;border-left:5px solid;}
+.def{background:#e8f0fe;border-color:var(--blue);}
+.formula{background:#eaf7ea;border-color:var(--green);}
+.veo{background:#fdf2e9;border-color:var(--orange);}
+.tip{background:#f5eef8;border-color:var(--purple);}
+.warn{background:#fdedec;border-color:var(--red);}
+.key{background:#e8f8f5;border-color:var(--teal);}
+.box-title{font-weight:600;margin-bottom:6px;}
+
+/* Tables */
+table{border-collapse:collapse;width:100%;margin:12px 0;}
+th,td{border:1px solid #ddd;padding:8px 10px;text-align:left;font-size:0.92em;}
+th{background:var(--accent);color:#fff;}
+
+/* Topic header */
+.topic-header{background:linear-gradient(135deg,var(--accent),var(--blue));color:#fff;padding:30px;border-radius:12px;margin:40px 0 20px;text-align:center;}
+.topic-header h1{color:#fff;border:none;margin:0;font-size:2em;}
+.topic-header .topic-num{font-size:3em;font-weight:700;opacity:0.3;display:block;}
+.topic-header p{color:rgba(255,255,255,0.9);margin-top:8px;}
+
+/* Page break */
+.pb{page-break-before:always;}
+hr{border:none;border-top:1px dashed #ccc;margin:30px 0;}
+
+/* TOC */
+.toc{background:#f4f6f9;border-radius:10px;padding:20px 28px;margin:20px 0;}
+.toc a{color:var(--accent);text-decoration:none;}
+.toc a:hover{text-decoration:underline;}
+.toc ol{counter-reset:toc-counter;list-style:none;padding-left:0;}
+.toc ol li{counter-increment:toc-counter;margin:6px 0;font-size:1.05em;}
+.toc ol li::before{content:counter(toc-counter,decimal-leading-zero) " ";font-weight:700;color:var(--accent);margin-right:6px;}
+
+code{font-family:'Fira Code',monospace;background:#eee;padding:1px 5px;border-radius:3px;font-size:0.88em;}
+</style>
+</head>
+<body>
+
+<!-- ========================= TITLE ========================= -->
+<div style="text-align:center;margin:20px 0 30px;">
+<h1 style="font-size:2.5em;border:none;margin-bottom:4px;">VEO Macroeconomics</h1>
+<p style="font-size:1.3em;color:var(--accent);font-weight:500;">Complete Teaching Slides for Vietnam/International Economics Olympiad</p>
+<p class="subtitle">Instructor: Jan Nguyen &bull; Based on Mankiw <em>Macroeconomics</em> &bull; With VEO/IEO past questions<br>
+Expanded coverage of <strong>Economic Growth</strong> and <strong>International Trade</strong></p>
+</div>
+
+<div class="toc">
+<strong style="font-size:1.1em;">Table of Contents</strong>
+<ol>
+<li><a href="#t1">Introduction to Macroeconomics</a></li>
+<li><a href="#t2">The Data of Macroeconomics (GDP, CPI)</a></li>
+<li><a href="#t3">Aggregate Demand &amp; Fiscal Policy</a></li>
+<li><a href="#t4">Money and Monetary Policy</a></li>
+<li><a href="#t5">Inflation and Unemployment</a></li>
+<li><a href="#t6">Economic Growth</a> ⭐ <em>Expanded</em></li>
+<li><a href="#t7">International Trade &amp; The Open Economy</a> ⭐ <em>Expanded</em></li>
+</ol>
+</div>
+
+<!-- ========================= TOPIC 1 ========================= -->
+<div class="topic-header" id="t1">
+<span class="topic-num">01</span>
+<h1>Introduction to Macroeconomics</h1>
+<p>What macroeconomists study, how they think, and why it matters</p>
+</div>
+
+<h2>What is Macroeconomics?</h2>
+
+<div class="box def">
+<div class="box-title">📘 Definition</div>
+<strong>Macroeconomics</strong> studies the economy <em>as a whole</em> — aggregate output, unemployment, inflation, interest rates, exchange rates, and the effects of government policy on these variables.
+<br><br>
+Contrast with <strong>Microeconomics</strong>: studies individual households, firms, and markets.
+</div>
+
+<h3>Key Questions Macroeconomists Ask</h3>
+<ul>
+<li>Why does the cost of living keep rising? (<strong>Inflation</strong>)</li>
+<li>Why are millions unemployed even in good times? (<strong>Unemployment</strong>)</li>
+<li>Why do economies experience booms and busts? (<strong>Business cycles</strong>)</li>
+<li>Why are some countries rich and others poor? (<strong>Economic growth</strong>)</li>
+<li>What should the government do about recessions? (<strong>Fiscal &amp; monetary policy</strong>)</li>
+<li>Why do countries trade? Who benefits? (<strong>International trade</strong>)</li>
+</ul>
+
+<div class="box veo">
+<div class="box-title">🏆 VEO 2021 Practice</div>
+<strong>Q:</strong> Which content does <em>Macroeconomics</em> study?<br>
+(a) Variables of the whole economy &nbsp; (b) Consumers' choices between fish and beef &nbsp; (c) A strike affecting one company &nbsp; (d) Government support for lychee price<br>
+<strong>Answer: (a)</strong> — (b), (c), (d) are microeconomics topics (individual markets/firms).
+</div>
+
+<h2>Models: How Economists Think</h2>
+
+<div class="box def">
+<div class="box-title">📘 Key Terms</div>
+<ul>
+<li><strong>Endogenous variables:</strong> Variables the model tries to <em>explain</em> (outputs).</li>
+<li><strong>Exogenous variables:</strong> Variables the model takes as <em>given</em> (inputs).</li>
+<li><strong>Market clearing:</strong> Prices adjust so supply = demand (equilibrium).</li>
+<li><strong>Sticky prices/wages:</strong> In reality, prices don't adjust instantly — important for short-run macro.</li>
+</ul>
+</div>
+
+<div class="box formula">
+<div class="box-title">📊 The Macroeconomic System</div>
+<strong>Inputs</strong> (exogenous): weather, politics, population, technology, policy choices<br>
+→ <strong>Black Box</strong>: Aggregate Supply + Aggregate Demand interaction<br>
+→ <strong>Outputs</strong> (endogenous): GDP, employment, price level, inflation, interest rates, trade balance
+</div>
+
+<!-- ========================= TOPIC 2 ========================= -->
+<div class="topic-header pb" id="t2">
+<span class="topic-num">02</span>
+<h1>The Data of Macroeconomics</h1>
+<p>GDP, GNP, CPI — measuring the economy</p>
+</div>
+
+<h2>Gross Domestic Product (GDP)</h2>
+
+<div class="box def">
+<div class="box-title">📘 Definition</div>
+<strong>GDP</strong> = the market value of all <strong>final</strong> goods and services produced <strong>within a country</strong> in a given period of time.
+</div>
+
+<h3>Rules for Computing GDP</h3>
+<table>
+<tr><th>Rule</th><th>Explanation</th></tr>
+<tr><td>Use market prices</td><td>GDP = Σ (Price × Quantity) for all final goods</td></tr>
+<tr><td>Final goods only</td><td>Intermediate goods excluded (already in final price). Use <strong>value added</strong> to avoid double-counting.</td></tr>
+<tr><td>No used goods</td><td>Only count production in current period</td></tr>
+<tr><td>Inventories</td><td>Goods produced but not sold = <strong>inventory investment</strong> (counted in GDP when produced)</td></tr>
+<tr><td>Imputed values</td><td>Non-market goods (e.g., owner-occupied housing) estimated at market equivalent</td></tr>
+</table>
+
+<h3>Three Methods of Computing GDP</h3>
+
+<div class="box formula">
+<div class="box-title">📊 The Three Approaches (all give the same answer)</div>
+<strong>1. Expenditure Approach:</strong>
+$$Y = C + I + G + NX$$
+where $C$ = consumption, $I$ = investment, $G$ = government purchases, $NX$ = net exports (exports − imports).
+
+<strong>2. Income Approach:</strong>
+$$GDP = W + R + i + \Pi + D + T_e$$
+where $W$ = wages, $R$ = rent, $i$ = interest, $\Pi$ = profit, $D$ = depreciation, $T_e$ = indirect taxes.
+
+<strong>3. Output (Value Added) Approach:</strong>
+$$GDP = \sum \text{Value Added in all industries}$$
+Value Added = Revenue − Cost of intermediate inputs.
+</div>
+
+<h3>Nominal vs Real GDP</h3>
+
+<div class="box def">
+<div class="box-title">📘 Key Distinction</div>
+<ul>
+<li><strong>Nominal GDP:</strong> Measured at <em>current</em> prices. Changes when either prices or quantities change.</li>
+<li><strong>Real GDP:</strong> Measured at <em>constant</em> (base-year) prices. Changes only when quantities change.</li>
+<li><strong>GDP Deflator</strong> $= \dfrac{\text{Nominal GDP}}{\text{Real GDP}} \times 100$ — measures the overall price level.</li>
+</ul>
+</div>
+
+<div class="box veo">
+<div class="box-title">🏆 VEO 2021 Practice</div>
+<strong>Q:</strong> Nominal GDP rose from 3,421 to 3,521 USD; GDP Deflator rose from 262 to 270. Find % changes.<br>
+<strong>Answer:</strong> Nominal GDP change = $(3521-3421)/3421 \times 100 = 2.92\%$. Deflator change = $(270-262)/262 \times 100 = 3.05\%$. Real GDP change ≈ $2.92\% - 3.05\% = -0.13\%$ (real GDP fell slightly despite nominal rise — prices grew faster than output).
+</div>
+
+<h3>GNP vs GDP</h3>
+<div class="box formula">
+$$\text{GNP} = \text{GDP} + \text{Net Income from Abroad}$$
+GDP = production <em>within</em> borders. GNP = production by <em>domestic residents</em> (anywhere).
+</div>
+
+<h2>Consumer Price Index (CPI)</h2>
+<div class="box def">
+<div class="box-title">📘 CPI</div>
+$$CPI_t = \frac{\sum P_t^i \cdot Q_0^i}{\sum P_0^i \cdot Q_0^i} \times 100$$
+CPI measures the cost of a <strong>fixed basket</strong> of goods over time (Laspeyres index). It tracks the <strong>cost of living</strong>.
+</div>
+
+<div class="box tip">
+<div class="box-title">💡 CPI vs GDP Deflator</div>
+<table>
+<tr><th></th><th>CPI</th><th>GDP Deflator</th></tr>
+<tr><td>Basket</td><td>Fixed (base year)</td><td>Changes with current output</td></tr>
+<tr><td>Goods included</td><td>Consumer goods only (incl. imports)</td><td>All domestically produced goods</td></tr>
+<tr><td>Bias</td><td>Overstates inflation (substitution bias)</td><td>Understates inflation</td></tr>
+</table>
+</div>
+
+<!-- ========================= TOPIC 3 ========================= -->
+<div class="topic-header pb" id="t3">
+<span class="topic-num">03</span>
+<h1>Aggregate Demand &amp; Fiscal Policy</h1>
+<p>Keynesian economics: how spending determines output</p>
+</div>
+
+<h2>Aggregate Demand (AD)</h2>
+
+<div class="box def">
+<div class="box-title">📘 Definition</div>
+<strong>Aggregate Demand (AD)</strong> = total spending on goods and services in the economy at each price level.
+$$AD = C + I + G + (X - M)$$
+The AD curve slopes <strong>downward</strong>: higher price level → lower real spending (wealth effect, interest rate effect, exchange rate effect).
+</div>
+
+<h3>Shifts in AD</h3>
+<p>AD shifts <strong>right</strong> (increase) when:</p>
+<ul>
+<li>Consumer confidence rises → $C \uparrow$</li>
+<li>Business investment increases → $I \uparrow$</li>
+<li>Government spending increases → $G \uparrow$</li>
+<li>Net exports rise (foreign demand up, or currency depreciates) → $NX \uparrow$</li>
+</ul>
+<p>AD shifts <strong>left</strong> (decrease) when the opposite occurs.</p>
+
+<h2>Aggregate Supply (AS)</h2>
+
+<div class="box def">
+<div class="box-title">📘 Short-Run vs Long-Run AS</div>
+<ul>
+<li><strong>SRAS</strong> (Short-Run AS): Upward-sloping. Higher prices → firms produce more (sticky wages/contracts).</li>
+<li><strong>LRAS</strong> (Long-Run AS): Vertical at potential output $Y^*$. In the long run, output depends on real factors (technology, capital, labour), not the price level.</li>
+</ul>
+</div>
+
+<h2>Fiscal Policy</h2>
+
+<div class="box def">
+<div class="box-title">📘 Definition</div>
+<strong>Fiscal policy</strong> = government use of <strong>taxation</strong> and <strong>government spending</strong> to influence aggregate demand.
+</div>
+
+<table>
+<tr><th></th><th>Expansionary</th><th>Contractionary</th></tr>
+<tr><td><strong>Goal</strong></td><td>Stimulate economy (fight recession)</td><td>Cool economy (fight inflation)</td></tr>
+<tr><td><strong>Spending</strong></td><td>Increase $G$</td><td>Decrease $G$</td></tr>
+<tr><td><strong>Taxes</strong></td><td>Cut taxes → $C \uparrow$</td><td>Raise taxes → $C \downarrow$</td></tr>
+<tr><td><strong>AD effect</strong></td><td>AD shifts right</td><td>AD shifts left</td></tr>
+</table>
+
+<div class="box formula">
+<div class="box-title">📊 The Multiplier Effect</div>
+An increase in government spending of $\Delta G$ leads to a larger increase in GDP:
+$$\Delta Y = \frac{1}{1 - MPC} \times \Delta G$$
+where $MPC$ = marginal propensity to consume. If $MPC = 0.8$, the multiplier = $1/(1-0.8) = 5$.
+<br><br>
+<strong>Tax multiplier:</strong> $\Delta Y = -\frac{MPC}{1-MPC} \times \Delta T$ (smaller than spending multiplier because some of the tax cut is saved).
+</div>
+
+<!-- ========================= TOPIC 4 ========================= -->
+<div class="topic-header pb" id="t4">
+<span class="topic-num">04</span>
+<h1>Money and Monetary Policy</h1>
+<p>Functions of money, central banking, and money creation</p>
+</div>
+
+<h2>What is Money?</h2>
+<div class="box def">
+<div class="box-title">📘 Three Functions of Money</div>
+<ol>
+<li><strong>Medium of exchange:</strong> Accepted for buying/selling goods and services.</li>
+<li><strong>Unit of account:</strong> Common measure to state prices and compare values.</li>
+<li><strong>Store of value:</strong> Can be held and exchanged later for goods/services.</li>
+</ol>
+</div>
+
+<div class="box veo">
+<div class="box-title">🏆 VEO 2021 Practice</div>
+<strong>Q:</strong> When estimating total learning costs for next year, which function of money do you apply?<br>
+<strong>Answer: (c) Unit of account</strong> — you're using money as a measuring stick to evaluate/compare costs. You're not exchanging or storing it.
+</div>
+
+<h2>Money Creation by Commercial Banks</h2>
+
+<div class="box formula">
+<div class="box-title">📊 The Money Multiplier</div>
+With fractional-reserve banking (reserve ratio $rr$):
+$$\text{Money Multiplier} = \frac{1}{rr}$$
+$$\text{Total Money Created} = \text{Initial Deposit} \times \frac{1}{rr}$$
+<strong>Example:</strong> Reserve ratio = 25%. New deposit = 3M VND. Total new money = $3M / 0.25 = 12M$ VND.
+</div>
+
+<h2>Central Bank Tools</h2>
+
+<table>
+<tr><th>Tool</th><th>How it works</th><th>Expansionary</th><th>Contractionary</th></tr>
+<tr><td><strong>Reserve Requirements</strong></td><td>Min reserves banks must hold</td><td>Lower $rr$ → more lending → MS↑</td><td>Raise $rr$ → less lending → MS↓</td></tr>
+<tr><td><strong>Discount Rate</strong></td><td>Rate CB charges banks for loans</td><td>Lower rate → banks borrow more → MS↑</td><td>Raise rate → banks borrow less → MS↓</td></tr>
+<tr><td><strong>Open Market Operations</strong></td><td>Buy/sell government bonds</td><td>Buy bonds → inject money → MS↑</td><td>Sell bonds → absorb money → MS↓</td></tr>
+</table>
+
+<div class="box key">
+<div class="box-title">🔑 Monetary Policy Summary</div>
+<strong>Expansionary:</strong> Increase money supply → lower interest rates → more borrowing/spending → AD↑<br>
+<strong>Contractionary:</strong> Decrease money supply → higher interest rates → less borrowing/spending → AD↓
+</div>
+
+<!-- ========================= TOPIC 5 ========================= -->
+<div class="topic-header pb" id="t5">
+<span class="topic-num">05</span>
+<h1>Inflation and Unemployment</h1>
+<p>CPI, causes of inflation, types of unemployment, the Phillips Curve</p>
+</div>
+
+<h2>Unemployment</h2>
+
+<div class="box formula">
+<div class="box-title">📊 Key Formulas</div>
+$$\text{Labour Force} = \text{Employed} + \text{Unemployed}$$
+$$\text{Adult Population} = \text{Labour Force} + \text{Not in Labour Force}$$
+$$\text{Unemployment Rate} = \frac{U}{L} \times 100\%$$
+$$\text{Labour Force Participation Rate} = \frac{L}{\text{Adult Population}} \times 100\%$$
+</div>
+
+<h3>Types of Unemployment</h3>
+<table>
+<tr><th>Type</th><th>Cause</th><th>Duration</th></tr>
+<tr><td><strong>Frictional</strong></td><td>Workers between jobs; information imperfect</td><td>Short-term, natural</td></tr>
+<tr><td><strong>Structural</strong></td><td>Skills mismatch; economy restructuring</td><td>Longer-term, natural</td></tr>
+<tr><td><strong>Cyclical</strong></td><td>Recession; AD below full-employment level</td><td>Varies with business cycle</td></tr>
+<tr><td><strong>Classical</strong></td><td>Wage set above equilibrium (e.g., minimum wage)</td><td>Persistent</td></tr>
+</table>
+
+<div class="box def">
+<div class="box-title">📘 Natural Rate of Unemployment</div>
+$u^* = $ frictional + structural unemployment. This is the "normal" unemployment rate even when the economy is at full employment. Cyclical unemployment = 0 when $u = u^*$.
+</div>
+
+<h2>Inflation</h2>
+
+<div class="box formula">
+<div class="box-title">📊 Computing Inflation</div>
+$$\text{Inflation Rate}_t = \frac{CPI_t - CPI_{t-1}}{CPI_{t-1}} \times 100\%$$
+</div>
+
+<h3>Causes of Inflation</h3>
+<table>
+<tr><th>Type</th><th>Mechanism</th><th>AD-AS</th></tr>
+<tr><td><strong>Demand-pull</strong></td><td>Excess spending → "too much money chasing too few goods"</td><td>AD shifts right</td></tr>
+<tr><td><strong>Cost-push</strong></td><td>Rising input costs (wages, oil, materials) push prices up</td><td>SRAS shifts left</td></tr>
+<tr><td><strong>Structural</strong></td><td>Demand shifts between sectors; prices rise in expanding sectors but don't fall in contracting ones</td><td>—</td></tr>
+<tr><td><strong>Expectations</strong></td><td>If people expect inflation, they demand higher wages → self-fulfilling</td><td>SRAS shifts left</td></tr>
+</table>
+
+<h2>The Phillips Curve</h2>
+<div class="box def">
+<div class="box-title">📘 Short-Run Phillips Curve</div>
+<strong>Short-run trade-off</strong> between inflation and unemployment: lower unemployment → higher inflation, and vice versa.
+$$\pi = \pi^e - \beta(u - u^*)$$
+where $\pi$ = inflation, $\pi^e$ = expected inflation, $u$ = unemployment, $u^*$ = natural rate.
+<br><br>
+<strong>Long-run:</strong> The Phillips Curve is <strong>vertical</strong> at $u^*$. In the long run, there is no trade-off — inflation is determined by monetary policy, unemployment settles at the natural rate.
+</div>
+
+<!-- ========================= TOPIC 6 ========================= -->
+<div class="topic-header pb" id="t6">
+<span class="topic-num">06</span>
+<h1>Economic Growth</h1>
+<p>⭐ EXPANDED — Sources of growth, Solow model, convergence, VEO applications</p>
+</div>
+
+<h2>What is Economic Growth?</h2>
+
+<div class="box def">
+<div class="box-title">📘 Definition</div>
+<strong>Economic growth</strong> = sustained increase in <strong>potential output</strong> (real GDP) over time. It represents an outward shift of the Production Possibility Frontier (PPF) or a rightward shift of LRAS.
+<br><br>
+<strong>Economic growth ≠ Economic development.</strong> Growth is quantitative (more output). Development is broader: improved living standards, health, education, institutions, equality.
+</div>
+
+<div class="box formula">
+<div class="box-title">📊 Measuring Growth</div>
+$$g_t = \frac{Y_t - Y_{t-1}}{Y_{t-1}} \times 100\%$$
+<strong>Per capita growth</strong> (adjusts for population):
+$$g_{pc,t} = \frac{y_t - y_{t-1}}{y_{t-1}} \times 100\% \qquad \text{where } y = Y/\text{Population}$$
+</div>
+
+<h2>Sources of Economic Growth</h2>
+
+<h3>The Production Function</h3>
+<div class="box formula">
+<div class="box-title">📊 Aggregate Production Function</div>
+$$Y = A \cdot F(K, L, H, N)$$
+<ul>
+<li>$Y$ = total output (real GDP)</li>
+<li>$A$ = total factor productivity (TFP) — technology, efficiency, institutions</li>
+<li>$K$ = physical capital (machines, factories, infrastructure)</li>
+<li>$L$ = labour (number of workers)</li>
+<li>$H$ = human capital (education, skills, health of workers)</li>
+<li>$N$ = natural resources (land, minerals, energy)</li>
+</ul>
+</div>
+
+<h3>The Four Sources of Growth</h3>
+<table>
+<tr><th>Source</th><th>Description</th><th>Vietnam Example</th></tr>
+<tr><td><strong>1. Physical Capital (K)</strong></td><td>Investment in machinery, infrastructure, factories. Subject to <strong>diminishing returns</strong>.</td><td>FDI inflows into manufacturing (Samsung, Intel); highway/port construction</td></tr>
+<tr><td><strong>2. Human Capital (H)</strong></td><td>Education, training, health improvements → more productive workers.</td><td>Rising university enrolment; vocational training programmes</td></tr>
+<tr><td><strong>3. Natural Resources (N)</strong></td><td>Land, minerals, energy. Can be depleted. Not sufficient alone.</td><td>Oil, gas, agriculture (rice, coffee, fisheries)</td></tr>
+<tr><td><strong>4. Technology / TFP (A)</strong></td><td>Better ways of combining inputs. The only source of <strong>sustained</strong> long-run growth (no diminishing returns).</td><td>Digital transformation; tech adoption from FDI spillovers</td></tr>
+</table>
+
+<div class="box veo">
+<div class="box-title">🏆 VEO 2021 Practice</div>
+<strong>Q:</strong> What variable plays the most significant role in accounting for huge differences in living standards worldwide?<br>
+<strong>Answer: (a) Productivity</strong> — output per worker. Countries are rich because their workers are productive, driven by capital, human capital, and technology.
+</div>
+
+<h2>The Solow Growth Model</h2>
+
+<div class="box def">
+<div class="box-title">📘 Key Ideas of the Solow Model</div>
+<ol>
+<li><strong>Capital accumulation alone cannot sustain growth</strong> due to diminishing returns to capital.</li>
+<li><strong>Steady state:</strong> The economy converges to a point where investment = depreciation. At the steady state, capital per worker and output per worker are constant (no growth in per-capita terms).</li>
+<li><strong>Only technological progress</strong> drives sustained per-capita growth in the long run.</li>
+<li><strong>Saving rate</strong> affects the <em>level</em> of income (higher saving → more capital → higher steady-state income) but not the long-run <em>growth rate</em>.</li>
+</ol>
+</div>
+
+<div class="box formula">
+<div class="box-title">📊 Solow Model Equations (per worker)</div>
+Production function per worker: $y = f(k)$ where $y = Y/L$, $k = K/L$.<br><br>
+Capital accumulation: $\Delta k = s \cdot f(k) - (n + \delta) \cdot k$
+<ul>
+<li>$s$ = saving rate</li>
+<li>$n$ = population growth rate</li>
+<li>$\delta$ = depreciation rate</li>
+</ul>
+<strong>Steady state:</strong> $\Delta k = 0 \Rightarrow s \cdot f(k^*) = (n + \delta) \cdot k^*$
+</div>
+
+<h3>Convergence Hypothesis</h3>
+<div class="box tip">
+<div class="box-title">💡 Do poor countries catch up?</div>
+<strong>Conditional convergence:</strong> Countries with similar institutions, saving rates, and policies converge to the same steady state. Poorer countries (further from their steady state) grow <em>faster</em> because capital has higher marginal product.<br><br>
+<strong>Unconditional convergence</strong> (all countries converge regardless) is NOT supported by evidence — institutions and policies matter enormously.
+</div>
+
+<h3>The Middle-Income Trap</h3>
+<div class="box warn">
+<div class="box-title">⚠️ VEO Key Topic</div>
+Countries that grew rapidly using cheap labour and capital accumulation stall at middle-income because:
+<ul>
+<li>Diminishing returns to factor accumulation</li>
+<li>Failure to transition from <strong>factor-driven</strong> to <strong>innovation-driven</strong> growth</li>
+<li>Weak institutions, insufficient R&D, education misalignment</li>
+</ul>
+<strong>Vietnam context:</strong> GNI per capita ~$4,180 (2023). Target: high-income by 2045. Needs to shift from labour-intensive manufacturing to technology, innovation, and high-value services.
+</div>
+
+<h2>Policies to Promote Growth</h2>
+<table>
+<tr><th>Policy Area</th><th>Actions</th></tr>
+<tr><td>Investment in physical capital</td><td>Encourage saving and investment; attract quality FDI; build infrastructure</td></tr>
+<tr><td>Investment in human capital</td><td>Education reform; vocational training; healthcare investment</td></tr>
+<tr><td>Technology and innovation</td><td>R&D spending; patent protection; university-industry links; technology transfer from FDI</td></tr>
+<tr><td>Institutional quality</td><td>Rule of law; property rights; anti-corruption; efficient regulation</td></tr>
+<tr><td>Openness to trade</td><td>Free trade agreements; export promotion; integration into global value chains</td></tr>
+<tr><td>Macroeconomic stability</td><td>Low inflation; sustainable fiscal policy; stable exchange rate</td></tr>
+</table>
+
+<!-- ========================= TOPIC 7 ========================= -->
+<div class="topic-header pb" id="t7">
+<span class="topic-num">07</span>
+<h1>International Trade &amp; The Open Economy</h1>
+<p>⭐ EXPANDED — Comparative advantage, trade policy, exchange rates, balance of payments</p>
+</div>
+
+<h2>Why Do Countries Trade?</h2>
+
+<h3>Absolute vs Comparative Advantage</h3>
+
+<div class="box def">
+<div class="box-title">📘 Key Definitions</div>
+<ul>
+<li><strong>Absolute advantage:</strong> A country can produce a good using <em>fewer resources</em> than another country.</li>
+<li><strong>Comparative advantage:</strong> A country can produce a good at a <em>lower opportunity cost</em> than another country.</li>
+</ul>
+<strong>Trade is based on comparative advantage, not absolute advantage.</strong> Even if one country is better at producing everything, both countries benefit from specialising in what they do <em>relatively</em> best.
+</div>
+
+<div class="box formula">
+<div class="box-title">📊 How to Find Comparative Advantage</div>
+<strong>Example (from VEO Practice):</strong><br>
+US: 150 wheat OR 50 steel. &nbsp;&nbsp; Vietnam: 40 wheat OR 20 steel.
+
+<table>
+<tr><th></th><th>OC of 1 Steel</th><th>OC of 1 Wheat</th></tr>
+<tr><td><strong>US</strong></td><td>150/50 = <strong>3 wheat</strong></td><td>50/150 = <strong>1/3 steel</strong></td></tr>
+<tr><td><strong>Vietnam</strong></td><td>40/20 = <strong>2 wheat</strong> ✓ lower</td><td>20/40 = <strong>1/2 steel</strong></td></tr>
+</table>
+
+Vietnam: comparative advantage in <strong>steel</strong> (lower OC: 2 < 3).<br>
+US: comparative advantage in <strong>wheat</strong> (lower OC: 1/3 < 1/2).<br>
+<strong>Both gain from trade</strong> if Vietnam specialises in steel and US in wheat.
+</div>
+
+<h3>Gains from Trade</h3>
+<div class="box tip">
+<div class="box-title">💡 Why trade benefits both countries</div>
+<ol>
+<li><strong>Specialisation:</strong> Each country produces what it's relatively best at → total world output increases.</li>
+<li><strong>Consumption beyond the PPF:</strong> Through trade, countries can consume combinations of goods beyond what they could produce alone.</li>
+<li><strong>Terms of Trade:</strong> The exchange ratio must lie between the two countries' opportunity costs for both to gain. In the example: 1 steel trades for between 2 and 3 wheat.</li>
+</ol>
+</div>
+
+<h2>Trade Policy</h2>
+
+<h3>Free Trade vs Protectionism</h3>
+<table>
+<tr><th>Policy</th><th>Instrument</th><th>Effect</th></tr>
+<tr><td><strong>Tariff</strong></td><td>Tax on imports</td><td>Raises import price → protects domestic producers → but hurts consumers and reduces efficiency</td></tr>
+<tr><td><strong>Quota</strong></td><td>Limit on quantity of imports</td><td>Similar to tariff but no government revenue; creates rents for licence holders</td></tr>
+<tr><td><strong>Subsidy</strong></td><td>Government payment to domestic producers</td><td>Lowers domestic cost → increases exports → but costly for taxpayers</td></tr>
+<tr><td><strong>Non-tariff barriers</strong></td><td>Regulations, standards, bureaucracy</td><td>Restrict imports indirectly</td></tr>
+</table>
+
+<h3>Arguments for Protectionism (and Rebuttals)</h3>
+<table>
+<tr><th>Argument</th><th>Rebuttal</th></tr>
+<tr><td>Infant industry</td><td>Hard to identify winners; "temporary" protection often becomes permanent</td></tr>
+<tr><td>National security</td><td>Valid for strategic goods but easily abused</td></tr>
+<tr><td>Unfair competition (dumping)</td><td>Anti-dumping duties exist but are often protectionist in practice</td></tr>
+<tr><td>Protect jobs</td><td>Protects some jobs but costs consumers more; retraining is more efficient</td></tr>
+</table>
+
+<div class="box key">
+<div class="box-title">🔑 Vietnam's Trade Integration</div>
+Vietnam is one of the most open economies in the world:
+<ul>
+<li><strong>Trade/GDP ratio:</strong> ~200% (among highest globally)</li>
+<li><strong>Key FTAs:</strong> CPTPP, EVFTA (EU), RCEP, ASEAN, bilateral agreements</li>
+<li><strong>Export structure:</strong> Electronics (Samsung), textiles/garments, seafood, agricultural products</li>
+<li><strong>Import structure:</strong> Machinery, raw materials, electronics components</li>
+<li>Major beneficiary of <strong>China+1 supply chain diversification</strong></li>
+</ul>
+</div>
+
+<h2>Exchange Rates</h2>
+
+<div class="box def">
+<div class="box-title">📘 Key Terms</div>
+<ul>
+<li><strong>Nominal exchange rate ($e$):</strong> The price of one currency in terms of another (e.g., 25,000 VND per 1 USD).</li>
+<li><strong>Real exchange rate ($\varepsilon$):</strong> The relative price of goods between countries:
+$$\varepsilon = e \times \frac{P^*}{P}$$
+where $P^*$ = foreign price level, $P$ = domestic price level. Measures competitiveness.</li>
+<li><strong>Appreciation:</strong> Currency becomes more valuable (e falls for VND/USD) → exports become more expensive, imports cheaper.</li>
+<li><strong>Depreciation:</strong> Currency becomes less valuable (e rises) → exports cheaper, imports more expensive.</li>
+</ul>
+</div>
+
+<h3>Exchange Rate Regimes</h3>
+<table>
+<tr><th>Regime</th><th>Description</th><th>Example</th></tr>
+<tr><td><strong>Fixed (Peg)</strong></td><td>Government maintains exchange rate at a set level</td><td>Hong Kong dollar pegged to USD</td></tr>
+<tr><td><strong>Floating</strong></td><td>Market supply/demand determine the rate</td><td>USD, EUR, JPY</td></tr>
+<tr><td><strong>Managed float</strong></td><td>Mostly market-determined but central bank intervenes</td><td><strong>Vietnam (VND)</strong> — SBV manages within a band</td></tr>
+</table>
+
+<h2>Balance of Payments</h2>
+
+<div class="box def">
+<div class="box-title">📘 Balance of Payments (BOP)</div>
+Records all economic transactions between residents and the rest of the world.
+<ul>
+<li><strong>Current Account:</strong> Trade in goods and services + income flows + transfers. CA surplus = exports > imports.</li>
+<li><strong>Capital/Financial Account:</strong> Investment flows (FDI, portfolio investment, loans). Capital inflows = foreigners investing in your country.</li>
+<li><strong>BOP identity:</strong> Current Account + Capital Account + Official Reserves Changes = 0</li>
+</ul>
+</div>
+
+<div class="box formula">
+<div class="box-title">📊 The Open Economy Identity</div>
+$$Y = C + I + G + NX$$
+$$\Rightarrow NX = Y - (C + I + G) = S - I$$
+<strong>Insight:</strong> A trade deficit ($NX < 0$) means the country invests more than it saves ($I > S$), financed by foreign capital inflows. A trade surplus means the country saves more than it invests.
+</div>
+
+<h3>Purchasing Power Parity (PPP)</h3>
+<div class="box tip">
+<div class="box-title">💡 PPP Theory</div>
+In the long run, exchange rates should adjust so that identical goods cost the same in all countries (law of one price):
+$$e = \frac{P}{P^*}$$
+<strong>PPP-adjusted GDP</strong> is often used for international comparisons because it accounts for differences in price levels. Vietnam's GDP per capita in PPP (~$16,000) is much higher than in nominal terms (~$4,300) because prices in Vietnam are lower than in developed countries.
+</div>
+
+<!-- ========================= SUMMARY ========================= -->
+<div class="topic-header pb">
+<span class="topic-num">📋</span>
+<h1>Quick Reference Summary</h1>
+<p>Key formulas and concepts for the exam</p>
+</div>
+
+<h2>Essential Formulas</h2>
+<table>
+<tr><th>Concept</th><th>Formula</th></tr>
+<tr><td>GDP (expenditure)</td><td>$Y = C + I + G + NX$</td></tr>
+<tr><td>GNP</td><td>$\text{GNP} = \text{GDP} + \text{Net Income from Abroad}$</td></tr>
+<tr><td>GDP Deflator</td><td>$\text{Deflator} = \frac{\text{Nominal GDP}}{\text{Real GDP}} \times 100$</td></tr>
+<tr><td>CPI Inflation</td><td>$\pi = \frac{CPI_t - CPI_{t-1}}{CPI_{t-1}} \times 100\%$</td></tr>
+<tr><td>Unemployment Rate</td><td>$u = \frac{U}{L} \times 100\%$</td></tr>
+<tr><td>Money Multiplier</td><td>$\text{MM} = 1/rr$</td></tr>
+<tr><td>Spending Multiplier</td><td>$k = 1/(1-MPC)$</td></tr>
+<tr><td>Quantity Theory</td><td>$MV = PY$</td></tr>
+<tr><td>Real Exchange Rate</td><td>$\varepsilon = e \times P^*/P$</td></tr>
+<tr><td>Growth Rate</td><td>$g = (Y_t - Y_{t-1})/Y_{t-1} \times 100\%$</td></tr>
+<tr><td>Solow Steady State</td><td>$s \cdot f(k^*) = (n + \delta) k^*$</td></tr>
+<tr><td>Opportunity Cost</td><td>OC of Good A = Units of B given up / Units of A gained</td></tr>
+<tr><td>Trade Balance</td><td>$NX = S - I$</td></tr>
+<tr><td>Compound Interest</td><td>$FV = PV(1+r)^n$</td></tr>
+<tr><td>NPV</td><td>$NPV = -I_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t}$</td></tr>
+</table>
+
+<h2>Topic Map: What to Expect in VEO</h2>
+<table>
+<tr><th>Topic</th><th>VEO Weight</th><th>Key Exam Skills</th></tr>
+<tr><td>GDP &amp; Measurement</td><td>High</td><td>Compute GDP (3 methods), nominal vs real, deflator vs CPI</td></tr>
+<tr><td>AD-AS &amp; Fiscal Policy</td><td>High</td><td>Shift AD/AS, multiplier effect, policy evaluation</td></tr>
+<tr><td>Money &amp; Monetary Policy</td><td>High</td><td>Money multiplier, CB tools, MS effects</td></tr>
+<tr><td>Inflation &amp; Unemployment</td><td>High</td><td>CPI calculation, types of unemployment, Phillips Curve</td></tr>
+<tr><td>Economic Growth</td><td>Medium-High</td><td>Sources of growth, Solow intuition, middle-income trap, Vietnam policy</td></tr>
+<tr><td>International Trade</td><td>Medium-High</td><td>Comparative advantage, gains from trade, exchange rates, BOP</td></tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VEO Macro – Topic 3: Aggregate Demand &amp; Fiscal Policy</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0f172a;--accent:#3b82f6;--accent2:#8b5cf6;--green:#10b981;--orange:#f59e0b;--red:#ef4444;--text:#f1f5f9;--muted:#94a3b8;--surface:#334155;--teal:#14b8a6;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;width:100vw;}
+.deck{position:relative;width:100vw;height:100vh;}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;flex-direction:column;justify-content:center;padding:56px 76px;opacity:0;transition:opacity 0.4s;}
+.slide.active{display:flex;opacity:1;}
+.slide.title-slide{background:linear-gradient(135deg,#1e3a5f,#0f172a 50%,#1a1040);text-align:center;justify-content:center;align-items:center;}
+.slide.section-slide{background:linear-gradient(135deg,var(--accent),var(--accent2));text-align:center;justify-content:center;align-items:center;}
+.slide.content-slide{background:var(--bg);}
+.slide.veo-slide{background:linear-gradient(135deg,#1a1040,#0f172a);border-left:6px solid var(--orange);}
+.slide.calc-slide{background:linear-gradient(135deg,#0a1628,#0f172a);border-left:6px solid var(--green);}
+.slide.diagram-slide{background:var(--bg);}
+h1{font-family:'DM Serif Display',serif;font-size:3.2em;line-height:1.15;margin-bottom:16px;}
+h2{font-family:'DM Serif Display',serif;font-size:2.15em;line-height:1.2;margin-bottom:12px;color:var(--accent);}
+h3{font-size:1.25em;font-weight:700;margin-bottom:8px;color:var(--green);}
+h4{font-size:1.05em;font-weight:700;color:var(--accent2);margin-bottom:6px;}
+p{font-size:1.08em;line-height:1.65;margin-bottom:10px;color:var(--muted);}
+.big{font-size:1.2em;color:var(--text);}
+li{font-size:1.02em;line-height:1.6;margin-bottom:5px;color:var(--muted);}
+ul,ol{padding-left:26px;}
+strong{color:var(--text);}
+.box{border-radius:12px;padding:16px 20px;margin:12px 0;}
+.box-def{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);}
+.box-key{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);}
+.box-warn{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);}
+.box-veo{background:rgba(245,158,11,0.12);border:2px solid var(--orange);}
+.box-purple{background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);}
+.box-calc{background:rgba(16,185,129,0.08);border:2px solid var(--green);}
+.box-red{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);}
+.box-title{font-weight:700;font-size:0.98em;margin-bottom:6px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:12px 0;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:12px 0;}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93em;}
+th{background:var(--accent);color:#fff;padding:9px 13px;text-align:left;font-weight:600;}
+td{padding:8px 13px;border-bottom:1px solid var(--surface);color:var(--muted);}
+.nav{position:fixed;bottom:20px;right:30px;display:flex;gap:10px;z-index:100;}
+.nav button{background:var(--surface);color:var(--text);border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:600;transition:0.2s;}
+.nav button:hover{background:var(--accent);}
+.counter{position:fixed;bottom:24px;left:30px;color:var(--muted);font-size:0.95em;z-index:100;}
+.topic-badge{position:fixed;top:20px;left:30px;background:var(--accent2);color:#fff;padding:6px 14px;border-radius:20px;font-size:0.8em;font-weight:600;z-index:100;}
+.hl{color:var(--accent);font-weight:700;}
+.hl-g{color:var(--green);font-weight:700;}
+.hl-o{color:var(--orange);font-weight:700;}
+.hl-r{color:var(--red);font-weight:700;}
+.hl-p{color:var(--accent2);font-weight:700;}
+.formula-big{font-size:1.55em;text-align:center;padding:18px;color:var(--green);font-weight:700;font-family:'DM Serif Display',serif;}
+.tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.85em;font-weight:600;}
+.tag-b{background:rgba(59,130,246,0.2);color:var(--accent);}
+.tag-g{background:rgba(16,185,129,0.2);color:var(--green);}
+.tag-o{background:rgba(245,158,11,0.2);color:var(--orange);}
+.tag-r{background:rgba(239,68,68,0.2);color:var(--red);}
+.subtitle{font-size:1.25em;color:var(--muted);font-weight:300;}
+.diagram{display:flex;align-items:center;justify-content:center;gap:14px;margin:16px 0;flex-wrap:wrap;}
+.d-box{background:var(--surface);padding:14px 20px;border-radius:10px;text-align:center;font-weight:600;font-size:0.92em;min-width:110px;}
+.d-arrow{font-size:1.6em;color:var(--accent);}
+.d-box.blue{border:2px solid var(--accent);color:var(--accent);}
+.d-box.green{border:2px solid var(--green);color:var(--green);}
+.d-box.orange{border:2px solid var(--orange);color:var(--orange);}
+.d-box.purple{border:2px solid var(--accent2);color:var(--accent2);}
+.d-box.red{border:2px solid var(--red);color:var(--red);}
+@media(max-width:900px){.slide{padding:28px 22px;}h1{font-size:2em;}h2{font-size:1.5em;}.grid-2,.grid-3{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="topic-badge">Topic 03 — AD &amp; Fiscal Policy</div>
+<div class="counter"><span id="cur">1</span> / <span id="tot"></span></div>
+<div class="nav"><button onclick="prev()">← Prev</button><button onclick="next()">Next →</button></div>
+
+<div class="deck" id="deck">
+
+<!-- ===== S1 TITLE ===== -->
+<div class="slide title-slide active">
+<p style="font-size:1em;color:var(--accent2);font-weight:600;letter-spacing:3px;">VIETNAM ECONOMICS OLYMPIAD</p>
+<h1 style="font-size:3.5em;color:#fff;">Aggregate Demand<br>&amp; Fiscal Policy</h1>
+<p class="subtitle" style="margin-top:12px;">Topic 03 &bull; The Keynesian Framework &bull; Government Spending &amp; Taxation</p>
+<p style="color:var(--muted);margin-top:24px;">Instructor: Jan Nguyen &bull; Based on Mankiw <em>Macroeconomics</em></p>
+</div>
+
+<!-- S2 Objectives -->
+<div class="slide content-slide">
+<h2>🎯 Learning Objectives</h2>
+<div class="grid-2">
+<div class="box box-def"><h3 style="color:var(--accent);">Aggregate Demand</h3>
+<ul><li>Define AD and its 4 components</li><li>Understand the <strong>consumption function</strong></li><li>Explain why the AD curve slopes downward</li><li>Identify what shifts AD left/right</li></ul></div>
+<div class="box box-key"><h3>Aggregate Supply &amp; Equilibrium</h3>
+<ul><li>Distinguish <strong>SRAS</strong> vs <strong>LRAS</strong></li><li>Find short-run equilibrium</li><li>Analyse demand shocks and supply shocks</li></ul></div>
+</div>
+<div class="box box-purple"><h3 style="color:var(--accent2);">Fiscal Policy</h3>
+<ul style="columns:2;"><li>Government spending multiplier</li><li>Tax multiplier</li><li>Expansionary vs contractionary</li><li>Automatic stabilisers</li><li>Crowding-out effect</li><li>Vietnam's fiscal response to COVID-19</li></ul></div>
+</div>
+
+<!-- S3 Section: Why AD -->
+<div class="slide section-slide">
+<p style="font-size:1em;letter-spacing:3px;font-weight:600;opacity:0.8;">THE KEYNESIAN INSIGHT</p>
+<h1 style="color:#fff;font-size:3em;">Why Aggregate<br>Demand Matters</h1>
+</div>
+
+<!-- S4 Keynes -->
+<div class="slide content-slide">
+<h2>John Maynard Keynes &amp; the Great Depression</h2>
+<p class="big" style="color:var(--text);">Before Keynes, classical economists believed markets always self-correct. Then came the <strong>Great Depression</strong> (1929–1939).</p>
+<div class="box box-warn" style="margin-top:14px;">
+<div class="box-title">The Vicious Cycle</div>
+<div class="diagram">
+<div class="d-box red">Spending falls</div><div class="d-arrow">→</div>
+<div class="d-box orange">Firms cut production</div><div class="d-arrow">→</div>
+<div class="d-box red">Workers laid off</div><div class="d-arrow">→</div>
+<div class="d-box orange">Income falls</div><div class="d-arrow">→</div>
+<div class="d-box red">Spending falls further</div>
+</div>
+</div>
+<div class="box box-def" style="margin-top:12px;">
+<div class="box-title">📘 Keynes' Solution</div>
+When private spending collapses, the <strong>government must step in</strong> and spend to break the cycle. This is the foundation of <strong>fiscal policy</strong>.
+</div>
+</div>
+
+<!-- S5 AD Definition -->
+<div class="slide content-slide">
+<h2>What is Aggregate Demand?</h2>
+<div class="box box-def" style="padding:24px;text-align:center;">
+<p style="font-size:1.4em;color:var(--accent);font-weight:700;"><strong>Aggregate Demand (AD)</strong> = the total spending on goods and services in the economy at each price level.</p>
+</div>
+<div class="box box-key" style="text-align:center;margin-top:16px;padding:22px;">
+<p class="formula-big" style="font-size:2em;">AD = C + I + G + (X − M)</p>
+</div>
+<p style="margin-top:14px;font-size:1.1em;"><strong>"Aggregate"</strong> means total / added up. AD is the macroeconomic version of demand — it's not about one good, but <em>everything</em> the economy produces.</p>
+</div>
+
+<!-- S6 Components overview -->
+<div class="slide content-slide">
+<h2>The 4 Components of AD</h2>
+<div class="grid-2">
+<div class="box box-def" style="text-align:center;"><div style="font-size:2em;">🏠</div><h3 style="color:var(--accent);">C — Consumption</h3><p>Household spending on goods &amp; services<br><span class="tag tag-b">~65% of GDP</span></p></div>
+<div class="box box-key" style="text-align:center;"><div style="font-size:2em;">🏭</div><h3>I — Investment</h3><p>Business spending on capital + residential construction + inventories<br><span class="tag tag-g">~20% of GDP</span></p></div>
+<div class="box box-purple" style="text-align:center;"><div style="font-size:2em;">🏛️</div><h3 style="color:var(--accent2);">G — Government</h3><p>Government purchases of goods &amp; services (NOT transfers)<br><span class="tag tag-o">~15% of GDP</span></p></div>
+<div class="box box-warn" style="text-align:center;"><div style="font-size:2em;">🌍</div><h3 style="color:var(--orange);">NX — Net Exports</h3><p>Exports minus Imports<br>Can be + (surplus) or − (deficit)</p></div>
+</div>
+</div>
+
+<!-- S7 Consumption -->
+<div class="slide content-slide">
+<h2>Consumption (C) — The Largest Component</h2>
+<div class="box box-def"><div class="box-title">📘 The Consumption Function (Keynes)</div>
+$$C = C_0 + MPC \times Y_d$$
+<ul><li>$C_0$ = <strong>autonomous consumption</strong> (spending that occurs even at zero income — necessities)</li>
+<li>$MPC$ = <strong>marginal propensity to consume</strong> = fraction of each additional dollar of income that is spent</li>
+<li>$Y_d$ = <strong>disposable income</strong> (income after taxes)</li></ul>
+</div>
+<div class="grid-2" style="margin-top:14px;">
+<div class="box box-key"><h3>MPC — Marginal Propensity to Consume</h3>
+$$MPC = \frac{\Delta C}{\Delta Y_d}$$
+<p>If MPC = 0.8: of every extra $1 of income, $0.80 is spent and $0.20 is saved.</p></div>
+<div class="box box-purple"><h3 style="color:var(--accent2);">MPS — Marginal Propensity to Save</h3>
+$$MPS = 1 - MPC$$
+<p>If MPC = 0.8, then MPS = 0.2.</p>
+<p style="margin-top:6px;"><strong>Key:</strong> MPC + MPS = 1 always.</p></div>
+</div>
+</div>
+
+<!-- S8 MPC Example -->
+<div class="slide calc-slide">
+<h2 style="color:var(--green);">📊 MPC Example</h2>
+<div class="box box-calc">
+<p style="color:var(--text);">Suppose $C_0 = 100$ and $MPC = 0.75$. Income (Yd) = 1,000.</p>
+$$C = 100 + 0.75 \times 1{,}000 = 100 + 750 = 850$$
+<p style="margin-top:8px;">If income rises to 1,200:</p>
+$$C = 100 + 0.75 \times 1{,}200 = 100 + 900 = 1{,}000$$
+<p style="margin-top:8px;">Change in C = 1,000 − 850 = <strong>150</strong>. Change in Yd = 200. MPC = 150/200 = <strong>0.75</strong> ✓</p>
+</div>
+<div class="box box-warn" style="margin-top:14px;">
+<div class="box-title">💡 Why MPC matters for fiscal policy</div>
+The higher the MPC, the more each dollar of government spending or tax cut gets <strong>re-spent</strong> in the economy → the bigger the multiplier effect.
+</div>
+</div>
+
+<!-- S9 Determinants of C -->
+<div class="slide content-slide">
+<h2>What Determines Consumption?</h2>
+<table>
+<tr><th>Factor</th><th>Effect on C</th><th>Explanation</th></tr>
+<tr><td><strong>Disposable income (Yd)</strong></td><td>↑ Yd → ↑ C</td><td>More income → more spending (main driver)</td></tr>
+<tr><td><strong>Wealth</strong></td><td>↑ Wealth → ↑ C</td><td>Higher asset values → feel richer → spend more</td></tr>
+<tr><td><strong>Interest rates</strong></td><td>↑ r → ↓ C</td><td>Higher rates → more attractive to save, costlier to borrow</td></tr>
+<tr><td><strong>Consumer confidence</strong></td><td>↑ Confidence → ↑ C</td><td>Optimistic about future → spend more now</td></tr>
+<tr><td><strong>Taxes</strong></td><td>↑ Taxes → ↓ Yd → ↓ C</td><td>Higher taxes reduce disposable income</td></tr>
+<tr><td><strong>Expectations of inflation</strong></td><td>↑ Expected π → ↑ C now</td><td>Buy now before prices rise</td></tr>
+</table>
+</div>
+
+<!-- S10 Investment -->
+<div class="slide content-slide">
+<h2>Investment (I)</h2>
+<div class="box box-def"><div class="box-title">📘 What drives investment?</div>
+<p>Firms invest when expected <strong>return on investment > cost of borrowing</strong> (interest rate).</p></div>
+<table style="margin-top:14px;">
+<tr><th>Factor</th><th>Effect on I</th><th>Explanation</th></tr>
+<tr><td><strong>Interest rate</strong></td><td>↑ r → ↓ I</td><td>Higher borrowing cost → fewer profitable projects</td></tr>
+<tr><td><strong>Business confidence</strong></td><td>↑ confidence → ↑ I</td><td>Expect future profits → invest more</td></tr>
+<tr><td><strong>Technology</strong></td><td>New tech → ↑ I</td><td>New opportunities for profitable investment</td></tr>
+<tr><td><strong>Government policy</strong></td><td>Tax incentives → ↑ I</td><td>Investment tax credits, depreciation allowances</td></tr>
+<tr><td><strong>Capacity utilisation</strong></td><td>High utilisation → ↑ I</td><td>Firms at full capacity need to expand</td></tr>
+</table>
+<div class="box box-warn" style="margin-top:10px;">
+<strong>Key link:</strong> This is how <strong>monetary policy</strong> affects AD — the central bank changes interest rates → affects investment → shifts AD.
+</div>
+</div>
+
+<!-- S11 Section: AD Curve -->
+<div class="slide section-slide">
+<p style="font-size:1em;letter-spacing:3px;font-weight:600;opacity:0.8;">THE AD CURVE</p>
+<h1 style="color:#fff;font-size:3em;">Why Does AD<br>Slope Downward?</h1>
+</div>
+
+<!-- S12 AD Curve -->
+<div class="slide diagram-slide">
+<h2>The AD Curve</h2>
+<div class="grid-2">
+<div>
+<p class="big" style="color:var(--text);">The AD curve shows the <strong>total quantity of output demanded</strong> at each price level.</p>
+<p style="margin-top:12px;">It slopes <strong>downward</strong>: as the price level rises, the total quantity of goods and services demanded falls.</p>
+<div class="box box-warn" style="margin-top:14px;">
+<div class="box-title">⚠️ NOT the same as micro demand</div>
+Micro: higher price of one good → substitute to another.<br>
+Macro: higher <em>overall</em> price level → can't substitute to "another economy." The reasons are different!
+</div>
+</div>
+<div style="display:flex;align-items:center;justify-content:center;">
+<svg viewBox="0 0 300 260" style="width:100%;max-width:300px;">
+<defs><marker id="ah" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker></defs>
+<line x1="40" y1="230" x2="280" y2="230" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)"/>
+<line x1="40" y1="230" x2="40" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah)"/>
+<text x="160" y="255" fill="#94a3b8" text-anchor="middle" font-size="13" font-family="Inter">Real GDP (Y)</text>
+<text x="15" y="125" fill="#94a3b8" text-anchor="middle" font-size="13" font-family="Inter" transform="rotate(-90,15,125)">Price Level (P)</text>
+<path d="M70,50 Q160,100 260,210" fill="none" stroke="#3b82f6" stroke-width="3.5"/>
+<text x="265" y="218" fill="#3b82f6" font-size="14" font-weight="700" font-family="Inter">AD</text>
+<line x1="40" y1="80" x2="120" y2="80" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5"/>
+<line x1="120" y1="80" x2="120" y2="230" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5"/>
+<text x="30" y="84" fill="#f59e0b" font-size="11" font-family="Inter">P₂</text>
+<text x="115" y="245" fill="#f59e0b" font-size="11" font-family="Inter">Y₂</text>
+<line x1="40" y1="160" x2="210" y2="160" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5"/>
+<line x1="210" y1="160" x2="210" y2="230" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5"/>
+<text x="30" y="164" fill="#10b981" font-size="11" font-family="Inter">P₁</text>
+<text x="205" y="245" fill="#10b981" font-size="11" font-family="Inter">Y₁</text>
+<circle cx="120" cy="80" r="4" fill="#f59e0b"/>
+<circle cx="210" cy="160" r="4" fill="#10b981"/>
+</svg>
+</div>
+</div>
+</div>
+
+<!-- S13 Three reasons -->
+<div class="slide content-slide">
+<h2>3 Reasons AD Slopes Downward</h2>
+<div class="grid-3">
+<div class="box box-def">
+<div style="font-size:1.8em;text-align:center;">💰</div>
+<h3 style="color:var(--accent);">1. Wealth Effect<br><span style="font-size:0.75em;font-weight:400;">(Pigou Effect)</span></h3>
+<p>Higher price level → <strong>real value of money falls</strong> → people feel poorer → <strong>C ↓</strong></p>
+</div>
+<div class="box box-key">
+<div style="font-size:1.8em;text-align:center;">📈</div>
+<h3>2. Interest Rate Effect<br><span style="font-size:0.75em;font-weight:400;">(Keynes Effect)</span></h3>
+<p>Higher price level → people need <strong>more money</strong> for transactions → <strong>interest rates ↑</strong> → <strong>I ↓</strong></p>
+</div>
+<div class="box box-purple">
+<div style="font-size:1.8em;text-align:center;">🌍</div>
+<h3 style="color:var(--accent2);">3. Exchange Rate Effect<br><span style="font-size:0.75em;font-weight:400;">(Mundell-Fleming)</span></h3>
+<p>Higher price level → domestic goods <strong>more expensive</strong> relative to foreign → <strong>NX ↓</strong></p>
+</div>
+</div>
+<div class="box box-warn" style="margin-top:12px;">
+<div class="box-title">📝 Exam Tip</div>
+All three effects mean: <strong>↑ Price Level → ↓ Quantity of output demanded</strong> → downward-sloping AD.
+</div>
+</div>
+
+<!-- S14 Shifts in AD -->
+<div class="slide content-slide">
+<h2>Shifts in the AD Curve</h2>
+<p class="big" style="color:var(--text);margin-bottom:12px;">AD shifts when <strong>any component</strong> (C, I, G, NX) changes at a given price level.</p>
+<div class="grid-2">
+<div class="box box-key">
+<h3>AD shifts RIGHT (increase) ↗</h3>
+<ul>
+<li>Consumer confidence rises → C↑</li>
+<li>Interest rates fall → I↑</li>
+<li>Government spending rises → G↑</li>
+<li>Tax cuts → Yd↑ → C↑</li>
+<li>Currency depreciates → exports cheaper → NX↑</li>
+<li>Foreign income rises → X↑</li>
+<li>Money supply increases → r↓ → I↑</li>
+</ul>
+</div>
+<div class="box box-red">
+<h3 style="color:var(--red);">AD shifts LEFT (decrease) ↙</h3>
+<ul>
+<li>Consumer confidence falls → C↓</li>
+<li>Interest rates rise → I↓</li>
+<li>Government spending cuts → G↓</li>
+<li>Tax increases → Yd↓ → C↓</li>
+<li>Currency appreciates → NX↓</li>
+<li>Foreign recession → X↓</li>
+<li>Money supply contracts → r↑ → I↓</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- S15 AD Shift diagram -->
+<div class="slide diagram-slide">
+<h2>Visualising AD Shifts</h2>
+<div class="grid-2">
+<div style="display:flex;align-items:center;justify-content:center;">
+<svg viewBox="0 0 300 260" style="width:100%;max-width:280px;">
+<defs><marker id="ah2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker></defs>
+<line x1="40" y1="230" x2="280" y2="230" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah2)"/>
+<line x1="40" y1="230" x2="40" y2="20" stroke="#94a3b8" stroke-width="2" marker-end="url(#ah2)"/>
+<text x="160" y="255" fill="#94a3b8" text-anchor="middle" font-size="12" font-family="Inter">Real GDP</text>
+<text x="15" y="125" fill="#94a3b8" text-anchor="middle" font-size="12" font-family="Inter" transform="rotate(-90,15,125)">Price Level</text>
+<path d="M60,50 Q140,100 230,200" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="8,5"/>
+<text x="235" y="208" fill="#94a3b8" font-size="12" font-family="Inter">AD₁</text>
+<path d="M100,50 Q180,100 270,200" fill="none" stroke="#10b981" stroke-width="3"/>
+<text x="272" y="195" fill="#10b981" font-size="12" font-weight="700" font-family="Inter">AD₂</text>
+<text x="160" y="20" fill="#10b981" font-size="13" font-weight="700" font-family="Inter">AD shifts RIGHT →</text>
+<text x="160" y="36" fill="#94a3b8" font-size="11" font-family="Inter">(G↑ or Tax↓ or C↑ or I↑)</text>
+</svg>
+</div>
+<div>
+<div class="box box-key"><h3>Result of rightward AD shift:</h3>
+<ul><li>Output (Y) <strong>increases</strong></li><li>Price level <strong>rises</strong> (in short run)</li><li>Employment <strong>increases</strong></li></ul></div>
+<div class="box box-red" style="margin-top:12px;"><h3 style="color:var(--red);">Result of leftward AD shift:</h3>
+<ul><li>Output (Y) <strong>falls</strong></li><li>Price level <strong>drops</strong></li><li>Unemployment <strong>rises</strong></li></ul></div>
+</div>
+</div>
+</div>
+
+<!-- S16 Section: AS -->
+<div class="slide section-slide">
+<p style="font-size:1em;letter-spacing:3px;font-weight:600;opacity:0.8;">THE OTHER HALF</p>
+<h1 style="color:#fff;font-size:3em;">Aggregate Supply</h1>
+<p style="color:rgba(255,255,255,0.8);font-size:1.15em;">Short-Run vs Long-Run</p>
+</div>
+
+<!-- S17 SRAS -->
+<div class="slide content-slide">
+<h2>Short-Run Aggregate Supply (SRAS)</h2>
+<div class="box box-def"><div class="box-title">📘 Definition</div>
+The <strong>SRAS</strong> curve shows the total quantity of output firms are willing to produce at each price level, <strong>in the short run</strong> (when some input prices, especially wages, are <strong>sticky</strong>).
+</div>
+<p style="margin-top:12px;" class="big">SRAS slopes <strong>upward</strong>: higher price level → higher profit margins (since wages are fixed) → firms produce more.</p>
+<h3 style="margin-top:16px;">What shifts SRAS?</h3>
+<div class="grid-2">
+<div class="box box-key"><h3>SRAS shifts RIGHT (↗) when:</h3>
+<ul><li>Input prices fall (oil, materials)</li><li>Productivity improves</li><li>Favourable supply shocks</li><li>Lower business taxes</li></ul></div>
+<div class="box box-red"><h3 style="color:var(--red);">SRAS shifts LEFT (↙) when:</h3>
+<ul><li>Input prices rise (oil crisis)</li><li>Natural disasters</li><li>Higher wages</li><li>Supply chain disruptions</li></ul></div>
+</div>
+</div>
+
+<!-- S18 LRAS -->
+<div class="slide content-slide">
+<h2>Long-Run Aggregate Supply (LRAS)</h2>
+<div class="box box-def"><div class="box-title">📘 Definition</div>
+In the long run, all prices (including wages) are <strong>flexible</strong>. Output is determined by real factors: technology, capital, labour, natural resources. The LRAS is <strong>vertical</strong> at potential output $Y^*$ (full employment GDP).
+</div>
+<div class="grid-2" style="margin-top:16px;">
+<div style="display:flex;align-items:center;justify-content:center;">
+<svg viewBox="0 0 300 240" style="width:100%;max-width:280px;">
+<line x1="40" y1="210" x2="280" y2="210" stroke="#94a3b8" stroke-width="2"/>
+<line x1="40" y1="210" x2="40" y2="20" stroke="#94a3b8" stroke-width="2"/>
+<text x="160" y="235" fill="#94a3b8" text-anchor="middle" font-size="12" font-family="Inter">Real GDP</text>
+<line x1="160" y1="30" x2="160" y2="210" stroke="#ef4444" stroke-width="3"/>
+<text x="170" y="25" fill="#ef4444" font-size="13" font-weight="700" font-family="Inter">LRAS</text>
+<text x="160" y="225" fill="#ef4444" font-size="11" font-family="Inter" text-anchor="middle">Y*</text>
+<path d="M60,190 Q120,140 260,50" fill="none" stroke="#10b981" stroke-width="2.5"/>
+<text x="265" y="48" fill="#10b981" font-size="12" font-family="Inter">SRAS</text>
+<path d="M60,60 Q140,110 240,180" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+<text x="245" y="185" fill="#3b82f6" font-size="12" font-family="Inter">AD</text>
+</svg>
+</div>
+<div>
+<div class="box box-key"><h3>Key implications:</h3>
+<ul><li>In the long run, <strong>output = Y*</strong> regardless of price level</li>
+<li>Changes in AD only affect <strong>prices</strong> in the long run, not output</li>
+<li>LRAS shifts right when potential output grows (more capital, labour, technology)</li></ul></div>
+<div class="box box-purple" style="margin-top:10px;"><h3 style="color:var(--accent2);">Classical Dichotomy</h3>
+<p>In the long run, real variables (output, employment) are determined by supply-side factors. Money and demand only affect nominal variables (price level).</p></div>
+</div>
+</div>
+</div>
+
+<!-- S19 AD-AS Equilibrium -->
+<div class="slide content-slide">
+<h2>AD-AS Equilibrium</h2>
+<div class="box box-def"><div class="box-title">📘 Short-Run Equilibrium</div>
+Where <strong>AD intersects SRAS</strong>. This determines the short-run price level and output. Output can be above, below, or at potential (Y*).</div>
+<div class="grid-3" style="margin-top:16px;">
+<div class="box box-key" style="text-align:center;">
+<h3>Y = Y*</h3><p>At full employment<br><span class="tag tag-g">No output gap</span></p>
+</div>
+<div class="box box-warn" style="text-align:center;">
+<h3 style="color:var(--orange);">Y &lt; Y*</h3><p>Recessionary gap<br>Unemployment above natural rate<br><span class="tag tag-o">Need expansionary policy</span></p>
+</div>
+<div class="box box-red" style="text-align:center;">
+<h3 style="color:var(--red);">Y &gt; Y*</h3><p>Inflationary gap<br>Economy overheating<br><span class="tag tag-r">Need contractionary policy</span></p>
+</div>
+</div>
+</div>
+
+<!-- S20 Demand shock -->
+<div class="slide content-slide">
+<h2>Demand Shocks &amp; Supply Shocks</h2>
+<div class="grid-2">
+<div class="box box-def"><h3 style="color:var(--accent);">Positive Demand Shock</h3>
+<p>AD shifts right → Y↑, P↑</p>
+<p><strong>Examples:</strong> Consumer confidence surge, government stimulus, money supply expansion</p>
+<p style="margin-top:6px;"><strong>Short run:</strong> Output and prices rise<br><strong>Long run:</strong> Only prices rise (output returns to Y*)</p></div>
+<div class="box box-red"><h3 style="color:var(--red);">Negative Supply Shock</h3>
+<p>SRAS shifts left → Y↓, P↑ (<strong>stagflation!</strong>)</p>
+<p><strong>Examples:</strong> Oil price spike, pandemic, natural disaster, supply chain crisis</p>
+<p style="margin-top:6px;">This is the worst scenario: output falls AND prices rise. Policy dilemma — stimulating AD worsens inflation.</p></div>
+</div>
+<div class="box box-veo" style="margin-top:10px;">
+<div class="box-title">🇻🇳 Vietnam 2022</div>
+Global energy/food price shocks (Russia-Ukraine war) = negative supply shock → SRAS shifted left → cost-push inflation with growth pressure downward.
+</div>
+</div>
+
+<!-- S21 Section: Fiscal Policy -->
+<div class="slide section-slide">
+<p style="font-size:1em;letter-spacing:3px;font-weight:600;opacity:0.8;">GOVERNMENT INTERVENTION</p>
+<h1 style="color:#fff;font-size:3em;">Fiscal Policy</h1>
+<p style="color:rgba(255,255,255,0.8);font-size:1.15em;">Taxation and government spending to manage AD</p>
+</div>
+
+<!-- S22 Fiscal def -->
+<div class="slide content-slide">
+<h2>What is Fiscal Policy?</h2>
+<div class="box box-def" style="padding:22px;">
+<div class="box-title">📘 Definition</div>
+<strong>Fiscal policy</strong> = the use of <strong>government spending (G)</strong> and <strong>taxation (T)</strong> to influence aggregate demand and the overall economy.
+</div>
+<div class="grid-2" style="margin-top:20px;">
+<div class="box box-key" style="text-align:center;padding:22px;">
+<div style="font-size:2.5em;">📈</div>
+<h3>Expansionary</h3>
+<p>↑G and/or ↓T</p>
+<p style="margin-top:8px;">Goal: <strong>stimulate</strong> the economy during recession</p>
+<p>AD shifts <strong>right</strong></p>
+</div>
+<div class="box box-red" style="text-align:center;padding:22px;">
+<div style="font-size:2.5em;">📉</div>
+<h3 style="color:var(--red);">Contractionary</h3>
+<p>↓G and/or ↑T</p>
+<p style="margin-top:8px;">Goal: <strong>cool down</strong> an overheating economy</p>
+<p>AD shifts <strong>left</strong></p>
+</div>
+</div>
+</div>
+
+<!-- S23 Multiplier intro -->
+<div class="slide content-slide">
+<h2>The Multiplier Effect</h2>
+<div class="box box-def"><div class="box-title">📘 Key Insight</div>
+A $1 increase in government spending leads to <strong>more than $1</strong> increase in GDP. Why? Because spending becomes income for someone, who then spends part of it, which becomes income for someone else, and so on.</div>
+<div class="diagram" style="margin-top:16px;">
+<div class="d-box green">Gov't spends $100</div>
+<div class="d-arrow">→</div>
+<div class="d-box blue">Worker earns $100,<br>spends $80 (MPC=0.8)</div>
+<div class="d-arrow">→</div>
+<div class="d-box green">Shop owner earns $80,<br>spends $64</div>
+<div class="d-arrow">→</div>
+<div class="d-box blue">Supplier earns $64,<br>spends $51.20</div>
+<div class="d-arrow">→</div>
+<div class="d-box orange">... and so on</div>
+</div>
+<p style="margin-top:12px;text-align:center;color:var(--text);font-size:1.1em;">Total = $100 + $80 + $64 + $51.20 + ... = $100 × $\frac{1}{1-0.8}$ = $100 × 5 = <strong class="hl-g" style="font-size:1.3em;">$500</strong></p>
+</div>
+
+<!-- S24 Spending multiplier -->
+<div class="slide content-slide">
+<h2>The Government Spending Multiplier</h2>
+<div class="box box-key" style="text-align:center;padding:28px;">
+<p class="formula-big" style="font-size:2em;">$k_G = \dfrac{1}{1 - MPC} = \dfrac{1}{MPS}$</p>
+<p style="color:var(--muted);margin-top:8px;">Change in GDP: $\Delta Y = k_G \times \Delta G$</p>
+</div>
+<div class="box box-calc" style="margin-top:16px;">
+<div class="box-title">📊 Example</div>
+<p style="color:var(--text);">MPC = 0.8. Government increases spending by $10 billion.</p>
+<p style="margin-top:8px;">$k_G = \frac{1}{1-0.8} = \frac{1}{0.2} = 5$</p>
+<p>$\Delta Y = 5 \times 10 = $ <strong class="hl-g" style="font-size:1.2em;">$50 billion</strong></p>
+</div>
+<table style="margin-top:14px;">
+<tr><th>MPC</th><th>MPS</th><th>Multiplier</th></tr>
+<tr><td>0.5</td><td>0.5</td><td><strong>2</strong></td></tr>
+<tr><td>0.75</td><td>0.25</td><td><strong>4</strong></td></tr>
+<tr><td>0.8</td><td>0.2</td><td><strong>5</strong></td></tr>
+<tr><td>0.9</td><td>0.1</td><td><strong>10</strong></td></tr>
+</table>
+</div>
+
+<!-- S25 Tax multiplier -->
+<div class="slide content-slide">
+<h2>The Tax Multiplier</h2>
+<div class="box box-def" style="text-align:center;padding:24px;">
+<p class="formula-big" style="font-size:1.8em;">$k_T = -\dfrac{MPC}{1 - MPC}$</p>
+<p style="color:var(--muted);margin-top:8px;">$\Delta Y = k_T \times \Delta T$</p>
+</div>
+<div class="box box-calc" style="margin-top:16px;">
+<div class="box-title">📊 Example</div>
+<p style="color:var(--text);">MPC = 0.8. Government cuts taxes by $10 billion ($\Delta T = -10$).</p>
+<p style="margin-top:8px;">$k_T = -\frac{0.8}{0.2} = -4$</p>
+<p>$\Delta Y = -4 \times (-10) = $ <strong class="hl-g" style="font-size:1.2em;">+$40 billion</strong></p>
+</div>
+<div class="box box-warn" style="margin-top:14px;">
+<div class="box-title">💡 Key: Spending multiplier > Tax multiplier</div>
+$k_G = 5$ but $|k_T| = 4$. Why? A $1 tax cut → only $MPC of it is spent (rest is saved). A $1 of government spending → all $1 enters the spending stream immediately. <strong>Government spending is "more bang for the buck."</strong>
+</div>
+</div>
+
+<!-- S26 Balanced budget multiplier -->
+<div class="slide content-slide">
+<h2>The Balanced Budget Multiplier</h2>
+<div class="box box-def"><div class="box-title">📘 What if G and T increase by the same amount?</div>
+<p style="color:var(--text);">Suppose the government increases spending by $\Delta G = 10$ AND increases taxes by $\Delta T = 10$ (balanced budget — no deficit change).</p></div>
+<div class="box box-calc" style="margin-top:14px;">
+<p>Effect of ΔG = 10: $\Delta Y = 5 \times 10 = +50$</p>
+<p>Effect of ΔT = 10: $\Delta Y = -4 \times 10 = -40$</p>
+<p style="margin-top:8px;"><strong>Net effect:</strong> $\Delta Y = +50 - 40 = $ <strong class="hl-g">+10</strong></p>
+</div>
+<div class="box box-key" style="margin-top:14px;text-align:center;padding:20px;">
+<p class="formula-big" style="font-size:1.6em;">Balanced Budget Multiplier = 1</p>
+<p style="color:var(--muted);">An equal increase in G and T always raises GDP by exactly the amount of the increase. Always = 1, regardless of MPC!</p>
+</div>
+</div>
+
+<!-- S27 VEO Multiplier Q -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Multiplier Calculations</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">An economy has MPC = 0.75. The government wants to close a <strong>recessionary gap of $200 billion</strong>.</p>
+<p style="margin-top:8px;color:var(--text);"><strong>Q1:</strong> By how much should G increase?<br>
+<strong>Q2:</strong> Alternatively, by how much should T decrease?</p>
+</div>
+<div class="box box-calc" style="margin-top:14px;">
+<h3>Solution:</h3>
+<p>$k_G = \frac{1}{1-0.75} = 4$. Need $\Delta Y = 200$.</p>
+<p><strong>Q1:</strong> $\Delta G = \frac{200}{4} = $ <strong class="hl-g">$50 billion</strong></p>
+<p style="margin-top:10px;">$|k_T| = \frac{0.75}{0.25} = 3$. Need $\Delta Y = 200$.</p>
+<p><strong>Q2:</strong> $\Delta T = -\frac{200}{3} = $ <strong class="hl-g">−$66.67 billion</strong> (cut taxes by $66.67B)</p>
+</div>
+<div class="box box-warn" style="margin-top:8px;">Note: A larger tax cut is needed because the tax multiplier is smaller than the spending multiplier.</div>
+</div>
+
+<!-- S28 More practice -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Which Policy?</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">For each scenario, state whether the government should use <strong>expansionary</strong> or <strong>contractionary</strong> fiscal policy, and which tool (G or T).</p>
+</div>
+<table style="margin-top:14px;">
+<tr><th>Scenario</th><th>Policy</th><th>Action</th></tr>
+<tr><td>Economy in recession, high unemployment</td><td><span class="tag tag-g">Expansionary</span></td><td>↑G or ↓T or both</td></tr>
+<tr><td>Inflation rising above 6%, economy overheating</td><td><span class="tag tag-r">Contractionary</span></td><td>↓G or ↑T or both</td></tr>
+<tr><td>COVID-19 lockdown devastates consumer spending</td><td><span class="tag tag-g">Expansionary</span></td><td>↑G (stimulus), ↓T (relief)</td></tr>
+<tr><td>Asset bubble forming, excessive credit growth</td><td><span class="tag tag-r">Contractionary</span></td><td>↑T, ↓G</td></tr>
+<tr><td>Post-war recovery, infrastructure destroyed</td><td><span class="tag tag-g">Expansionary</span></td><td>↑G (rebuild infrastructure)</td></tr>
+</table>
+</div>
+
+<!-- S29 Automatic stabilisers -->
+<div class="slide content-slide">
+<h2>Automatic Stabilisers</h2>
+<div class="box box-def"><div class="box-title">📘 Definition</div>
+<strong>Automatic stabilisers</strong> are fiscal mechanisms that automatically adjust government spending or tax revenue without new legislation — they kick in as the economy changes.</div>
+<div class="grid-2" style="margin-top:16px;">
+<div class="box box-key"><h3>During Recession (Y↓)</h3>
+<ul><li><strong>Tax revenue falls</strong> automatically (lower income → lower tax)</li>
+<li><strong>Unemployment benefits rise</strong> automatically (more people qualify)</li>
+<li>Both inject spending into the economy → partially offset the downturn</li></ul></div>
+<div class="box box-warn"><h3 style="color:var(--orange);">During Boom (Y↑)</h3>
+<ul><li><strong>Tax revenue rises</strong> automatically (higher income → higher tax brackets)</li>
+<li><strong>Unemployment benefits fall</strong> (fewer people qualifying)</li>
+<li>Both withdraw spending → partially cool the boom</li></ul></div>
+</div>
+<div class="box box-purple" style="margin-top:10px;">
+<strong>Advantage:</strong> No legislative delay. <strong>Disadvantage:</strong> Often not strong enough alone — may need active ("discretionary") policy too.
+</div>
+</div>
+
+<!-- S30 Crowding out -->
+<div class="slide content-slide">
+<h2>The Crowding-Out Effect</h2>
+<div class="box box-warn"><div class="box-title">⚠️ A Limitation of Fiscal Policy</div>
+When the government borrows to fund increased spending, it <strong>competes with private borrowers</strong> for loanable funds → <strong>interest rates rise</strong> → <strong>private investment falls</strong>.
+</div>
+<div class="diagram" style="margin-top:16px;">
+<div class="d-box green">G↑</div><div class="d-arrow">→</div>
+<div class="d-box blue">Gov't borrows more</div><div class="d-arrow">→</div>
+<div class="d-box orange">Demand for loanable funds↑</div><div class="d-arrow">→</div>
+<div class="d-box red">Interest rates↑</div><div class="d-arrow">→</div>
+<div class="d-box red">Private I↓</div>
+</div>
+<div class="grid-2" style="margin-top:14px;">
+<div class="box box-key"><h3>Partial Crowding Out</h3>
+<p>G↑ by $100 but I↓ by $30 → net ΔAD = $70. Multiplier effect is <strong>reduced</strong> but still positive.</p></div>
+<div class="box box-red"><h3 style="color:var(--red);">Complete Crowding Out</h3>
+<p>G↑ by $100 but I↓ by $100 → net ΔAD = $0. Fiscal policy is <strong>ineffective</strong>. (Extreme case.)</p></div>
+</div>
+</div>
+
+<!-- S31 Time lags -->
+<div class="slide content-slide">
+<h2>Limitations of Fiscal Policy</h2>
+<table>
+<tr><th>Limitation</th><th>Description</th></tr>
+<tr><td><strong>Recognition lag</strong></td><td>Takes time to realise the economy is in recession (data is published with delay)</td></tr>
+<tr><td><strong>Decision lag</strong></td><td>Political process — parliament must debate and approve spending/tax changes</td></tr>
+<tr><td><strong>Implementation lag</strong></td><td>Building infrastructure takes years; tax changes take time to affect behaviour</td></tr>
+<tr><td><strong>Crowding out</strong></td><td>Government borrowing raises interest rates → reduces private investment</td></tr>
+<tr><td><strong>Government debt</strong></td><td>Persistent deficits → rising national debt → future tax burden</td></tr>
+<tr><td><strong>Political constraints</strong></td><td>Politicians may time policy for elections, not economic need</td></tr>
+</table>
+<div class="box box-purple" style="margin-top:10px;">
+<div class="box-title">💡 Implication</div>
+Because of these lags, fiscal policy is better for <strong>severe, prolonged recessions</strong>. For mild, short-term fluctuations, <strong>monetary policy</strong> (Topic 4) is usually faster and more flexible.
+</div>
+</div>
+
+<!-- S32 Budget deficit -->
+<div class="slide content-slide">
+<h2>Government Budget: Deficit &amp; Debt</h2>
+<div class="box box-def" style="text-align:center;padding:22px;">
+<p class="formula-big" style="font-size:1.5em;">Budget Balance = Tax Revenue (T) − Government Spending (G)</p>
+</div>
+<div class="grid-3" style="margin-top:16px;">
+<div class="box box-key" style="text-align:center;"><h3>Surplus</h3><p>T > G<br>Government saves</p></div>
+<div class="box box-warn" style="text-align:center;"><h3 style="color:var(--orange);">Balanced</h3><p>T = G<br>No borrowing</p></div>
+<div class="box box-red" style="text-align:center;"><h3 style="color:var(--red);">Deficit</h3><p>T < G<br>Government borrows</p></div>
+</div>
+<div class="box box-def" style="margin-top:14px;">
+<div class="box-title">📘 Deficit vs Debt</div>
+<ul><li><strong>Deficit</strong> = flow (this year's shortfall). Like your monthly overspending.</li>
+<li><strong>Debt</strong> = stock (accumulated total owed). Like your total credit card balance.</li>
+<li>Persistent deficits → growing debt → higher interest payments → less room for future spending.</li></ul>
+</div>
+</div>
+
+<!-- S33 Vietnam fiscal -->
+<div class="slide content-slide">
+<h2>🇻🇳 Vietnam's Fiscal Policy in Practice</h2>
+<div class="box box-veo"><div class="box-title">COVID-19 Response (2020–2021)</div>
+<ul>
+<li><strong>Tax relief:</strong> Deferred corporate income tax, VAT reductions, land rent deferrals</li>
+<li><strong>Spending:</strong> Cash transfers to affected workers; National Vaccine Fund</li>
+<li><strong>Fiscal discipline:</strong> Vietnam maintained relatively low public debt (~44% of GDP) — providing room for stimulus</li>
+</ul></div>
+<div class="box box-key" style="margin-top:12px;"><div class="box-title">2022–2023: Recovery &amp; Infrastructure</div>
+<ul>
+<li><strong>Infrastructure push:</strong> Massive public investment in highways, airports (Long Thanh), metro systems</li>
+<li><strong>VAT cut:</strong> Temporary reduction from 10% to 8% to stimulate consumer spending</li>
+<li>Budget deficit target: ~3–4% of GDP</li>
+</ul></div>
+</div>
+
+<!-- S34 AD-AS Practice -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: AD-AS Analysis</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">For each event, identify: (1) which curve shifts, (2) direction, (3) effect on Y and P.</p>
+</div>
+<table style="margin-top:12px;font-size:0.9em;">
+<tr><th>Event</th><th>Curve</th><th>Shift</th><th>Y</th><th>P</th></tr>
+<tr><td>Government increases infrastructure spending</td><td class="hl">AD</td><td class="hl-g">Right</td><td>↑</td><td>↑</td></tr>
+<tr><td>Oil prices spike globally</td><td class="hl-g">SRAS</td><td class="hl-r">Left</td><td>↓</td><td>↑</td></tr>
+<tr><td>Central bank cuts interest rates</td><td class="hl">AD</td><td class="hl-g">Right</td><td>↑</td><td>↑</td></tr>
+<tr><td>A new technology boosts productivity</td><td class="hl-g">SRAS + LRAS</td><td class="hl-g">Right</td><td>↑</td><td>↓</td></tr>
+<tr><td>Government raises income taxes</td><td class="hl">AD</td><td class="hl-r">Left</td><td>↓</td><td>↓</td></tr>
+<tr><td>Major earthquake destroys factories</td><td class="hl-g">SRAS + LRAS</td><td class="hl-r">Left</td><td>↓</td><td>↑</td></tr>
+<tr><td>Consumer confidence collapses</td><td class="hl">AD</td><td class="hl-r">Left</td><td>↓</td><td>↓</td></tr>
+</table>
+</div>
+
+<!-- S35 Multiplier practice 2 -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 Practice: Multiplier Deep Dive</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">In an economy with MPC = 0.6:</p>
+<p style="color:var(--text);margin-top:6px;">(a) What is the spending multiplier?<br>(b) Government increases G by $20B. What is ΔY?<br>(c) Government cuts taxes by $20B. What is ΔY?<br>(d) Government increases G by $20B AND T by $20B. What is ΔY?</p>
+</div>
+<div class="box box-calc" style="margin-top:14px;">
+<h3>Solutions:</h3>
+<p>(a) $k_G = \frac{1}{1-0.6} = \frac{1}{0.4} = $ <strong>2.5</strong></p>
+<p>(b) $\Delta Y = 2.5 \times 20 = $ <strong>$50B</strong></p>
+<p>(c) $k_T = -\frac{0.6}{0.4} = -1.5$. $\Delta Y = -1.5 \times (-20) = $ <strong>$30B</strong></p>
+<p>(d) Balanced budget: $\Delta Y = 50 - 30 = $ <strong>$20B</strong> (multiplier = 1 ✓)</p>
+</div>
+</div>
+
+<!-- S36 IEO question -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🏆 IEO-Style: Fiscal Policy Analysis</h2>
+<div class="box box-veo">
+<p style="color:var(--text);">Vietnam's economy is experiencing a recessionary gap. The government has two options:</p>
+<p style="color:var(--text);margin-top:6px;"><strong>Option A:</strong> Increase government spending on infrastructure by 50 trillion VND.<br><strong>Option B:</strong> Cut personal income taxes by 50 trillion VND.</p>
+<p style="color:var(--text);margin-top:6px;">Assuming MPC = 0.8, which option generates a larger increase in GDP? Explain.</p>
+</div>
+<div class="box box-calc" style="margin-top:12px;">
+<h3>Answer:</h3>
+<p><strong>Option A:</strong> $k_G = 5$. $\Delta Y = 5 \times 50 = $ <strong>250 trillion VND</strong></p>
+<p><strong>Option B:</strong> $|k_T| = 4$. $\Delta Y = 4 \times 50 = $ <strong>200 trillion VND</strong></p>
+<p style="margin-top:8px;"><strong>Option A (spending) is more effective</strong> because every dollar of G enters the spending stream immediately, while part of a tax cut is saved (MPS × ΔT doesn't get spent).</p>
+</div>
+</div>
+
+<!-- S37 Fiscal vs Monetary comparison -->
+<div class="slide content-slide">
+<h2>Fiscal Policy vs Monetary Policy</h2>
+<table>
+<tr><th>Feature</th><th>Fiscal Policy</th><th>Monetary Policy</th></tr>
+<tr><td><strong>Controlled by</strong></td><td>Government (Parliament)</td><td>Central Bank (SBV)</td></tr>
+<tr><td><strong>Tools</strong></td><td>G, T</td><td>Interest rates, money supply, reserve requirements</td></tr>
+<tr><td><strong>Works through</strong></td><td>Direct spending or disposable income</td><td>Interest rates → investment &amp; consumption</td></tr>
+<tr><td><strong>Speed</strong></td><td>Slow (legislative process)</td><td>Fast (central bank decides immediately)</td></tr>
+<tr><td><strong>Precision</strong></td><td>Can target specific sectors</td><td>Blunt — affects whole economy</td></tr>
+<tr><td><strong>Side effects</strong></td><td>Crowding out, debt accumulation</td><td>Asset bubbles, exchange rate effects</td></tr>
+<tr><td><strong>Best for</strong></td><td>Severe recessions, infrastructure needs</td><td>Fine-tuning, inflation control</td></tr>
+</table>
+<div class="box box-key" style="margin-top:10px;">In practice, governments use <strong>both together</strong> ("policy mix") for the best results.</div>
+</div>
+
+<!-- S38 Keynesian Cross (advanced) -->
+<div class="slide content-slide">
+<h2>The Keynesian Cross (Advanced)</h2>
+<div class="grid-2">
+<div>
+<div class="box box-def"><div class="box-title">📘 Model</div>
+<p>Planned expenditure: $PE = C + I + G + NX$</p>
+<p>Equilibrium: $Y = PE$ (output = planned spending)</p>
+<p>$PE = C_0 + MPC(Y - T) + I + G + NX$</p></div>
+<div class="box box-key" style="margin-top:10px;"><h3>Equilibrium output:</h3>
+$$Y^* = \frac{1}{1-MPC}(C_0 - MPC \cdot T + I + G + NX)$$
+<p>The $\frac{1}{1-MPC}$ is the multiplier — it amplifies any change in autonomous spending.</p></div>
+</div>
+<div style="display:flex;align-items:center;justify-content:center;">
+<svg viewBox="0 0 300 260" style="width:100%;max-width:290px;">
+<line x1="40" y1="230" x2="280" y2="230" stroke="#94a3b8" stroke-width="2"/>
+<line x1="40" y1="230" x2="40" y2="20" stroke="#94a3b8" stroke-width="2"/>
+<text x="160" y="255" fill="#94a3b8" text-anchor="middle" font-size="12" font-family="Inter">Income (Y)</text>
+<text x="15" y="125" fill="#94a3b8" text-anchor="middle" font-size="12" font-family="Inter" transform="rotate(-90,15,125)">Expenditure (PE)</text>
+<line x1="40" y1="230" x2="260" y2="10" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="265" y="15" fill="#94a3b8" font-size="11" font-family="Inter">45°</text>
+<line x1="40" y1="190" x2="260" y2="60" stroke="#3b82f6" stroke-width="3"/>
+<text x="265" y="65" fill="#3b82f6" font-size="12" font-weight="700" font-family="Inter">PE</text>
+<circle cx="165" cy="115" r="5" fill="#10b981"/>
+<text x="175" y="108" fill="#10b981" font-size="11" font-weight="700" font-family="Inter">Y*</text>
+<line x1="165" y1="115" x2="165" y2="230" stroke="#10b981" stroke-width="1" stroke-dasharray="5,5"/>
+</svg>
+</div>
+</div>
+</div>
+
+<!-- S39 Open economy multiplier -->
+<div class="slide content-slide">
+<h2>Open Economy Multiplier (Advanced)</h2>
+<div class="box box-def">
+<p>In an <strong>open economy</strong> with imports, the multiplier is smaller because some spending leaks abroad:</p>
+$$k = \frac{1}{1 - MPC + MPM}$$
+<p>where $MPM$ = marginal propensity to import (fraction of extra income spent on imports).</p>
+</div>
+<div class="box box-calc" style="margin-top:14px;">
+<div class="box-title">📊 Example</div>
+<p>MPC = 0.8, MPM = 0.2</p>
+<p>Closed economy multiplier: $\frac{1}{1-0.8} = 5$</p>
+<p>Open economy multiplier: $\frac{1}{1-0.8+0.2} = \frac{1}{0.4} = 2.5$</p>
+<p style="margin-top:8px;">The multiplier is <strong>halved</strong> because spending leaks to imports. Very relevant for <strong>Vietnam</strong> (trade/GDP ≈ 200%).</p>
+</div>
+</div>
+
+<!-- S40 With taxes multiplier -->
+<div class="slide content-slide">
+<h2>Multiplier with Proportional Tax (Advanced)</h2>
+<div class="box box-def">
+<p>With a proportional tax rate $t$ (e.g., 20%):</p>
+$$k = \frac{1}{1 - MPC(1-t)}$$
+</div>
+<div class="box box-calc" style="margin-top:14px;">
+<div class="box-title">📊 Example</div>
+<p>MPC = 0.8, tax rate t = 0.25</p>
+<p>$k = \frac{1}{1 - 0.8(1-0.25)} = \frac{1}{1 - 0.8 \times 0.75} = \frac{1}{1 - 0.6} = \frac{1}{0.4} = 2.5$</p>
+<p style="margin-top:8px;">Without tax: $k = 5$. With 25% tax: $k = 2.5$. Taxes act as an <strong>automatic stabiliser</strong> — they reduce the multiplier and dampen economic fluctuations.</p>
+</div>
+</div>
+
+<!-- S41 Full multiplier -->
+<div class="slide content-slide">
+<h2>📋 Multiplier Summary Table</h2>
+<table>
+<tr><th>Multiplier</th><th>Formula</th><th>Example (MPC=0.8)</th></tr>
+<tr><td>Simple spending</td><td>$\frac{1}{1-MPC}$</td><td>5</td></tr>
+<tr><td>Tax</td><td>$-\frac{MPC}{1-MPC}$</td><td>−4</td></tr>
+<tr><td>Balanced budget</td><td>Always = 1</td><td>1</td></tr>
+<tr><td>With prop. tax (t=0.25)</td><td>$\frac{1}{1-MPC(1-t)}$</td><td>2.5</td></tr>
+<tr><td>Open economy (MPM=0.2)</td><td>$\frac{1}{1-MPC+MPM}$</td><td>2.5</td></tr>
+<tr><td>Full model (t=0.25, MPM=0.2)</td><td>$\frac{1}{1-MPC(1-t)+MPM}$</td><td>1.67</td></tr>
+</table>
+<div class="box box-warn" style="margin-top:10px;">
+<div class="box-title">💡 Key takeaway</div>
+The more <strong>leakages</strong> (saving, taxes, imports), the <strong>smaller</strong> the multiplier. Real-world multipliers are typically 1–2, not the theoretical 5.
+</div>
+</div>
+
+<!-- S42 Common mistakes -->
+<div class="slide content-slide">
+<h2>⚠️ Common Exam Mistakes</h2>
+<div class="grid-2">
+<div class="box box-red">
+<div class="box-title" style="color:var(--red);">❌ Don't</div>
+<ul>
+<li>Confuse <strong>movement along AD</strong> (price change) with <strong>shift of AD</strong></li>
+<li>Forget that G excludes <strong>transfer payments</strong></li>
+<li>Mix up spending multiplier and tax multiplier</li>
+<li>Ignore crowding out when evaluating fiscal policy</li>
+<li>Say "fiscal policy = printing money" (that's monetary)</li>
+<li>Forget: LRAS is vertical, SRAS is upward-sloping</li>
+</ul>
+</div>
+<div class="box box-key">
+<div class="box-title">✅ Do</div>
+<ul>
+<li>Always state which curve shifts and in which direction</li>
+<li>Show multiplier calculations step by step</li>
+<li>Distinguish short-run (AD matters) vs long-run (AS matters)</li>
+<li>Mention time lags and crowding out as limitations</li>
+<li>Use AD-AS diagrams whenever possible</li>
+<li>Connect to Vietnam context for bonus marks</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- S43 Key terms -->
+<div class="slide content-slide">
+<h2>📝 Key Terms — Topic 3</h2>
+<div class="grid-3">
+<div class="box box-def"><h3 style="color:var(--accent);">AD</h3>
+<ul><li>Aggregate Demand</li><li>C, I, G, NX</li><li>Consumption function</li><li>MPC, MPS</li><li>3 reasons AD slopes down</li></ul></div>
+<div class="box box-key"><h3>AS &amp; Equilibrium</h3>
+<ul><li>SRAS vs LRAS</li><li>Recessionary gap</li><li>Inflationary gap</li><li>Demand/supply shocks</li><li>Stagflation</li></ul></div>
+<div class="box box-purple"><h3 style="color:var(--accent2);">Fiscal Policy</h3>
+<ul><li>Spending multiplier</li><li>Tax multiplier</li><li>BBM = 1</li><li>Automatic stabilisers</li><li>Crowding out</li></ul></div>
+</div>
+</div>
+
+<!-- S44 Formula cheat sheet -->
+<div class="slide content-slide">
+<h2>📋 Formula Cheat Sheet — Topic 3</h2>
+<table>
+<tr><th>Formula</th><th>Name</th></tr>
+<tr><td>$AD = C + I + G + NX$</td><td>Aggregate Demand</td></tr>
+<tr><td>$C = C_0 + MPC \cdot Y_d$</td><td>Consumption function</td></tr>
+<tr><td>$MPC + MPS = 1$</td><td>Marginal propensities</td></tr>
+<tr><td>$k_G = \frac{1}{1-MPC}$</td><td>Spending multiplier</td></tr>
+<tr><td>$k_T = -\frac{MPC}{1-MPC}$</td><td>Tax multiplier</td></tr>
+<tr><td>$\Delta Y = k_G \times \Delta G$</td><td>Effect of spending change</td></tr>
+<tr><td>$\Delta Y = k_T \times \Delta T$</td><td>Effect of tax change</td></tr>
+<tr><td>BBM = 1</td><td>Balanced budget multiplier</td></tr>
+<tr><td>$k = \frac{1}{1-MPC(1-t)+MPM}$</td><td>Full open economy multiplier</td></tr>
+</table>
+</div>
+
+<!-- S45 Review quiz -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🧠 Review Quiz (1/2)</h2>
+<table>
+<tr><th>#</th><th>Question</th><th>Answer</th></tr>
+<tr><td>1</td><td>Name the 4 components of AD</td><td>C, I, G, NX</td></tr>
+<tr><td>2</td><td>Why does AD slope downward?</td><td>Wealth effect, interest rate effect, exchange rate effect</td></tr>
+<tr><td>3</td><td>MPC = 0.75. What is the spending multiplier?</td><td>1/(1-0.75) = 4</td></tr>
+<tr><td>4</td><td>Is the tax multiplier larger or smaller than the spending multiplier?</td><td>Smaller (|kT| < kG)</td></tr>
+<tr><td>5</td><td>What is the balanced budget multiplier?</td><td>Always = 1</td></tr>
+</table>
+</div>
+
+<!-- S46 Review quiz 2 -->
+<div class="slide veo-slide">
+<h2 style="color:var(--orange);">🧠 Review Quiz (2/2)</h2>
+<table>
+<tr><th>#</th><th>Question</th><th>Answer</th></tr>
+<tr><td>6</td><td>What is crowding out?</td><td>Gov't borrowing raises interest rates → private investment falls</td></tr>
+<tr><td>7</td><td>SRAS shifts left. What happens?</td><td>Stagflation: Y↓ and P↑</td></tr>
+<tr><td>8</td><td>Name two automatic stabilisers</td><td>Progressive income tax, unemployment benefits</td></tr>
+<tr><td>9</td><td>Expansionary fiscal policy = ?</td><td>↑G and/or ↓T → AD shifts right</td></tr>
+<tr><td>10</td><td>Why is the open economy multiplier smaller?</td><td>Imports are a leakage — spending goes abroad</td></tr>
+</table>
+</div>
+
+<!-- S47 Homework -->
+<div class="slide content-slide">
+<h2>📚 Homework &amp; Further Reading</h2>
+<div class="grid-2">
+<div class="box box-def"><h3 style="color:var(--accent);">Read</h3>
+<ul><li>Mankiw Ch. 10–11 (AD-AS Model)</li><li>Mankiw Ch. 12 (Fiscal Policy)</li><li>Sloman, Ch. 13–14</li></ul></div>
+<div class="box box-key"><h3>Practice</h3>
+<ul><li>Compute multipliers for 5 different MPC values</li><li>Draw AD-AS diagrams for 5 real-world events</li><li>Solve VEO 2021 Q2 (COVID impact on Vietnam) using AD-AS</li><li>Solve VEO 2022 Q1 (inflation) using cost-push / demand-pull framework</li></ul></div>
+</div>
+</div>
+
+<!-- S48 Thank you -->
+<div class="slide title-slide">
+<p style="font-size:1em;color:var(--accent2);font-weight:600;letter-spacing:3px;">END OF TOPIC 03</p>
+<h1 style="font-size:3em;color:#fff;">Thank You!</h1>
+<p class="subtitle" style="margin-top:12px;">Next: Topic 04 — Money &amp; Monetary Policy</p>
+<p style="color:var(--muted);margin-top:24px;">Questions? 🙋</p>
+</div>
+
+</div>
+
+<script>
+let current=0;const slides=document.querySelectorAll('.slide'),total=slides.length;
+document.getElementById('tot').textContent=total;
+function show(n){slides.forEach(s=>s.classList.remove('active'));slides[n].classList.add('active');document.getElementById('cur').textContent=n+1;}
+function next(){if(current<total-1){current++;show(current);}}
+function prev(){if(current>0){current--;show(current);}}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}if(e.key==='ArrowLeft')prev();});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(dx<-50)next();if(dx>50)prev();});
+</script>
+</body>
+</html>
