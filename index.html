@@ -3,33 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MeritPath – VEO/IEO Practice Quizzes</title>
+<title>MeritPath – VEO/IEO Practice Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0F0F0F;--surface:#1A1A1A;--surface-hover:#222;--border:#2A2A2A;--text:#F0EDE6;--text-muted:#8A8680;--gold:#C8963E;--gold-dim:rgba(200,150,62,.15);--green:#3D8B5E;--blue:#4A6FA5;--teal:#2A6B5E;--brown:#6B3A2A;--radius:16px}
+:root{--bg:#0F0F0F;--surface:#1A1A1A;--surface-hover:#222;--border:#2A2A2A;--text:#F0EDE6;--text-muted:#8A8680;--gold:#C8963E;--gold-dim:rgba(200,150,62,.15);--green:#3D8B5E;--blue:#4A6FA5;--teal:#2A6B5E;--brown:#6B3A2A;--purple:#7C5CBF;--radius:16px}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 .glow{position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(150px);opacity:.12;pointer-events:none;z-index:0}.glow-1{top:-200px;left:-100px;background:var(--gold)}.glow-2{bottom:-250px;right:-150px;background:var(--blue)}
 .wrapper{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:0 1.5rem}
 .header{padding:3rem 0 1rem;text-align:center}.logo-mark{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:2rem}.logo-icon{width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:var(--bg)}.logo-text{font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
 .hero-title{font-family:'Instrument Serif',serif;font-size:clamp(2.4rem,6vw,3.6rem);line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem}.hero-title .hl{background:linear-gradient(135deg,var(--gold) 0%,#E8C97A 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:1.1rem;color:var(--text-muted);max-width:520px;margin:0 auto 2.5rem;line-height:1.7}
-.stats-row{display:flex;justify-content:center;gap:3rem;margin-bottom:3rem;flex-wrap:wrap}.stat{text-align:center}.stat-num{font-family:'Instrument Serif',serif;font-size:2rem;color:var(--gold)}.stat-label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-top:.15rem}
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin-bottom:2.5rem}
-.section-title{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-bottom:1.25rem}
-.year-label{font-family:'Instrument Serif',serif;font-size:1.15rem;color:var(--gold);margin:1.5rem 0 .75rem;padding-left:.25rem;opacity:.8}
-.quiz-grid{display:grid;grid-template-columns:1fr;gap:.85rem;margin-bottom:1rem}
-.quiz-card{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;position:relative;overflow:hidden;transition:all .3s ease}
+.hero-sub{font-size:1.1rem;color:var(--text-muted);max-width:540px;margin:0 auto 2.5rem;line-height:1.7}
+.stats-row{display:flex;justify-content:center;gap:2.5rem;margin-bottom:3rem;flex-wrap:wrap}.stat{text-align:center}.stat-num{font-family:'Instrument Serif',serif;font-size:2rem;color:var(--gold)}.stat-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-top:.1rem}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin-bottom:2rem}
+
+/* Tab navigation */
+.tab-nav{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab-btn{padding:.55rem 1.3rem;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--text-muted);font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s}
+.tab-btn:hover{border-color:#444;color:var(--text)}
+.tab-btn.active{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+.section-title{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);margin-bottom:1rem}
+.year-label{font-family:'Instrument Serif',serif;font-size:1.1rem;color:var(--gold);margin:1.25rem 0 .6rem;padding-left:.2rem;opacity:.8}
+.category-label{font-family:'Instrument Serif',serif;font-size:1.1rem;margin:1.5rem 0 .6rem;padding-left:.2rem;opacity:.85}
+.cat-macro{color:#60A5FA}.cat-micro{color:#34D399}.cat-ieo{color:#C084FC}.cat-revision{color:#FBBF24}
+
+.quiz-grid{display:grid;grid-template-columns:1fr;gap:.75rem;margin-bottom:.5rem}
+.quiz-card{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.35rem 1.5rem;position:relative;overflow:hidden;transition:all .3s ease}
 .quiz-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px;transition:width .3s}
-.quiz-card.c-green::before{background:var(--green)}.quiz-card.c-blue::before{background:var(--blue)}.quiz-card.c-teal::before{background:var(--teal)}.quiz-card.c-brown::before{background:var(--brown)}
+.quiz-card.c-green::before{background:var(--green)}.quiz-card.c-blue::before{background:var(--blue)}.quiz-card.c-teal::before{background:var(--teal)}.quiz-card.c-brown::before{background:var(--brown)}.quiz-card.c-purple::before{background:var(--purple)}
 .quiz-card:hover{background:var(--surface-hover);border-color:#3A3A3A;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}.quiz-card:hover::before{width:6px}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.6rem}
-.card-title{font-family:'Instrument Serif',serif;font-size:1.35rem;line-height:1.3}
-.card-arrow{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;transition:all .3s}.quiz-card:hover .card-arrow{background:var(--gold)}.card-arrow svg{width:15px;height:15px;stroke:var(--gold);transition:stroke .3s,transform .3s}.quiz-card:hover .card-arrow svg{stroke:var(--bg);transform:translateX(2px)}
-.card-desc{font-size:.88rem;color:var(--text-muted);line-height:1.5;margin-bottom:.8rem}
-.card-tags{display:flex;gap:.4rem;flex-wrap:wrap}.tag{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:.25rem .6rem;border-radius:6px;background:rgba(255,255,255,.06);color:var(--text-muted)}.tag-count{color:var(--gold);background:var(--gold-dim)}.tag-timer{color:#8ED4C4;background:rgba(42,107,94,.2)}.tag-open{color:#A8C4E0;background:rgba(74,111,165,.2)}
-.coming-soon{background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius);padding:1.5rem 2rem;text-align:center;margin:2rem 0 3rem}.coming-soon p{color:var(--text-muted);font-size:.92rem}.coming-soon strong{color:var(--text)}
-.footer{text-align:center;padding:2rem 0 3rem;border-top:1px solid var(--border)}.footer p{font-size:.82rem;color:var(--text-muted);line-height:1.7}.footer a{color:var(--gold);text-decoration:none}.footer a:hover{text-decoration:underline}
-@media(max-width:600px){.header{padding:2rem 0 .5rem}.quiz-card{padding:1.25rem}.card-title{font-size:1.15rem}.stats-row{gap:1.5rem}}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.5rem}
+.card-title{font-family:'Instrument Serif',serif;font-size:1.25rem;line-height:1.3}
+.card-arrow{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;transition:all .3s}.quiz-card:hover .card-arrow{background:var(--gold)}.card-arrow svg{width:14px;height:14px;stroke:var(--gold);transition:stroke .3s,transform .3s}.quiz-card:hover .card-arrow svg{stroke:var(--bg);transform:translateX(2px)}
+.card-desc{font-size:.85rem;color:var(--text-muted);line-height:1.5;margin-bottom:.7rem}
+.card-tags{display:flex;gap:.35rem;flex-wrap:wrap}.tag{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:.2rem .5rem;border-radius:6px;background:rgba(255,255,255,.06);color:var(--text-muted)}.tag-count{color:var(--gold);background:var(--gold-dim)}.tag-timer{color:#8ED4C4;background:rgba(42,107,94,.2)}.tag-open{color:#A8C4E0;background:rgba(74,111,165,.2)}.tag-slides{color:#C084FC;background:rgba(124,92,191,.15)}
+
+.footer{text-align:center;padding:2rem 0 3rem;border-top:1px solid var(--border);margin-top:2rem}.footer p{font-size:.82rem;color:var(--text-muted);line-height:1.7}.footer a{color:var(--gold);text-decoration:none}.footer a:hover{text-decoration:underline}
+@media(max-width:600px){.header{padding:2rem 0 .5rem}.quiz-card{padding:1.1rem 1.15rem}.card-title{font-size:1.1rem}.stats-row{gap:1.2rem}.tab-nav{gap:.3rem}.tab-btn{padding:.45rem .9rem;font-size:.82rem}}
 </style>
 </head>
 <body>
@@ -38,75 +49,181 @@
 <div class="wrapper">
   <header class="header">
     <div class="logo-mark"><div class="logo-icon">M</div><span class="logo-text">MeritPath</span></div>
-    <h1 class="hero-title">VEO / IEO<br><span class="hl">Practice Quizzes</span></h1>
-    <p class="hero-sub">Interactive quizzes based on real Vietnam Economics Olympiad &amp; International Economics Olympiad exam papers. Test yourself, get instant feedback, and learn from detailed explanations.</p>
+    <h1 class="hero-title">VEO / IEO<br><span class="hl">Study Hub</span></h1>
+    <p class="hero-sub">Interactive quizzes and study slides for the Vietnam Economics Olympiad &amp; International Economics Olympiad. All based on official syllabi and past papers.</p>
     <div class="stats-row">
-      <div class="stat"><div class="stat-num">148</div><div class="stat-label">Questions</div></div>
+      <div class="stat"><div class="stat-num">148</div><div class="stat-label">Quiz Questions</div></div>
       <div class="stat"><div class="stat-num">7</div><div class="stat-label">Exam Papers</div></div>
-      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Years Covered</div></div>
+      <div class="stat"><div class="stat-num">15</div><div class="stat-label">Slide Decks</div></div>
     </div>
   </header>
 
   <div class="divider"></div>
-  <div class="section-title">Available Quizzes</div>
 
-  <!-- 2021 -->
-  <div class="year-label">— 2021</div>
-  <div class="quiz-grid">
-    <a href="VEO_2021_Round1_Quiz.html" class="quiz-card c-brown">
-      <div class="card-top"><div class="card-title">VEO 2021 – Round 1</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-      <div class="card-desc">Opportunity cost calculation, monopoly optimization, Leontief utility, Cobb-Douglas production, GDP deflator, and trade policy.</div>
-      <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Micro</span><span class="tag">Macro</span><span class="tag">Trade</span></div>
-    </a>
-    <a href="VEO_2021_Round2_Quiz.html" class="quiz-card c-teal">
-      <div class="card-top"><div class="card-title">VEO 2021 – Round 2</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-      <div class="card-desc">Collusion &amp; cheating, bond valuation, money multiplier, expected utility &amp; insurance, perfect competition long-run equilibrium, and COVID-19 vaccine game theory.</div>
-      <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag tag-open">5 Open-Ended</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Game Theory</span><span class="tag">Finance</span></div>
-    </a>
+  <!-- Tab navigation -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('quizzes')">Practice Quizzes</button>
+    <button class="tab-btn" onclick="switchTab('slides')">Study Slides</button>
   </div>
 
-  <!-- 2022 -->
-  <div class="year-label">— 2022</div>
-  <div class="quiz-grid">
-    <a href="VEO_2022_Round1_Quiz.html" class="quiz-card c-blue">
-      <div class="card-top"><div class="card-title">VEO 2022 – Round 1</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-      <div class="card-desc">Prisoner's dilemma, ultimatum game (100 NE), sunk vs. opportunity costs, profit maximization, GDP calculation, fiscal multipliers, and consumer theory.</div>
-      <div class="card-tags"><span class="tag tag-count">28 MCQs</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Micro</span><span class="tag">Macro</span><span class="tag">Game Theory</span></div>
-    </a>
-    <a href="VEO_2022_Round2_Quiz.html" class="quiz-card c-green">
-      <div class="card-top"><div class="card-title">VEO 2022 – Round 2</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-      <div class="card-desc">Monopoly deadweight loss, driver-vs-patrol game theory, repeated buyer-seller quality game (Folk Theorem &amp; backward induction), inflation policy, and COVID-19 inequality.</div>
-      <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag tag-open">5 Open-Ended</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Game Theory</span><span class="tag">Policy</span></div>
-    </a>
+  <!-- ═══════════ QUIZZES TAB ═══════════ -->
+  <div class="tab-content active" id="tab-quizzes">
+    <div class="section-title">Practice Quizzes — Past Papers</div>
+
+    <div class="year-label">— 2021</div>
+    <div class="quiz-grid">
+      <a href="VEO_2021_Round1_Quiz.html" class="quiz-card c-brown">
+        <div class="card-top"><div class="card-title">VEO 2021 – Round 1</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Opportunity cost, monopoly optimization, Leontief utility, Cobb-Douglas production, GDP deflator, and trade policy.</div>
+        <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Micro</span><span class="tag">Macro</span><span class="tag">Trade</span></div>
+      </a>
+      <a href="VEO_2021_Round2_Quiz.html" class="quiz-card c-teal">
+        <div class="card-top"><div class="card-title">VEO 2021 – Round 2</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Collusion &amp; cheating, bond valuation, money multiplier, expected utility &amp; insurance, long-run equilibrium, and COVID-19 vaccine game theory.</div>
+        <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag tag-open">5 Open-Ended</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Game Theory</span><span class="tag">Finance</span></div>
+      </a>
+    </div>
+
+    <div class="year-label">— 2022</div>
+    <div class="quiz-grid">
+      <a href="VEO_2022_Round1_Quiz.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">VEO 2022 – Round 1</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Prisoner's dilemma, ultimatum game, sunk vs. opportunity costs, profit maximization, GDP calculation, and fiscal multipliers.</div>
+        <div class="card-tags"><span class="tag tag-count">28 MCQs</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Micro</span><span class="tag">Macro</span><span class="tag">Game Theory</span></div>
+      </a>
+      <a href="VEO_2022_Round2_Quiz.html" class="quiz-card c-green">
+        <div class="card-top"><div class="card-title">VEO 2022 – Round 2</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Monopoly DWL, driver-vs-patrol game theory, repeated buyer-seller game, inflation policy, and COVID-19 inequality.</div>
+        <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag tag-open">5 Open-Ended</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Game Theory</span><span class="tag">Policy</span></div>
+      </a>
+    </div>
+
+    <div class="year-label">— 2025</div>
+    <div class="quiz-grid">
+      <a href="VEO_2025_Round1_Quiz.html" class="quiz-card c-green">
+        <div class="card-top"><div class="card-title">VEO 2025 – Round 1</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Consumer theory, market structures, game theory, fiscal &amp; monetary policy, financial literacy, and the marketing mix.</div>
+        <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Micro</span><span class="tag">Macro</span><span class="tag">Marketing</span></div>
+      </a>
+    </div>
+
+    <div class="year-label">— 2026 Mock</div>
+    <div class="quiz-grid">
+      <a href="VEO_2026_MockExam_Quiz.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">VEO 2026 – Mock Exam</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Nash equilibria, NPV calculations, comparative advantage, money creation, tax incidence, and marketing strategy.</div>
+        <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag tag-timer">⏱ Timer</span><span class="tag">Micro</span><span class="tag">Macro</span><span class="tag">Trade</span><span class="tag">Marketing</span></div>
+      </a>
+    </div>
   </div>
 
-  <!-- 2025 -->
-  <div class="year-label">— 2025</div>
-  <div class="quiz-grid">
-    <a href="VEO_2025_Round1_Quiz.html" class="quiz-card c-green">
-      <div class="card-top"><div class="card-title">VEO 2025 – Round 1</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-      <div class="card-desc">Official Round 1 practice paper covering consumer theory, market structures, game theory, fiscal &amp; monetary policy, financial literacy, and the marketing mix.</div>
-      <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag">Micro</span><span class="tag">Macro</span><span class="tag">Marketing</span><span class="tag">Finance</span></div>
-    </a>
-  </div>
+  <!-- ═══════════ SLIDES TAB ═══════════ -->
+  <div class="tab-content" id="tab-slides">
+    <div class="section-title">Study Slides — Topic Reviews</div>
 
-  <!-- 2026 -->
-  <div class="year-label">— 2026 Mock</div>
-  <div class="quiz-grid">
-    <a href="VEO_2026_MockExam_Quiz.html" class="quiz-card c-blue">
-      <div class="card-top"><div class="card-title">VEO 2026 – Mock Exam</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-      <div class="card-desc">Full mock exam MCQ section featuring Nash equilibria, NPV calculations, comparative advantage, money creation, tax incidence, and marketing strategy.</div>
-      <div class="card-tags"><span class="tag tag-count">20 MCQs</span><span class="tag">Micro</span><span class="tag">Macro</span><span class="tag">Trade</span><span class="tag">Investment</span><span class="tag">Marketing</span></div>
-    </a>
-  </div>
+    <!-- Macroeconomics -->
+    <div class="category-label cat-macro">— Macroeconomics</div>
+    <div class="quiz-grid">
+      <a href="VEO_Macro_Topic1_Introduction_Slides.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">Topic 1: Introduction to Macroeconomics</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">What macroeconomics studies, key questions, circular flow, and the economist's worldview.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Macro</span><span class="tag">Foundations</span></div>
+      </a>
+      <a href="VEO_Macro_Topic2_GDP_CPI_Slides.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">Topic 2: GDP & CPI</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Measuring national income, nominal vs real GDP, GDP deflator, CPI calculation, and inflation measurement.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Macro</span><span class="tag">Data</span></div>
+      </a>
+      <a href="VEO_Macro_Topic3_AD and fiscal policy.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">Topic 3: AD and Fiscal Policy</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Aggregate demand, fiscal multipliers, government spending, taxation, and budget deficits.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Macro</span><span class="tag">Policy</span></div>
+      </a>
+      <a href="VEO_Macro_Topic4_Money_Monetary_Policy_Slides.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">Topic 4: Money & Monetary Policy</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Functions of money, banking system, money creation, central bank tools, and interest rate policy.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Macro</span><span class="tag">Banking</span></div>
+      </a>
+      <a href="VEO_Macro_Topic5_Inflation_Unemployment_Slides.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">Topic 5: Inflation & Unemployment</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Types of unemployment, natural rate, Phillips curve, causes and costs of inflation.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Macro</span><span class="tag">Labor</span></div>
+      </a>
+      <a href="VEO_Macro_Topic6_Economic_Growth_Slides.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">Topic 6: Economic Growth</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Sources of growth, productivity, Solow model basics, technology, and living standards.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Macro</span><span class="tag">Growth</span></div>
+      </a>
+      <a href="VEO_Macro_Topic7_International_Trade_Slides.html" class="quiz-card c-blue">
+        <div class="card-top"><div class="card-title">Topic 7: International Trade</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Comparative advantage, gains from trade, tariffs, exchange rates, and protectionism.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Macro</span><span class="tag">Trade</span></div>
+      </a>
+      <a href="VEO_Macroeconomics_Teaching_Slides.html" class="quiz-card c-teal">
+        <div class="card-top"><div class="card-title">Macroeconomics: Full Teaching Deck</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Comprehensive macro overview — all topics combined into one teaching resource.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Macro</span><span class="tag">Complete</span></div>
+      </a>
+    </div>
 
-  <div class="coming-soon">
-    <p><strong>More quizzes coming soon</strong> — IEO past papers, VEO 2023–2024, and topic-specific drills.</p>
+    <!-- Microeconomics -->
+    <div class="category-label cat-micro">— Microeconomics</div>
+    <div class="quiz-grid">
+      <a href="VEO_Micro_Risk_Uncertainty_Investment_Slides.html" class="quiz-card c-green">
+        <div class="card-top"><div class="card-title">Risk, Uncertainty & Investment</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Expected utility, risk aversion, insurance, portfolio choice, and investment decisions under uncertainty.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Micro</span><span class="tag">Risk</span></div>
+      </a>
+    </div>
+
+    <!-- IEO Specific -->
+    <div class="category-label cat-ieo">— IEO Exam Topics</div>
+    <div class="quiz-grid">
+      <a href="IEO_Finance_Slides.html" class="quiz-card c-purple">
+        <div class="card-top"><div class="card-title">IEO Financial Literacy</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">All 9 IEO syllabus topics: banking, saving, credit, investment, insurance, fraud, crowdfunding, and crypto.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Finance</span><span class="tag">IEO Syllabus</span></div>
+      </a>
+      <a href="IEO_BusinessCase_Slides.html" class="quiz-card c-purple">
+        <div class="card-top"><div class="card-title">IEO Business Case</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">MECE, Pyramid Principle, Porter's 5 Forces, market sizing, presentation skills, and team strategy.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Business</span><span class="tag">IEO Syllabus</span></div>
+      </a>
+    </div>
+
+    <!-- Revision -->
+    <div class="category-label cat-revision">— Revision & Review</div>
+    <div class="quiz-grid">
+      <a href="VEO_IEO_ASAD_Model_Revision.html" class="quiz-card c-brown">
+        <div class="card-top"><div class="card-title">AS-AD Model Revision</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Aggregate Supply and Demand model — shifts, equilibrium, policy effects, and diagram practice.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Revision</span><span class="tag">AS-AD</span></div>
+      </a>
+      <a href="VEO_IEO_Empirical_Economics_Light.html" class="quiz-card c-brown">
+        <div class="card-top"><div class="card-title">Empirical Economics (Light)</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">How economists use data, correlation vs causation, natural experiments, and interpreting graphs/tables.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Revision</span><span class="tag">Empirical</span></div>
+      </a>
+      <a href="VEO_IEO_Microeconomics_Revision.html" class="quiz-card c-brown">
+        <div class="card-top"><div class="card-title">Microeconomics Revision</div><div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        <div class="card-desc">Consumer theory, firm behavior, market structures, game theory, and market failures — quick review.</div>
+        <div class="card-tags"><span class="tag tag-slides">Slides</span><span class="tag">Revision</span><span class="tag">Micro</span></div>
+      </a>
+    </div>
   </div>
 
   <footer class="footer">
-    <p>Built by <a href="#">MeritPath</a> &bull; Economics Olympiad Coaching<br>VEO &amp; IEO preparation &bull; PhD Admissions Consulting</p>
+    <p>Built by <a href="#">MeritPath</a> &bull; Economics Olympiad Coaching<br>VEO &amp; IEO Preparation &bull; PhD Admissions Consulting</p>
   </footer>
 </div>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
 </body>
 </html>
